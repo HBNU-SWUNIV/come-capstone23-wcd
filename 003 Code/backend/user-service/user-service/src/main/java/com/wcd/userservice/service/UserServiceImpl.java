@@ -3,6 +3,7 @@ package com.wcd.userservice.service;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.jpa.UserEntity;
 import com.wcd.userservice.jpa.UserRepository;
+import com.wcd.userservice.vo.ResponseUser;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -87,5 +88,13 @@ public class UserServiceImpl implements UserService{
         return userDto;
     }
 
+    @Override
+    public UserDto updateUser(ResponseUser user) {
+
+        UserEntity userEntity = new ModelMapper(user, UserEntity.class);
+
+
+
+    }
 
 }

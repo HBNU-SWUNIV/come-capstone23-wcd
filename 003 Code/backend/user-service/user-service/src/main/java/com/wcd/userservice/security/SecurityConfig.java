@@ -40,6 +40,11 @@ public class SecurityConfig {
 
         http.headers().frameOptions().disable();
 
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true);
+
         return http.build();
     }
 
