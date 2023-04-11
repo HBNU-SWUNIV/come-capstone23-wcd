@@ -8,7 +8,6 @@ import java.util.Date;
 public class UserDto {
     private String loginId;
     private String password;
-    private String userId;
     private String name;
     private String phoneNumber;
     private Date birthday;
@@ -17,5 +16,6 @@ public class UserDto {
     private boolean onlineStatus;
     private String profileImage;
 
+    private String userId;
     private String encryptedPwd;
 }

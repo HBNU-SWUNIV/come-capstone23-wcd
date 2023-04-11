@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseUser {
-    private int loginId;
+    private String loginId;
     private String name;
     private String phoneNumber;
     private Date birthday;

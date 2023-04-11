@@ -2,6 +2,7 @@ package com.wcd.userservice.controller;
 
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.service.UserService;
+import com.wcd.userservice.vo.RequestUpdateUser;
 import com.wcd.userservice.vo.RequestUser;
 import com.wcd.userservice.vo.ResponseUser;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -53,4 +55,14 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> updateUser(@RequestBody RequestUpdateUser user) {
+        UserDto userDto = userService.updateUser(user);
+
+        ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
+
 }
