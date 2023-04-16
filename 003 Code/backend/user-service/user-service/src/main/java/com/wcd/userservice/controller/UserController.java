@@ -10,7 +10,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,22 +46,28 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
     }
 
-    @GetMapping("/users/{userId}")
-    public ResponseEntity<ResponseUser> getUser(@PathVariable("userId") String userId) {
-        UserDto userDto = userService.getUserByUserId(userId);
+    @GetMapping("/users/{user-id}")
+    public ResponseEntity<ResponseUser> getUserById(@PathVariable("user-id") Long userId) {
+        UserDto userDto = userService.getUserById(userId);
 
         ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 
-    @PutMapping("/users/{userId}")
-    public ResponseEntity<ResponseUser> updateUser(@RequestBody RequestUpdateUser user) {
-        UserDto userDto = userService.updateUser(user);
+    @PutMapping("/users/{user-id}")
+    public ResponseEntity<ResponseUser> updateUser(@PathVariable("user-id") Long userId, @RequestBody RequestUpdateUser requestUpdateUser) {
+        UserDto userDto = userService.updateUserById(userId, requestUpdateUser);
 
         ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
+
+    @DeleteMapping("/users/{user-id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("user-id") Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -2,20 +2,23 @@ package com.wcd.userservice.dto;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserDto {
+    private Long id;
     private String loginId;
     private String password;
+    private String encryptedPwd;
     private String name;
     private String phoneNumber;
-    private Date birthday;
+    private LocalDate birthday;
     private String gender;
-    private Date createdAt;
-    private boolean onlineStatus;
     private String profileImage;
+    private LocalDateTime createdAt;
 
-    private String userId;
-    private String encryptedPwd;
+    private UserEvaluation userEvaluation;
+    private List<Integer> joinClubList;
 }
