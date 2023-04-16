@@ -1,9 +1,12 @@
 package com.wcd.userservice.jpa;
 
+import com.wcd.userservice.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,9 +36,10 @@ public class UserEntity {
     private Date birthday;
 
     @Column(nullable = false)
-    private String gender;
-
-    private boolean onlineStatus;
+    private Gender gender;
 
     private String profileImage;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserEvaluationEntity> userEvaluationList = new ArrayList<>();
 }
