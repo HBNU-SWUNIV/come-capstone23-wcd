@@ -1,10 +1,12 @@
 package com.wcd.userservice.vo;
 
+import com.wcd.userservice.enums.Gender;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class RequestUser {
@@ -22,11 +24,12 @@ public class RequestUser {
     private String name;
 
     @NotNull(message = "PhoneNumber cannot be null")
+    @Pattern(regexp = "\\d{3}-\\d{3,4}-\\d{4}", message = "Invalid phone number")
     private String phoneNumber;
 
     @NotNull(message = "BirthDay cannot be null")
-    private Date birthday;
+    private LocalDate birthday;
 
     @NotNull(message = "Gender cannot be null")
-    private String gender;
+    private Gender gender;
 }

@@ -3,7 +3,7 @@ package com.wcd.userservice.service;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.jpa.UserEntity;
 import com.wcd.userservice.jpa.UserRepository;
-import com.wcd.userservice.vo.ResponseUser;
+import com.wcd.userservice.vo.RequestUpdateUser;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -46,23 +45,8 @@ public class UserServiceImpl implements UserService{
             throw new UsernameNotFoundException(username);
 
         // User: Spring Security에서 제공해주는 User 모델
-        return new User(userEntity.getLoginId(), userEntity.getEncryptedPwd(), true, true, true, true, new ArrayList<>());
-    }
-
-    @Override
-    public UserDto createUser(UserDto userDto) {
-        userDto.setUserId(UUID.randomUUID().toString());
-
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
-        userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPassword()));
-
-        userRepository.save(userEntity);
-
-        UserDto returnUserDto = mapper.map(userEntity, UserDto.class);
-
-        return returnUserDto;
+        return new User(userEntity.getLoginId(), userEntity.getEncryptedPwd(),
+                true, true, true, true, new ArrayList<>());
     }
 
     @Override
@@ -77,11 +61,24 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto getUserByUserId(String userId) {
-        UserEntity userEntity = userRepository.findByUserId(userId);
+    public UserDto createUser(UserDto userDto) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        if (userEntity == null)
-            throw new UsernameNotFoundException("User not found");
+        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
+        userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPassword()));
+
+        userRepository.save(userEntity);
+
+        UserDto returnUserDto = mapper.map(userEntity, UserDto.class);
+
+        return returnUserDto;
+    }
+
+    @Override
+    public UserDto getUserById(Long userId) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
@@ -89,12 +86,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto updateUser(ResponseUser user) {
+    public UserDto updateUserById(Long userId, RequestUpdateUser requestUpdateUser) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        UserEntity userEntity = new ModelMapper(user, UserEntity.class);
+        userEntity.setName(requestUpdateUser.getName());
+        userEntity.setPhoneNumber(requestUpdateUser.getPhoneNumber());
+        userEntity.setBirthday(requestUpdateUser.getBirthday());
+        userEntity.setGender(requestUpdateUser.getGender());
+        userEntity.setProfileImage(requestUpdateUser.getProfile_image());
 
+        UserEntity newUser = userRepository.save(userEntity);
 
+        UserDto userDto = new ModelMapper().map(newUser, UserDto.class);
 
+        return userDto;
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        UserDto userDto = getUserById(userId);
+
+        UserEntity userEntity = new ModelMapper().map(userDto, UserEntity.class);
+
+        userRepository.delete(userEntity);
     }
 
 }
