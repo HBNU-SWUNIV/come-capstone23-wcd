@@ -34,6 +34,18 @@
 
 - ### 20XX 년 OO학술대회
 
+## Branch 규칙
+
+### Git flow
+
+- 메인 브랜치: main, develop
+- 보조 브랜치: feature, release, hotfix
+
+- 보조 브랜치는 사용을 마치면 브랜치를 삭제하도록 한다.
+- merge할 때는 --no-ff를 사용하여 기록을 그룹화한다.
+
+#### 
+
 ## Commit 규칙
 
 ### 규칙
