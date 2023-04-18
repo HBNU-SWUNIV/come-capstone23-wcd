@@ -1,6 +1,7 @@
 package com.wcd.userservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wcd.userservice.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.service.UserService;
 import com.wcd.userservice.vo.RequestLogin;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 // Spring Security를 이용한 로그인 요청 발생 시 작업을 처리해 주는 Custom Filter 클래스
 @Slf4j
@@ -33,8 +36,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private UserService userService;
     private Environment env;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+    RedisTemplate<String, String> redisTemplate;
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager, RedisTemplate redisTemplate) {
         super.setAuthenticationManager(authenticationManager);
+        this.redisTemplate = redisTemplate;
     }
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, UserService userService, Environment env) {
@@ -84,23 +90,60 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String loginId = ((User) authResult.getPrincipal()).getUsername();
         // 여기서는 loginId로 토큰 값을 만들 것이 아니라 userId를 통해 토큰을 만들 것이기 때문에 loginId 통해 사용자 정보를 가져온다.
         UserDto userDetails = userService.getUserDetailsByLoginId(loginId);
+        String userId = userDetails.getUserId();
 
-        Key secretKey = Keys.hmacShaKeyFor(env.getProperty("token.secret").getBytes(StandardCharsets.UTF_8));
+        String refresh_token = generateRefreshToken(userId);
+
+        TokenDto tokenDto = new TokenDto(
+                generateAccessToken(userId),
+                refresh_token
+        );
+
+        redisTemplate.opsForValue().set(
+                userId,
+                refresh_token,
+                Long.parseLong(env.getProperty("refresh_token.expiration_time")),
+                TimeUnit.MICROSECONDS
+        );
+
+        // 응답헤더에 token과 userId 추가
+        response.addHeader("access_token", tokenDto.getAccess_token());
+        response.addHeader("refresh_token", tokenDto.getRefresh_token());
+        // userId를 반환시켜주는 이유는 우리가 가지고 있는 token과 userId가 동일한지 확인하기 위함
+        response.addHeader("userId", userDetails.getUserId());
+    }
+
+    public String generateAccessToken(String userId) {
+        Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
 
         String token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
-                .setSubject(userDetails.getUserId())
+                .setSubject(userId)
                 // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
                 .setExpiration(new Date(System.currentTimeMillis()
-                        + Long.parseLong(env.getProperty("token.expiration_time"))))
+                        + Long.parseLong(env.getProperty("access_token.expiration_time"))))
                 // JWT 토큰에 서명 추가
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 // JWT 토큰을 문자열로 변환
                 .compact();
 
-        // 응답헤더에 token과 userId 추가
-        response.addHeader("token", token);
-        // userId를 반환시켜주는 이유는 우리가 가지고 있는 token과 userId가 동일한지 확인하기 위함
-        response.addHeader("userId", userDetails.getUserId());
+        return token;
+    }
+
+    public String generateRefreshToken(String userId) {
+        Key secretKey = Keys.hmacShaKeyFor(env.getProperty("refresh_token.secret").getBytes(StandardCharsets.UTF_8));
+
+        String token = Jwts.builder()
+                // JWT 토큰의 subject를 설정
+                .setSubject(userId)
+                // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
+                .setExpiration(new Date(System.currentTimeMillis()
+                        + Long.parseLong(env.getProperty("refresh_token.expiration_time"))))
+                // JWT 토큰에 서명 추가
+                .signWith(secretKey, SignatureAlgorithm.HS512)
+                // JWT 토큰을 문자열로 변환
+                .compact();
+
+        return token;
     }
 }
