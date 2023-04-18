@@ -1,4 +1,4 @@
-package com.wcd.userservice.jpa;
+package com.wcd.userservice.entity;
 
 import com.wcd.userservice.enums.Gender;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.wcd.userservice.jpa;
+package com.wcd.userservice.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,9 @@
 package com.wcd.userservice.service;
 
+import com.wcd.userservice.dto.RegenerateTokenDto;
+import com.wcd.userservice.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
+import com.wcd.userservice.dto.UserEvaluationDto;
 import com.wcd.userservice.vo.RequestUpdateUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -15,4 +18,8 @@ public interface UserService extends UserDetailsService {
     UserDto updateUserById(Long userId, RequestUpdateUser requestUpdateUser);
 
     void deleteUser(Long userId);
+
+    UserEvaluationDto getUserEvaluationByUserId(Long userId);
+
+    TokenDto regenerateToken(RegenerateTokenDto refreshTokenDto);
 }

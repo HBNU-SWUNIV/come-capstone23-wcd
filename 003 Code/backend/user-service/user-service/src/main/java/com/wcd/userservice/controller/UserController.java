@@ -1,10 +1,15 @@
 package com.wcd.userservice.controller;
 
+import com.wcd.userservice.dto.RegenerateTokenDto;
+import com.wcd.userservice.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
+import com.wcd.userservice.dto.UserEvaluationDto;
 import com.wcd.userservice.service.UserService;
 import com.wcd.userservice.vo.RequestUpdateUser;
 import com.wcd.userservice.vo.RequestUser;
 import com.wcd.userservice.vo.ResponseUser;
+import com.wcd.userservice.vo.ResponseUserEvaluation;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
@@ -32,8 +37,15 @@ public class UserController {
                 + ", token expiration time=" + env.getProperty("token.expiration_time"));
     }
 
+    @PostMapping("/regenerateToken")
+    public ResponseEntity<TokenDto> regenerateToken(@Valid RegenerateTokenDto refreshTokenDto) {
+        TokenDto tokenDto = userService.regenerateToken(refreshTokenDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
+    }
+
     @PostMapping("/signup")
-    public ResponseEntity<ResponseUser> createUser(@RequestBody RequestUser user) {
+    public ResponseEntity<ResponseUser> createUser(@RequestBody @Valid RequestUser user) {
         ModelMapper mapper = new ModelMapper();
         // source와 destination 필드의 이름과 타입이 완전히 일치하는 경우에만 매핑을 수행
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -56,7 +68,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{user-id}")
-    public ResponseEntity<ResponseUser> updateUser(@PathVariable("user-id") Long userId, @RequestBody RequestUpdateUser requestUpdateUser) {
+    public ResponseEntity<ResponseUser> updateUser(@PathVariable("user-id") Long userId, @RequestBody @Valid RequestUpdateUser requestUpdateUser) {
         UserDto userDto = userService.updateUserById(userId, requestUpdateUser);
 
         ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
@@ -70,4 +82,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/users/{user-id}/evaluation")
+    public ResponseEntity<ResponseUserEvaluation> getUserEvaluation(@PathVariable("user-id") Long userId) {
+        UserEvaluationDto userEvaluationDto = userService.getUserEvaluationByUserId(userId);
+
+        ResponseUserEvaluation returnValue = new ModelMapper().map(userEvaluationDto, ResponseUserEvaluation.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+    }
 }
