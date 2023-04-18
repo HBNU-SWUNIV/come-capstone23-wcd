@@ -1,5 +1,6 @@
 package com.wcd.userservice.dto;
 
+import com.wcd.userservice.vo.ResponseClub;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,6 +20,8 @@ public class UserDto {
     private String profileImage;
     private LocalDateTime createdAt;
 
-    private UserEvaluation userEvaluation;
-    private List<Integer> joinClubList;
+    private String userId;
+
+    private UserEvaluationDto userEvaluation;
+    private List<ResponseClub> joinClubList;
 }
