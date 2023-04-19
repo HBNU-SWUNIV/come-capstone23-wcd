@@ -22,4 +22,6 @@ public interface ClubService {
     ClubMemberDto createClubMember(Long clubId, Long userId);
 
     void deleteClubMember(Long clubId, Long userId);
+
+    Iterable<ClubEntity> getClubByUserId(Long userId);
 }
