@@ -1,8 +1,13 @@
-token:
+access_token:
   expiration_time: 864000000
   secret: p2s5v8y/B?E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfUjWnZr4u7x!A%D*G-KaPdSg
   # 암호화
   # secret: "{cipher}"
+  
+refresh_token:
+  expiration_time: 864000000
+  secret: PeShVmYq3t6w9z$C&E)H@McQfTjWnZr4u7x!A%D*G-JaNdRgUkXp2s5v8y/B?E(H
+  
 # # 접속할 수 있는 IP
 # gateway:
 #   ip:
