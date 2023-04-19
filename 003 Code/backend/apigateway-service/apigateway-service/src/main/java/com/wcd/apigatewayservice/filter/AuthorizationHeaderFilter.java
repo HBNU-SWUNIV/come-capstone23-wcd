@@ -7,11 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -23,10 +28,12 @@ import java.security.Key;
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
 
     Environment env;
+    RedisTemplate<String, String> redisTemplate;
 
-    public AuthorizationHeaderFilter(Environment env) {
+    public AuthorizationHeaderFilter(Environment env, RedisTemplate<String, String> redisTemplate) {
         super(Config.class);
         this.env = env;
+        this.redisTemplate = redisTemplate;
     }
 
     public static class Config { }
@@ -40,14 +47,22 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                 return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
             }
-
             // HTTP 요청 헤더에서 Authorization 필드에 해당하는 값을 가져옴
             String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             // authorizationHeader 문자열에 Bearer 문자열을 제거
             String jwt = authorizationHeader.replace("Bearer", "");
 
             // JWT 토큰의 서명을 검증하고, 만료 시간을 확인하여 JWT 토큰이 유효한지 검증
-            if (!isJwtValid(jwt)) {
+            if (jwt != null && isJwtValid(jwt)) {
+                // Redis에 해당 accessToken logout 여부를 확인
+                String isLogout = (String) redisTemplate.opsForValue().get(jwt);
+
+                // 로그아웃이 없는(되어 있지 않은) 경우 해당 토큰은 정상적으로 작동하기
+                if (!ObjectUtils.isEmpty(isLogout)) {
+                    return onError(exchange, "Please Login", HttpStatus.UNAUTHORIZED);
+                }
+            }
+            else {
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
@@ -66,7 +81,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 JWT 토큰 서명에 사용될 비밀 키 생성. 이때, 비밀 키는 애플리케이션에서 미리 설정한 token.secret 값으로부터 생성되며,
                 hmacShaKeyFor 메서드는 HMAC-SHA 알고리즘을 사용하여 비밀 키를 생성
             */
-            Key secretKey = Keys.hmacShaKeyFor(env.getProperty("token.secret").getBytes(StandardCharsets.UTF_8));
+            Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
 
             // JWT 토큰을 파싱하기 위한 빌더 객체 생성 및 토큰에 사용될 서명 키 설정
             JwtParserBuilder jwtParserBuilder = Jwts.parserBuilder().setSigningKey(secretKey);
