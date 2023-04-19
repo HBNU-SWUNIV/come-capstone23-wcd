@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class RequestUpdateUser {
@@ -17,7 +17,7 @@ public class RequestUpdateUser {
     private String phoneNumber;
 
     @NotNull(message = "BirthDay cannot be null")
-    private Date birthday;
+    private LocalDate birthday;
 
     @NotNull(message = "Gender cannot be null")
     private Gender gender;

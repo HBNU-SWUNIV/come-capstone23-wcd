@@ -8,10 +8,8 @@ import com.wcd.userservice.vo.RequestUpdateUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 // Authentication에 인증하기 위한 자격으로 들어가려면 UserDetailService를 상속받아 구현해줘야함
-public interface UserService extends UserDetailsService {
+public interface UserService{
     UserDto createUser(UserDto userDto);
-
-    UserDto getUserDetailsByLoginId(String loginId);
 
     UserDto getUserById(Long userId);
 
@@ -22,4 +20,6 @@ public interface UserService extends UserDetailsService {
     UserEvaluationDto getUserEvaluationByUserId(Long userId);
 
     TokenDto regenerateToken(RegenerateTokenDto refreshTokenDto);
+
+    void logout(TokenDto tokenDto);
 }

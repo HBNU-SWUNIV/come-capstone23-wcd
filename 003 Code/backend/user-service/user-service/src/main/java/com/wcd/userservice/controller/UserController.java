@@ -9,12 +9,14 @@ import com.wcd.userservice.vo.RequestUpdateUser;
 import com.wcd.userservice.vo.RequestUser;
 import com.wcd.userservice.vo.ResponseUser;
 import com.wcd.userservice.vo.ResponseUserEvaluation;
+import feign.Response;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,6 +58,13 @@ public class UserController {
         ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+    }
+
+    @PostMapping("/users/logout")
+    public ResponseEntity<Void> logout(@RequestBody TokenDto tokenDto) {
+        userService.logout(tokenDto);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/users/{user-id}")

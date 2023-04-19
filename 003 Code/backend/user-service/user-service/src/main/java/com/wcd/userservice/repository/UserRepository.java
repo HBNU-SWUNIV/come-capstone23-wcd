@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByLoginId(String loginId);
 
-    @Query("select u from UserEntity u join fetch u.userEvaluationList where u.id = :userId")
-    Optional<UserEntity> findById(@Param("userId") Long userId);
+
+
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.userEvaluationList WHERE u.id = :userId")
+    Optional<UserEntity> findByIdWithUserEvaluation(@Param("userId") Long userId);
 }

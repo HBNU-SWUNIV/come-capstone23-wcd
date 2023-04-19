@@ -2,12 +2,9 @@ package com.wcd.userservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wcd.userservice.dto.TokenDto;
-import com.wcd.userservice.dto.UserDto;
-import com.wcd.userservice.service.UserService;
+import com.wcd.userservice.security.jwt.JwtTokenProvider;
+import com.wcd.userservice.service.MyUserDetailsService;
 import com.wcd.userservice.vo.RequestLogin;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,34 +16,32 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 // Spring Security를 이용한 로그인 요청 발생 시 작업을 처리해 주는 Custom Filter 클래스
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private UserService userService;
+    private MyUserDetailsService myUserDetailsService;
     private Environment env;
 
-    RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
+    private JwtTokenProvider jwtTokenProvider;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager, RedisTemplate redisTemplate) {
+    public AuthenticationFilter(AuthenticationManager authenticationManager) {
         super.setAuthenticationManager(authenticationManager);
-        this.redisTemplate = redisTemplate;
     }
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager, UserService userService, Environment env) {
-        super(authenticationManager);
-        this.userService = userService;
+    public AuthenticationFilter(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, Environment env, RedisTemplate<String, String> redisTemplate, JwtTokenProvider jwtTokenProvider) {
+        super.setAuthenticationManager(authenticationManager);
+        this.myUserDetailsService = myUserDetailsService;
         this.env = env;
+        this.redisTemplate = redisTemplate;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -83,24 +78,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        /*
-            User: 인증에 성공한 사용자 정보를 담는 클래스
-            (User) authResult.getPrincipal()를 통해 사용자 정보를 가져온 뒤 getUsername()을 통해 사용자의 아이디 정보를 가져온다.
-         */
-        String loginId = ((User) authResult.getPrincipal()).getUsername();
-        // 여기서는 loginId로 토큰 값을 만들 것이 아니라 userId를 통해 토큰을 만들 것이기 때문에 loginId 통해 사용자 정보를 가져온다.
-        UserDto userDetails = userService.getUserDetailsByLoginId(loginId);
-        String userId = userDetails.getUserId();
-
-        String refresh_token = generateRefreshToken(userId);
+        String refresh_token = jwtTokenProvider.generateRefreshToken(authResult);
 
         TokenDto tokenDto = new TokenDto(
-                generateAccessToken(userId),
+                jwtTokenProvider.generateAccessToken(authResult),
                 refresh_token
         );
 
         redisTemplate.opsForValue().set(
-                userId,
+                authResult.getName(),
                 refresh_token,
                 Long.parseLong(env.getProperty("refresh_token.expiration_time")),
                 TimeUnit.MICROSECONDS
@@ -109,41 +95,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         // 응답헤더에 token과 userId 추가
         response.addHeader("access_token", tokenDto.getAccess_token());
         response.addHeader("refresh_token", tokenDto.getRefresh_token());
-        // userId를 반환시켜주는 이유는 우리가 가지고 있는 token과 userId가 동일한지 확인하기 위함
-        response.addHeader("userId", userDetails.getUserId());
-    }
-
-    public String generateAccessToken(String userId) {
-        Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
-
-        String token = Jwts.builder()
-                // JWT 토큰의 subject를 설정
-                .setSubject(userId)
-                // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
-                .setExpiration(new Date(System.currentTimeMillis()
-                        + Long.parseLong(env.getProperty("access_token.expiration_time"))))
-                // JWT 토큰에 서명 추가
-                .signWith(secretKey, SignatureAlgorithm.HS512)
-                // JWT 토큰을 문자열로 변환
-                .compact();
-
-        return token;
-    }
-
-    public String generateRefreshToken(String userId) {
-        Key secretKey = Keys.hmacShaKeyFor(env.getProperty("refresh_token.secret").getBytes(StandardCharsets.UTF_8));
-
-        String token = Jwts.builder()
-                // JWT 토큰의 subject를 설정
-                .setSubject(userId)
-                // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
-                .setExpiration(new Date(System.currentTimeMillis()
-                        + Long.parseLong(env.getProperty("refresh_token.expiration_time"))))
-                // JWT 토큰에 서명 추가
-                .signWith(secretKey, SignatureAlgorithm.HS512)
-                // JWT 토큰을 문자열로 변환
-                .compact();
-
-        return token;
+        // login_id를 반환시켜주는 이유는 우리가 가지고 있는 token과 login_id가 동일한지 확인하기 위함
+        response.addHeader("login_id", authResult.getName());
     }
 }
