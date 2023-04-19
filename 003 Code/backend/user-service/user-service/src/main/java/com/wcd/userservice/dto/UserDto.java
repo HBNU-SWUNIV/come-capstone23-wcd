@@ -20,8 +20,6 @@ public class UserDto {
     private String profileImage;
     private LocalDateTime createdAt;
 
-    private String userId;
-
     private UserEvaluationDto userEvaluation;
     private List<ResponseClub> joinClubList;
 }

@@ -10,6 +10,6 @@ import java.util.List;
 @FeignClient(name="club-service")
 public interface ClubServiceClient {
 
-    @GetMapping("/club-service/clubs/{user-id}")
+    @GetMapping("/club-service/clubs/member/{user-id}")
     List<ResponseClub> getClubByUserId(@PathVariable Long userId);
 }

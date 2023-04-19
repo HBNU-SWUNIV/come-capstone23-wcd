@@ -1,10 +1,12 @@
 package com.wcd.userservice.security;
 
-import com.wcd.userservice.service.UserService;
+import com.wcd.userservice.security.jwt.JwtTokenProvider;
+import com.wcd.userservice.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,9 +19,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserService userService;
+    private final MyUserDetailsService myUserDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Environment env;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 권한과 관련한 메서드
     // HttpSecurity: HTTP 요청에 대한 보안 구성 지정
@@ -30,20 +34,14 @@ public class SecurityConfig {
         AuthenticationManager authenticationManager = getAuthenticationManager(http);
 
         http.csrf().disable();
+
         http.authorizeHttpRequests()
-                .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/error/**").permitAll()
                 .requestMatchers("/**").permitAll()
                 .and()
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager));
 
         http.headers().frameOptions().disable();
-
-        http.logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true);
 
         return http.build();
     }
@@ -55,11 +53,11 @@ public class SecurityConfig {
 
         // userDetailService: 사용자 인증 정보를 검색할 때 사용하는 서비스 (userService)
         // passwordEncoder: 패스워드 인코딩을 위해 사용
-        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+        authenticationManagerBuilder.userDetailsService(myUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
         return authenticationManagerBuilder.build();
     }
 
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        return new AuthenticationFilter(authenticationManager, userService, env);
+        return new AuthenticationFilter(authenticationManager, myUserDetailsService, env, redisTemplate, jwtTokenProvider);
     }
 }

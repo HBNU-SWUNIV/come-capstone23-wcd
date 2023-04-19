@@ -4,13 +4,14 @@ import com.wcd.userservice.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -23,9 +24,6 @@ public class UserEntity {
     @Column(nullable = false)
     private String encryptedPwd;
 
-    @Column(nullable = false, unique = true)
-    private String userId;
-
     @Column(nullable = false, length = 50)
     private String name;
 
@@ -33,7 +31,7 @@ public class UserEntity {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(nullable = false)
     private Gender gender;
