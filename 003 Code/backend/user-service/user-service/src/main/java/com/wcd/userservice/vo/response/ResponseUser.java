@@ -1,4 +1,4 @@
-package com.wcd.userservice.vo;
+package com.wcd.userservice.vo.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wcd.userservice.dto.UserEvaluationDto;

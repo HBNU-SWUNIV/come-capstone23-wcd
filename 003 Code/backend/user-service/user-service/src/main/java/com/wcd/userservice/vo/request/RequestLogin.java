@@ -1,4 +1,4 @@
-package com.wcd.userservice.vo;
+package com.wcd.userservice.vo.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

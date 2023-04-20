@@ -1,6 +1,6 @@
 package com.wcd.userservice.client;
 
-import com.wcd.userservice.vo.ResponseClub;
+import com.wcd.userservice.vo.response.ResponseClub;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wcd.userservice.dto.TokenDto;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.service.MyUserDetailsService;
-import com.wcd.userservice.vo.RequestLogin;
+import com.wcd.userservice.vo.request.RequestLogin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

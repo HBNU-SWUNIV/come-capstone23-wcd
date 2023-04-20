@@ -33,6 +33,7 @@ public class UserEntity {
     @Column(nullable = false)
     private LocalDate birthday;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
 

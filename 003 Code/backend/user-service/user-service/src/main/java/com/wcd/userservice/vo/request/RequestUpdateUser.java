@@ -1,4 +1,4 @@
-package com.wcd.userservice.vo;
+package com.wcd.userservice.vo.request;
 
 import com.wcd.userservice.enums.Gender;
 import jakarta.validation.constraints.NotNull;

@@ -2,13 +2,16 @@ package com.wcd.clubservice.service;
 
 import com.wcd.clubservice.dto.ClubDto;
 import com.wcd.clubservice.dto.ClubMemberDto;
+import com.wcd.clubservice.entity.ClubEntity;
+import com.wcd.clubservice.entity.ClubMemberEntity;
+import com.wcd.clubservice.entity.TagEntity;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
-import com.wcd.clubservice.jpa.*;
+import com.wcd.clubservice.repository.ClubMemberRepository;
+import com.wcd.clubservice.repository.ClubRepository;
 import com.wcd.clubservice.vo.RequestUpdateClub;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

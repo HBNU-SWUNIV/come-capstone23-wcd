@@ -2,8 +2,8 @@ package com.wcd.clubservice.controller;
 
 import com.wcd.clubservice.dto.ClubDto;
 import com.wcd.clubservice.dto.ClubMemberDto;
-import com.wcd.clubservice.jpa.ClubEntity;
-import com.wcd.clubservice.jpa.ClubMemberEntity;
+import com.wcd.clubservice.entity.ClubEntity;
+import com.wcd.clubservice.entity.ClubMemberEntity;
 import com.wcd.clubservice.service.ClubService;
 import com.wcd.clubservice.vo.RequestClub;
 import com.wcd.clubservice.vo.RequestUpdateClub;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/")

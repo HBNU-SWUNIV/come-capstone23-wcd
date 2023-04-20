@@ -1,11 +1,10 @@
-package com.wcd.clubservice.jpa;
+package com.wcd.clubservice.entity;
 
 import com.wcd.clubservice.enums.ApprovalMethod;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +31,7 @@ public class ClubEntity implements Serializable {
 
     private String mainImageUrl;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApprovalMethod approvalMethod;
 
