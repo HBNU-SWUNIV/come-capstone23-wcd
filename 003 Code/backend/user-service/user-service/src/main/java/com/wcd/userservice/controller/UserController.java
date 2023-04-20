@@ -5,18 +5,16 @@ import com.wcd.userservice.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.dto.UserEvaluationDto;
 import com.wcd.userservice.service.UserService;
-import com.wcd.userservice.vo.RequestUpdateUser;
-import com.wcd.userservice.vo.RequestUser;
-import com.wcd.userservice.vo.ResponseUser;
-import com.wcd.userservice.vo.ResponseUserEvaluation;
-import feign.Response;
+import com.wcd.userservice.vo.request.RequestUpdateUser;
+import com.wcd.userservice.vo.request.RequestUser;
+import com.wcd.userservice.vo.response.ResponseUser;
+import com.wcd.userservice.vo.response.ResponseUserEvaluation;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

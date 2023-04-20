@@ -2,13 +2,16 @@ package com.wcd.clubservice.service;
 
 import com.wcd.clubservice.dto.ClubDto;
 import com.wcd.clubservice.dto.ClubMemberDto;
+import com.wcd.clubservice.entity.ClubEntity;
+import com.wcd.clubservice.entity.ClubMemberEntity;
+import com.wcd.clubservice.entity.TagEntity;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
-import com.wcd.clubservice.jpa.*;
+import com.wcd.clubservice.repository.ClubMemberRepository;
+import com.wcd.clubservice.repository.ClubRepository;
 import com.wcd.clubservice.vo.RequestUpdateClub;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,6 +29,7 @@ public class ClubServiceImpl implements ClubService{
         this.clubMemberRepository = clubMemberRepository;
     }
 
+    // 모임 조회
     @Override
     public Iterable<ClubEntity> getClub() {
         Iterable<ClubEntity> clubList = clubRepository.findAll();
@@ -37,6 +41,7 @@ public class ClubServiceImpl implements ClubService{
         return clubList;
     }
 
+    // 모임 생성
     @Override
     public ClubDto createClub(ClubDto clubDto) {
         ModelMapper mapper = new ModelMapper();
@@ -65,6 +70,19 @@ public class ClubServiceImpl implements ClubService{
         return returnClubDto;
     }
 
+    // 모임 상세 조회 (user-id)
+    @Override
+    public Iterable<ClubEntity> getClubByUserId(Long userId) {
+        Iterable<ClubEntity> clubList = clubMemberRepository.findClubByUserId(userId);
+
+        if (!clubList.iterator().hasNext()) {
+            throw new NoSuchElementException();
+        }
+
+        return clubList;
+    }
+
+    // 모임 상세 조회 (club-id)
     @Override
     public ClubDto getClubById(Long clubId) {
         ClubEntity clubEntity = clubRepository.findById(clubId)
@@ -75,6 +93,7 @@ public class ClubServiceImpl implements ClubService{
         return clubDto;
     }
 
+    // 모임 정보 수정
     @Override
     public ClubDto updateClubById(Long clubId, RequestUpdateClub requestUpdateClub) {
         ClubEntity clubEntity = clubRepository.findById(clubId)
@@ -93,6 +112,7 @@ public class ClubServiceImpl implements ClubService{
         return clubDto;
     }
 
+    // 모임 삭제
     @Override
     public void deleteClub(Long clubId) {
         ClubEntity clubEntity = clubRepository.findById(clubId)
@@ -101,6 +121,7 @@ public class ClubServiceImpl implements ClubService{
         clubRepository.delete(clubEntity);
     }
 
+    // 모임 멤버 조회
     @Override
     public Iterable<ClubMemberEntity> getClubMember(Long clubId) {
         Iterable<ClubMemberEntity> clubMemberList = clubMemberRepository.findByClubId(clubId);
@@ -111,6 +132,7 @@ public class ClubServiceImpl implements ClubService{
         return clubMemberList;
     }
 
+    // 모임 가입
     @Override
     public ClubMemberDto createClubMember(Long clubId, Long userId) {
         ClubEntity clubEntity = clubRepository.findById(clubId)
@@ -135,6 +157,7 @@ public class ClubServiceImpl implements ClubService{
         return clubMemberDto;
     }
 
+    // 모임 탈퇴
     @Override
     public void deleteClubMember(Long clubId, Long userId) {
         clubMemberRepository.deleteByClubIdAndUserId(clubId, userId);

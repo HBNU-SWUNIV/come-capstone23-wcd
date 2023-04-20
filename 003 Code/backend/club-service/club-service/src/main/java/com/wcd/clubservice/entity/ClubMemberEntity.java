@@ -1,11 +1,10 @@
-package com.wcd.clubservice.jpa;
+package com.wcd.clubservice.entity;
 
 import com.wcd.clubservice.enums.Grade;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -26,6 +25,7 @@ public class ClubMemberEntity implements Serializable {
 
     private boolean isOnline;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Grade grade;
 

@@ -22,6 +22,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+  profiles:
+    include: oauth
 
 access_token:
   expiration_time: 3600000

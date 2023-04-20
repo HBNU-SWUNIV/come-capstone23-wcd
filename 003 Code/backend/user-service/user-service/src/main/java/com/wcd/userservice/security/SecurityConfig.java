@@ -1,6 +1,10 @@
 package com.wcd.userservice.security;
 
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
+import com.wcd.userservice.security.oauth.CustomOAuth2UserService;
+import com.wcd.userservice.security.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.wcd.userservice.security.oauth.OAuth2AuthenticationFailureHandler;
+import com.wcd.userservice.security.oauth.OAuth2AuthenticationSuccessHandler;
 import com.wcd.userservice.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,24 +28,47 @@ public class SecurityConfig {
     private final Environment env;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
+    }
 
     // 권한과 관련한 메서드
     // HttpSecurity: HTTP 요청에 대한 보안 구성 지정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+
         // 사용자 인증 매니저, 인증 매니저는 사용자의 인증 정보를 확인
         AuthenticationManager authenticationManager = getAuthenticationManager(http);
 
-        http.csrf().disable();
-
-        http.authorizeHttpRequests()
-                .requestMatchers("/**").permitAll()
+        http
+            .csrf().disable()
+            .headers().frameOptions().disable()
                 .and()
-                .authenticationManager(authenticationManager)
-                .addFilter(getAuthenticationFilter(authenticationManager));
+                    .authorizeHttpRequests()
+                    .requestMatchers("/**").permitAll()
+                .and()
+                    .authenticationManager(authenticationManager)
+                    .addFilter(getAuthenticationFilter(authenticationManager));
 
-        http.headers().frameOptions().disable();
+        http.
+                oauth2Login() // OAuth2 로그인 설정 시작점
+                    .authorizationEndpoint().baseUri("/oauth2/authorize")
+                    .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
+                .and()
+                    .redirectionEndpoint()
+                    .baseUri("/login/oauth2/code/**")
+                .and()
+                    .userInfoEndpoint() // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정 담당
+                    .userService(customOAuth2UserService) // OAuth2 로그인 성공 시, 후작업을 진행할 UserService 인터페이스 구현체 등록
+                .and()
+                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                    .failureHandler(oAuth2AuthenticationFailureHandler);
 
         return http.build();
     }

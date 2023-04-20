@@ -31,6 +31,7 @@ dependencies {
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly group: 'com.h2database', name: 'h2'

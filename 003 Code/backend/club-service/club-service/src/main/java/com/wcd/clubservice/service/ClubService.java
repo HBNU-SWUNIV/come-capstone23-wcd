@@ -2,8 +2,8 @@ package com.wcd.clubservice.service;
 
 import com.wcd.clubservice.dto.ClubDto;
 import com.wcd.clubservice.dto.ClubMemberDto;
-import com.wcd.clubservice.jpa.ClubEntity;
-import com.wcd.clubservice.jpa.ClubMemberEntity;
+import com.wcd.clubservice.entity.ClubEntity;
+import com.wcd.clubservice.entity.ClubMemberEntity;
 import com.wcd.clubservice.vo.RequestUpdateClub;
 
 public interface ClubService {
@@ -22,4 +22,6 @@ public interface ClubService {
     ClubMemberDto createClubMember(Long clubId, Long userId);
 
     void deleteClubMember(Long clubId, Long userId);
+
+    Iterable<ClubEntity> getClubByUserId(Long userId);
 }

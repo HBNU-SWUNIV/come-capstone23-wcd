@@ -1,6 +1,6 @@
 package com.wcd.userservice.dto;
 
-import com.wcd.userservice.vo.ResponseClub;
+import com.wcd.userservice.vo.response.ResponseClub;
 import lombok.Data;
 
 import java.time.LocalDate;
