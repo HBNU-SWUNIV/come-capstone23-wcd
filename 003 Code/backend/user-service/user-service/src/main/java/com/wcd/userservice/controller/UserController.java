@@ -1,12 +1,13 @@
 package com.wcd.userservice.controller;
 
-import com.wcd.userservice.dto.RegenerateTokenDto;
-import com.wcd.userservice.dto.TokenDto;
+import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
+import com.wcd.userservice.security.jwt.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.dto.UserEvaluationDto;
 import com.wcd.userservice.service.UserService;
 import com.wcd.userservice.vo.request.RequestUpdateUser;
 import com.wcd.userservice.vo.request.RequestUser;
+import com.wcd.userservice.vo.request.RequestUserEvaluation;
 import com.wcd.userservice.vo.response.ResponseUser;
 import com.wcd.userservice.vo.response.ResponseUserEvaluation;
 import jakarta.validation.Valid;
@@ -87,6 +88,15 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable("user-id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/users/{user-id}/evaluation")
+    public ResponseEntity<ResponseUserEvaluation> createUserEvaluation(@PathVariable("user-id") Long userId, @RequestBody @Valid RequestUserEvaluation requestUserEvaluation) {
+        UserEvaluationDto userEvaluationDto = userService.createUserEvaluationByUserId(userId, requestUserEvaluation);
+
+        ResponseUserEvaluation returnValue = new ModelMapper().map(userEvaluationDto, ResponseUserEvaluation.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 
     @GetMapping("/users/{user-id}/evaluation")

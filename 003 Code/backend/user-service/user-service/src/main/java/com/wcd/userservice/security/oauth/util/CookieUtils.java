@@ -8,6 +8,7 @@ import org.springframework.util.SerializationUtils;
 import java.util.Base64;
 import java.util.Optional;
 
+// 쿠키를 다루기 위한 유틸리티 클래스
 public class CookieUtils {
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();

@@ -1,6 +1,5 @@
 package com.wcd.userservice;
 
-import com.wcd.userservice.error.FeignErrorDecoder;
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

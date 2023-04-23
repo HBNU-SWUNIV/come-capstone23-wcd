@@ -1,6 +1,6 @@
 package com.wcd.userservice.security.oauth.dto;
 
-import com.wcd.userservice.entity.OAuthEntity;
+import com.wcd.userservice.security.oauth.entity.OAuth;
 import com.wcd.userservice.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
@@ -62,8 +62,8 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public OAuthEntity toEntity() {
-        return OAuthEntity.builder()
+    public OAuth toEntity() {
+        return OAuth.builder()
                 .name(name)
                 .email(email)
                 .provider(provider)

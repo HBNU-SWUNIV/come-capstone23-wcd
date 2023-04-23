@@ -2,17 +2,21 @@ package com.wcd.userservice.entity;
 
 import com.wcd.userservice.enums.Gender;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@Data
-@Entity
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "users")
-public class UserEntity {
+@Entity
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +44,5 @@ public class UserEntity {
     private String profileImage;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserEvaluationEntity> userEvaluationList = new ArrayList<>();
+    private List<UserEvaluation> userEvaluationList = new ArrayList<>();
 }

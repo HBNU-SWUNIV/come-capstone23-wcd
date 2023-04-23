@@ -1,7 +1,7 @@
 package com.wcd.userservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wcd.userservice.dto.TokenDto;
+import com.wcd.userservice.security.jwt.dto.TokenDto;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.service.MyUserDetailsService;
 import com.wcd.userservice.vo.request.RequestLogin;
@@ -86,9 +86,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         );
 
         redisTemplate.opsForValue().set(
+                // Redis 데이터베이스에 저장할 키(key)
                 authResult.getName(),
+                // value
                 refresh_token,
+                // Redis에 저장될 기간
                 Long.parseLong(env.getProperty("refresh_token.expiration_time")),
+                // 기간의 단위를 마이크로 초로 지정
                 TimeUnit.MICROSECONDS
         );
 

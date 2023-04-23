@@ -1,18 +1,20 @@
 package com.wcd.userservice.service;
 
 import com.wcd.userservice.client.ClubServiceClient;
-import com.wcd.userservice.dto.RegenerateTokenDto;
-import com.wcd.userservice.dto.TokenDto;
+import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
+import com.wcd.userservice.security.jwt.dto.TokenDto;
 import com.wcd.userservice.dto.UserDto;
 import com.wcd.userservice.dto.UserEvaluationDto;
-import com.wcd.userservice.entity.UserEntity;
-import com.wcd.userservice.entity.UserEvaluationEntity;
+import com.wcd.userservice.entity.Users;
+import com.wcd.userservice.entity.UserEvaluation;
 import com.wcd.userservice.exception.CustomException;
 import com.wcd.userservice.repository.UserEvaluationRepository;
 import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.vo.request.RequestUpdateUser;
+import com.wcd.userservice.vo.request.RequestUserEvaluation;
 import com.wcd.userservice.vo.response.ResponseClub;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -23,40 +25,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService{
-    UserRepository userRepository;
-    UserEvaluationRepository userEvaluationRepository;
-    BCryptPasswordEncoder passwordEncoder;
-    JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final UserEvaluationRepository userEvaluationRepository;
 
-    Environment env;
+    private final Environment env;
 
-    ClubServiceClient clubServiceClient;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    RedisTemplate<String, String> redisTemplate;
+    private final ClubServiceClient clubServiceClient;
 
-    public UserServiceImpl(UserRepository userRepository, UserEvaluationRepository userEvaluationRepository, BCryptPasswordEncoder passwordEncoder, Environment env, ClubServiceClient clubServiceClient, RedisTemplate<String, String> redisTemplate, JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
-        this.userEvaluationRepository = userEvaluationRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.env = env;
-        this.clubServiceClient = clubServiceClient;
-        this.redisTemplate = redisTemplate;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final RedisTemplate<String, String> redisTemplate;
 
-    /*
-        UserDetailsService를 상속받아서 재정의 해줘야함
-        loginId를 가지고 사용자를 찾아오는 메서드
-     */
-
-
+    @Transactional
     @Override
     public TokenDto regenerateToken(RegenerateTokenDto refreshTokenDto) {
         String refresh_token = refreshTokenDto.getRefresh_token();
@@ -93,12 +84,13 @@ public class UserServiceImpl implements UserService{
         return tokenDto;
     }
 
+    @Transactional
     @Override
     public UserDto createUser(UserDto userDto) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
+        Users userEntity = mapper.map(userDto, Users.class);
         userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPassword()));
 
         userRepository.save(userEntity);
@@ -131,20 +123,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto getUserById(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId)
+        Users userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-        List<ResponseClub> clubList = clubServiceClient.getClubByUserId(userId);
-        userDto.setJoinClubList(clubList);
-
         return userDto;
     }
 
+    @Transactional
     @Override
     public UserDto updateUserById(Long userId, RequestUpdateUser requestUpdateUser) {
-        UserEntity userEntity = userRepository.findById(userId)
+        Users userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         userEntity.setName(requestUpdateUser.getName());
@@ -153,25 +143,31 @@ public class UserServiceImpl implements UserService{
         userEntity.setGender(requestUpdateUser.getGender());
         userEntity.setProfileImage(requestUpdateUser.getProfile_image());
 
-        UserEntity newUser = userRepository.save(userEntity);
+        Users newUser = userRepository.save(userEntity);
 
         UserDto userDto = new ModelMapper().map(newUser, UserDto.class);
 
         return userDto;
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long userId) {
         UserDto userDto = getUserById(userId);
 
-        UserEntity userEntity = new ModelMapper().map(userDto, UserEntity.class);
+        Users userEntity = new ModelMapper().map(userDto, Users.class);
 
         userRepository.delete(userEntity);
     }
 
     @Override
+    public UserEvaluationDto createUserEvaluationByUserId(Long userId, RequestUserEvaluation requestUserEvaluation) {
+        return null;
+    }
+
+    @Override
     public UserEvaluationDto getUserEvaluationByUserId(Long userId) {
-        UserEvaluationEntity userEvaluationEntity = userEvaluationRepository.findByUserId(userId);
+        UserEvaluation userEvaluationEntity = userEvaluationRepository.findByUserId(userId);
 
         UserEvaluationDto userEvaluationDto = new ModelMapper().map(userEvaluationEntity, UserEvaluationDto.class);
 
