@@ -1,4 +1,4 @@
-package com.wcd.userservice.entity;
+package com.wcd.userservice.security.oauth.entity;
 
 import com.wcd.userservice.enums.Role;
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class OAuthEntity {
+public class OAuth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class OAuthEntity {
     private String provider;
 
     @Builder
-    public OAuthEntity(Long id, String name, String email, String password, Role role, String provider) {
+    public OAuth(Long id, String name, String email, String password, Role role, String provider) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -35,7 +35,7 @@ public class OAuthEntity {
 
     }
 
-    public OAuthEntity update(String name, String provider) {
+    public OAuth update(String name, String provider) {
         this.name = name;
         this.provider = provider;
 

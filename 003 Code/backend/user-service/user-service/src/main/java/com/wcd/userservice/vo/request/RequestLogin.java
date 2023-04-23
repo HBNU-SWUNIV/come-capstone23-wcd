@@ -3,17 +3,20 @@ package com.wcd.userservice.vo.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 
-@Data
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RequestLogin {
 
     @NotNull(message = "login_id cannot be null")
-    @Size(min = 2, message = "Email not be less than two characters")
+    @Size(min = 2, message = "login_id not be less than 2 characters")
     @Email
     private String loginId;
 
     @NotNull(message = "Password cannot be null")
-    @Size(min = 8, message = "Password must be equals or grater than  characters")
+    @Size(min = 8, message = "Password must be equals or grater than 8 characters")
     private String password;
 }

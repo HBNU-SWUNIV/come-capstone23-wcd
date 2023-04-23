@@ -1,28 +1,27 @@
 package com.wcd.userservice.service;
 
-import com.wcd.userservice.entity.UserEntity;
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 @Component
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Slf4j
 public class MyUserDetailsService implements UserDetailsService {
-    UserRepository userRepository;
-
-    public MyUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByLoginId(username);
+        Users userEntity = userRepository.findByLoginId(username);
 
         // 해당하는 사용자가 없다면
         if(userEntity == null)
@@ -31,7 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
 
         // User: Spring Security에서 제공해주는 User 모델
-        return new User(userEntity.getLoginId(), userEntity.getEncryptedPwd(),
+        return new org.springframework.security.core.userdetails.User(userEntity.getLoginId(), userEntity.getEncryptedPwd(),
                 true, true, true, true, new ArrayList<>());
     }
 }

@@ -1,6 +1,6 @@
 package com.wcd.userservice.security.oauth.dto;
 
-import com.wcd.userservice.entity.OAuthEntity;
+import com.wcd.userservice.security.oauth.entity.OAuth;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +14,9 @@ import java.util.Collection;
  */
 @Getter
 public class SessionUser implements UserDetails {
-    private OAuthEntity user;
+    private OAuth user;
 
-    public SessionUser(OAuthEntity user) {
+    public SessionUser(OAuth user) {
         this.user = user;
     }
 

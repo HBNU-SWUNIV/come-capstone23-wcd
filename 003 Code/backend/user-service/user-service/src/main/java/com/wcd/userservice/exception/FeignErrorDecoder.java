@@ -1,4 +1,4 @@
-package com.wcd.userservice.error;
+package com.wcd.userservice.exception;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;

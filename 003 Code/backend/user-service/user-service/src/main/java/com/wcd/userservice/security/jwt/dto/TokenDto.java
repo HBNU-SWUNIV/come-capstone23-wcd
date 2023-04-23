@@ -1,4 +1,4 @@
-package com.wcd.userservice.dto;
+package com.wcd.userservice.security.jwt.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

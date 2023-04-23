@@ -1,21 +1,23 @@
 package com.wcd.userservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
-@Entity
+@Getter
+@NoArgsConstructor
 @Table(name = "user-evaluation")
-public class UserEvaluationEntity {
+@Entity
+public class UserEvaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private Users user;
 
-    private String score;
+    private int score;
 
     private String review;
 }

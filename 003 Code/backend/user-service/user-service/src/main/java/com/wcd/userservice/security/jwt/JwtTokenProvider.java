@@ -2,35 +2,32 @@ package com.wcd.userservice.security.jwt;
 
 import com.wcd.userservice.exception.CustomException;
 import com.wcd.userservice.service.MyUserDetailsService;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.JwtParserBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private Environment env;
-    private MyUserDetailsService myUserDetailsService;
-
-    public JwtTokenProvider(Environment env, MyUserDetailsService myUserDetailsService) {
-        this.env = env;
-        this.myUserDetailsService = myUserDetailsService;
-    }
+    private final Environment env;
+    private final MyUserDetailsService myUserDetailsService;
 
     public String generateAccessToken(Authentication authentication) {
+        // HMAC SHA-512 알고리즘으로 생성된 Secret Key 생성
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
 
         String access_token = Jwts.builder()
@@ -65,7 +62,7 @@ public class JwtTokenProvider {
     }
 
     /**
-     * Access 토큰으로부터 클레임을 만들고, 이를 통해 User 객체를 생성하여 Authentication 객체를 반환
+     * Access 토큰으로부터 클레임을 만들고(복호화), 이를 통해 User 객체를 생성하여 Authentication 객체를 반환 (토큰에 있는 정보를 꺼냄)
      * @param access_token
      * @return
      */
@@ -74,16 +71,14 @@ public class JwtTokenProvider {
 
         JwtParserBuilder jwtParserBuilder = Jwts.parserBuilder().setSigningKey(secretKey);
 
-        String subject = jwtParserBuilder
+        Claims claims = jwtParserBuilder
                 .build()
                 // 파싱 대상 JWT 토큰을 Jws(JWT Signature를 포함하는 객체) 객체로 파싱
                 .parseClaimsJws(access_token)
                 // 파싱된 JWT 내용을 가져옴
-                .getBody()
-                // JWT의 subject 값을 가져옴
-                .getSubject();
+                .getBody();
 
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername(subject);
+        UserDetails userDetails = new User(claims.getSubject(), "", new ArrayList<>());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -99,31 +94,16 @@ public class JwtTokenProvider {
         JwtParserBuilder jwtParserBuilder = Jwts.parserBuilder().setSigningKey(secretKey);
 
 
-        String subject = jwtParserBuilder
+        Claims claims = jwtParserBuilder
                 .build()
                 // 파싱 대상 JWT 토큰을 Jws(JWT Signature를 포함하는 객체) 객체로 파싱
                 .parseClaimsJws(refresh_token)
                 // 파싱된 JWT 내용을 가져옴
-                .getBody()
-                // JWT의 subject 값을 가져옴
-                .getSubject();
+                .getBody();
 
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername(subject);
+        UserDetails userDetails = new User(claims.getSubject(), "", new ArrayList<>());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    /**
-     * http 헤더로부터 bearer 토큰을 가져옴.
-     * @param req
-     * @return
-     */
-    public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 
     /**
