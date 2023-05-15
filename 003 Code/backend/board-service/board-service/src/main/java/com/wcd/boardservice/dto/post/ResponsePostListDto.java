@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class PostListDto {
+public class ResponsePostListDto {
     private Long id;
     private String category;
     private Long clubId;

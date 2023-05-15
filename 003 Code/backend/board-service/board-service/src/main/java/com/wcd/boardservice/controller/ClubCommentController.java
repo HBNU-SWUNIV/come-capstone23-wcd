@@ -1,6 +1,8 @@
 package com.wcd.boardservice.controller;
 
-import com.wcd.boardservice.dto.CommentDto;
+import com.wcd.boardservice.dto.comment.CommentDto;
+import com.wcd.boardservice.dto.comment.RequestCommentDto;
+import com.wcd.boardservice.dto.comment.ResponseCommentDto;
 import com.wcd.boardservice.service.CommentService;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -22,28 +24,28 @@ public class ClubCommentController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<CommentDto>> getAllPostComments(@PathVariable("club-id") Long clubId,
+    public ResponseEntity<Page<ResponseCommentDto>> getAllPostComments(@PathVariable("club-id") Long clubId,
                                                               @PathVariable("post-id") Long postId,
                                                               Pageable pageable) {
-        Page<CommentDto> commentListDtos = commentService.getAllPostComment(postId, pageable);
+        Page<ResponseCommentDto> commentListDtos = commentService.getAllPostComment(postId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
     }
 
     @PostMapping("/")
-    public ResponseEntity<CommentDto> createNewComment(@PathVariable("club-id") Long clubId,
+    public ResponseEntity<ResponseCommentDto> createNewComment(@PathVariable("club-id") Long clubId,
                                                        @PathVariable("post-id") Long postId,
-                                                       @RequestBody CommentDto commentDto) {
-        CommentDto createCommentDto = commentService.createComment(commentDto);
-        return ResponseEntity.status(HttpStatus.OK).body(createCommentDto);
+                                                       @RequestBody RequestCommentDto requestCommentDto) {
+        ResponseCommentDto responseCommentDto = commentService.createComment(requestCommentDto);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
     @PatchMapping("/{comment-id}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable("club-id") Long clubId,
+    public ResponseEntity<ResponseCommentDto> updateComment(@PathVariable("club-id") Long clubId,
                                                     @PathVariable("post-id") Long postId,
                                                     @PathVariable("comment-id") Long commentId,
-                                                    @RequestBody CommentDto commentDto) {
-        CommentDto updateCommentDto = commentService.updateComment(commentId, commentDto.getWriterId(), commentDto);
-        return ResponseEntity.status(HttpStatus.OK).body(updateCommentDto);
+                                                    @RequestBody RequestCommentDto requestCommentDto) {
+        ResponseCommentDto responseCommentDto = commentService.updateComment(commentId, requestCommentDto.getWriterId(), requestCommentDto);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
     @DeleteMapping("/{comment-id}")

@@ -1,6 +1,7 @@
 package com.wcd.boardservice.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,16 +10,16 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "vote")
 public class Vote extends BaseEntity {
-    @Id
-    @Column(name = "writer_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "vote_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "writer_id")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @Column(name = "club_id")
@@ -27,10 +28,10 @@ public class Vote extends BaseEntity {
     @Column(name = "writer_id")
     private Long writerId;
 
-    @OneToMany(mappedBy = "vote", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vote", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<VoteItem> voteItems;
 
-    @OneToMany(mappedBy = "vote", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vote", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<VoteRecord> voteRecords;
 
     private LocalDateTime deadline;
@@ -39,8 +40,16 @@ public class Vote extends BaseEntity {
     private Boolean isMultipleSelection;
 
     @Column(name = "is_blind")
-    private Boolean is_blind;
+    private Boolean isBlind;
 
     @Column(name = "is_add_item")
     private boolean isAddItem;
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public void changeVoteItem(List<VoteItem> voteItems) {
+        this.voteItems = voteItems;
+    }
 }

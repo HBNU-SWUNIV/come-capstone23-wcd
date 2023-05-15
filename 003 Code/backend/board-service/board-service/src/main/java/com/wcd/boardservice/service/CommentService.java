@@ -1,18 +1,18 @@
 package com.wcd.boardservice.service;
 
-import com.wcd.boardservice.dto.CommentDto;
+import com.wcd.boardservice.dto.comment.RequestCommentDto;
+import com.wcd.boardservice.dto.comment.ResponseCommentDto;
+import com.wcd.boardservice.dto.post.RequestPostDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface CommentService {
-    CommentDto createComment(CommentDto commentDto);
-    CommentDto updateComment(Long commentId, Long userId, CommentDto commentDto);
+    ResponseCommentDto createComment(RequestCommentDto requestCommentDto);
+    ResponseCommentDto updateComment(Long commentId, Long userId, RequestCommentDto responseCommentDto);
     void deleteComment(Long commentId, Long userId);
-    CommentDto getCommentById(Long commentId);
-    Page<CommentDto> getAllComment(Pageable pageable);
-    Page<CommentDto> getAllPostComment(Long postId, Pageable pageable);
-    Page<CommentDto> getALlUserComment(Long userId, Pageable pageable);
-    Page<CommentDto> getAllClubComment(Long clubId, Pageable pageable);
+    ResponseCommentDto getCommentById(Long commentId);
+    Page<ResponseCommentDto> getAllComment(Pageable pageable);
+    Page<ResponseCommentDto> getAllPostComment(Long postId, Pageable pageable);
+    Page<ResponseCommentDto> getALlUserComment(Long userId, Pageable pageable);
+//    Page<CommentDto> getAllClubComment(Long clubId, Pageable pageable);
 }

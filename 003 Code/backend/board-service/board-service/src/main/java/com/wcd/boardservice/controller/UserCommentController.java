@@ -1,6 +1,7 @@
 package com.wcd.boardservice.controller;
 
-import com.wcd.boardservice.dto.CommentDto;
+import com.wcd.boardservice.dto.comment.CommentDto;
+import com.wcd.boardservice.dto.comment.ResponseCommentDto;
 import com.wcd.boardservice.service.CommentService;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -24,9 +25,9 @@ public class UserCommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/comments")
-    public ResponseEntity<Page<CommentDto>> getAllUserComments(@PathVariable("user-id") Long userId, Pageable pageable) {
-        Page<CommentDto> commentDtos = commentService.getALlUserComment(userId, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(commentDtos);
+    @GetMapping("/")
+    public ResponseEntity<Page<ResponseCommentDto>> getAllUserComments(@PathVariable("user-id") Long userId, Pageable pageable) {
+        Page<ResponseCommentDto> responseCommentDtos = commentService.getALlUserComment(userId, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCommentDtos);
     }
 }

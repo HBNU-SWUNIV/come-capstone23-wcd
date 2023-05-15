@@ -10,4 +10,5 @@ import java.util.List;
 public interface VoteItemRepository extends JpaRepository<VoteItem, Long> {
     public List<VoteItem> findByvoteId(Long voteId);
     public List<VoteItem> findByIdIn(Long[] itemIds);
+    public void deleteByvoteId(Long voteId);
 }

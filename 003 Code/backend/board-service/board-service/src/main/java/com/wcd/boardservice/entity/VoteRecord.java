@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class VoteRecord {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "vote_record_id")
     private Long id;
 
     private Long userId;

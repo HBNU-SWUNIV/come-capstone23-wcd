@@ -1,11 +1,13 @@
 package com.wcd.boardservice.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "post")
 public class Post extends BaseEntity{
@@ -32,6 +34,21 @@ public class Post extends BaseEntity{
 
     private String content;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Vote vote;
+
+    public void setVote(Vote vote) {
+        this.vote = vote;
+    }
+
+    public void changeTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
+    public void changeContent(String newContent) {
+        this.content = newContent;
+    }
+    public void changeVote(Vote newVote) {
+        this.vote = newVote;
+    }
 }

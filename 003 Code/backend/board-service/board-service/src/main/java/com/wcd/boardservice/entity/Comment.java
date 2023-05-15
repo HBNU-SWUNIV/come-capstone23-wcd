@@ -2,11 +2,13 @@ package com.wcd.boardservice.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "comment")
 public class Comment extends BaseEntity{
@@ -24,7 +26,7 @@ public class Comment extends BaseEntity{
 
     private int step;
 
-    private int group;
+    private int commentGroup;
 
-    private int order;
+    private int commentOrder;
 }

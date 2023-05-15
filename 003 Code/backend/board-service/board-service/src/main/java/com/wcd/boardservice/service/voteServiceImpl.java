@@ -1,6 +1,8 @@
 package com.wcd.boardservice.service;
 
-import com.wcd.boardservice.dto.VoteDto;
+import com.wcd.boardservice.dto.vote.RequestVoteDto;
+import com.wcd.boardservice.dto.vote.ResponseVoteDto;
+import com.wcd.boardservice.dto.vote.VoteDto;
 import com.wcd.boardservice.entity.Vote;
 import com.wcd.boardservice.entity.VoteItem;
 import com.wcd.boardservice.entity.VoteRecord;
@@ -8,7 +10,9 @@ import com.wcd.boardservice.repository.VoteItemRepository;
 import com.wcd.boardservice.repository.VoteRecordRepository;
 import com.wcd.boardservice.repository.VoteRepository;
 import jakarta.transaction.Transactional;
+import org.bouncycastle.cert.ocsp.Req;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,48 +21,58 @@ import java.util.NoSuchElementException;
 @Transactional
 @Service
 public class voteServiceImpl implements VoteService{
+    @Autowired
     VoteRepository voteRepository;
+    @Autowired
     VoteItemRepository voteItemRepository;
+    @Autowired
     VoteRecordRepository voteRecordRepository;
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
-    public VoteDto createVote(VoteDto voteDto) {
+    public ResponseVoteDto createVote(RequestVoteDto requestVoteDto) {
         try {
-            Vote newVote = modelMapper.map(voteDto, Vote.class);
-            for (VoteItem voteItem : newVote.getVoteItems()) {
-                voteItemRepository.save(voteItem);
+            Vote newVote = modelMapper.map(requestVoteDto, Vote.class);
+            for(VoteItem voteItem : newVote.getVoteItems()) {
+                voteItem.setVote(newVote);
             }
             Vote saveVote = voteRepository.save(newVote);
-            VoteDto saveVoteDto = modelMapper.map(saveVote, VoteDto.class);
-            return saveVoteDto;
+            ResponseVoteDto responseVoteDto = modelMapper.map(saveVote, ResponseVoteDto.class);
+            return responseVoteDto;
         } catch (Exception e) {
+            System.err.println("Error while creating post: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public VoteDto updateVote(Long voteId, Long userId, VoteDto voteDto) {
+    public ResponseVoteDto updateVote(Long voteId, Long userId, RequestVoteDto requestVoteDto) {
         try {
-            Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
+            Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new Exception());
             if (!vote.getWriterId().equals(userId)) {
                 throw new Exception();
             }
-            if(vote.getVoteRecords() != null) {
+            if(!vote.getVoteRecords().isEmpty()) {
                 throw new Exception();
             }
 
-            for (VoteItem voteItem : vote.getVoteItems()) {
-                voteItemRepository.delete(voteItem);
-            }
-            vote = modelMapper.map(voteDto, Vote.class);
-            for (VoteItem voteItem : vote.getVoteItems()) {
-                voteItemRepository.save(voteItem);
-            }
-            Vote updateVote = voteRepository.save(vote);
-            VoteDto updateVoteDto = modelMapper.map(updateVote, VoteDto.class);
-            return updateVoteDto;
+            // VoteDto에서 받아온 VoteItem 엔티티들을 Vote 엔티티에 설정합니다.
+            vote.getVoteItems().clear();
+
+//            for(VoteItemDto voteItemDto : voteDto.getVoteItemDtos()) {
+//                voteItem.setVote(vote);
+//                vote.getVoteItems().add(voteItem);
+//            }
+
+            // Vote 엔티티를 저장합니다.
+            Vote savedVote = voteRepository.save(vote);
+            VoteDto savedVoteDto = modelMapper.map(savedVote, VoteDto.class);
+            return null;
         } catch (Exception e) {
+            System.err.println("Error while creating post: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -69,12 +83,6 @@ public class voteServiceImpl implements VoteService{
             Vote deleteVote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
             if (!deleteVote.getWriterId().equals(userId)) {
                 throw new Exception();
-            }
-            for(VoteItem voteItem : deleteVote.getVoteItems()) {
-                voteItemRepository.delete(voteItem);
-            }
-            for(VoteRecord voteRecord : deleteVote.getVoteRecords()) {
-                voteRecordRepository.delete(voteRecord);
             }
             voteRepository.delete(deleteVote);
         } catch (Exception e) {
@@ -114,8 +122,9 @@ public class voteServiceImpl implements VoteService{
     @Override
     public VoteDto reCastVote(Long voteId, Long[] itemIds, Long userId) {
         try {
-            voteRecordRepository.deleteByvoteIdAnduserId(voteId, userId);
+            voteRecordRepository.deleteByvoteIdAndUserId(voteId, userId);
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
+            voteRecordRepository.deleteByvoteIdAndUserId(voteId, userId);
             List<VoteItem> voteItems = voteItemRepository.findByIdIn(itemIds);
             for (VoteItem voteItem : voteItems) {
                 VoteRecord voteRecord = new VoteRecord(userId, vote, voteItem);
@@ -132,7 +141,7 @@ public class voteServiceImpl implements VoteService{
     @Override
     public VoteDto unCastVote(Long voteId, Long userId) {
         try {
-            voteRecordRepository.deleteByvoteIdAnduserId(voteId, userId);
+            voteRecordRepository.deleteByvoteIdAndUserId(voteId, userId);
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
             VoteDto saveVoteDto = modelMapper.map(vote, VoteDto.class);
             return saveVoteDto;
