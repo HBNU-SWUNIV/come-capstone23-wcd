@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/clubs/{club-id}/posts")
 public class ClubPostController {
@@ -24,8 +26,8 @@ public class ClubPostController {
 
     @GetMapping("/")
     public ResponseEntity<Page<ResponsePostListDto>> getAllCLubPosts(@PathVariable("club-id") Long clubId, Pageable pageable) {
-        Page<ResponsePostListDto> postListDtos = postService.getAllClubPost(clubId, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(postListDtos);
+        Page<ResponsePostListDto> responsePostListDtos = postService.getAllClubPost(clubId, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }
 
     @PostMapping("/")

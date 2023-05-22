@@ -91,19 +91,19 @@ public class voteServiceImpl implements VoteService{
     }
 
     @Override
-    public VoteDto getVoteById(Long voteId) {
+    public ResponseVoteDto getVoteById(Long voteId) {
         try {
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
-            VoteDto voteDto = modelMapper.map(vote, VoteDto.class);
+            ResponseVoteDto responseVoteDto = modelMapper.map(vote, ResponseVoteDto.class);
 
-            return voteDto;
+            return responseVoteDto;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public VoteDto castVote(Long voteId, Long[] itemIds, Long userId) {
+    public ResponseVoteDto castVote(Long voteId, Long[] itemIds, Long userId) {
         try {
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
             List<VoteItem> voteItems = voteItemRepository.findByIdIn(itemIds);
@@ -112,15 +112,15 @@ public class voteServiceImpl implements VoteService{
                 VoteRecord saveVoteRecord = voteRecordRepository.save(voteRecord);
                 voteItem.getVoteRecords().add(saveVoteRecord);
             }
-            VoteDto saveVoteDto = modelMapper.map(vote, VoteDto.class);
-            return saveVoteDto;
+            ResponseVoteDto responseVoteDto = modelMapper.map(vote, ResponseVoteDto.class);
+            return responseVoteDto;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public VoteDto reCastVote(Long voteId, Long[] itemIds, Long userId) {
+    public ResponseVoteDto reCastVote(Long voteId, Long[] itemIds, Long userId) {
         try {
             voteRecordRepository.deleteByvoteIdAndUserId(voteId, userId);
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
@@ -131,35 +131,35 @@ public class voteServiceImpl implements VoteService{
                 VoteRecord saveVoteRecord = voteRecordRepository.save(voteRecord);
                 voteItem.getVoteRecords().add(saveVoteRecord);
             }
-            VoteDto saveVoteDto = modelMapper.map(vote, VoteDto.class);
-            return saveVoteDto;
+            ResponseVoteDto responseVoteDto = modelMapper.map(vote, ResponseVoteDto.class);
+            return responseVoteDto;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public VoteDto unCastVote(Long voteId, Long userId) {
+    public ResponseVoteDto unCastVote(Long voteId, Long userId) {
         try {
             voteRecordRepository.deleteByvoteIdAndUserId(voteId, userId);
             Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
-            VoteDto saveVoteDto = modelMapper.map(vote, VoteDto.class);
-            return saveVoteDto;
+            ResponseVoteDto responseVoteDto = modelMapper.map(vote, ResponseVoteDto.class);
+            return responseVoteDto;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public VoteDto addItem(Long voteId, VoteDto voteDto) {
+    public ResponseVoteDto addItem(Long voteId, VoteDto voteDto) {
         try {
             if (voteDto.isAddItem() == true) {
                 Vote vote = voteRepository.findById(voteId).orElseThrow(() -> new NoSuchElementException());
                 vote = modelMapper.map(voteDto, Vote.class);
                 Vote saveVote = voteRepository.save(vote);
-                VoteDto saveVoteDto = modelMapper.map(saveVote, VoteDto.class);
+                ResponseVoteDto responseVoteDto = modelMapper.map(saveVote, ResponseVoteDto.class);
 
-                return saveVoteDto;
+                return responseVoteDto;
             } else {
                 throw new Exception();
             }

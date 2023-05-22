@@ -3,9 +3,11 @@ package com.wcd.boardservice.service;
 import com.wcd.boardservice.dto.comment.CommentDto;
 import com.wcd.boardservice.dto.comment.RequestCommentDto;
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
-import com.wcd.boardservice.dto.post.RequestPostDto;
+import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.entity.Comment;
+import com.wcd.boardservice.entity.Post;
 import com.wcd.boardservice.repository.CommentRepository;
+import com.wcd.boardservice.repository.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,14 +15,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 @Service
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    PostRepository postRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -29,8 +32,10 @@ public class CommentServiceImpl implements CommentService {
     public ResponseCommentDto createComment(RequestCommentDto requestCommentDto) {
         try {
             Comment newComment = modelMapper.map(requestCommentDto, Comment.class);
+            newComment.setPost(postRepository.findById(requestCommentDto.getPostId()).orElseThrow());
             Comment savedComment = commentRepository.save(newComment);
             ResponseCommentDto responseCommentDto = modelMapper.map(savedComment, ResponseCommentDto.class);
+            responseCommentDto.setPostId(savedComment.getId());
             return responseCommentDto;
         } catch (Exception e) {
             System.err.println("Error while creating post: " + e.getMessage());
@@ -51,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
             comment = modelMapper.map(requestCommentDto, Comment.class);
             Comment updatedComment = commentRepository.save(comment);
             ResponseCommentDto responseCommentDto = modelMapper.map(updatedComment, ResponseCommentDto.class);
+            responseCommentDto.setPostId(updatedComment.getId());
 
             return responseCommentDto;
         } catch (NoSuchElementException e) {
@@ -90,12 +96,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<ResponseCommentDto> getAllComment(Pageable pageable) {
         try {
-            Page<Comment> commentList= commentRepository.findAll(pageable);
-            List<ResponseCommentDto> commentDtoList = commentList.stream()
-                    .map(comment -> modelMapper.map(comment, ResponseCommentDto.class))
-                    .collect(Collectors.toList());
-
-            return new PageImpl<>(commentDtoList, pageable, commentList.getTotalElements());
+            Page<Comment> commentLists = commentRepository.findAll(pageable);
+            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
+            return responseCommentDtos;
         } catch (Exception e) {
             return null;
         }
@@ -104,12 +107,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<ResponseCommentDto> getAllPostComment(Long postId, Pageable pageable) {
         try {
-            Page<Comment> commentList= commentRepository.findBypostId(postId, pageable);
-            List<ResponseCommentDto> commentDtoList = commentList.stream()
-                    .map(comment -> modelMapper.map(comment, ResponseCommentDto.class))
-                    .collect(Collectors.toList());
-
-            return new PageImpl<>(commentDtoList, pageable, commentList.getTotalElements());
+            Page<Comment> commentLists = commentRepository.findBypostId(postId, pageable);
+            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
+            return responseCommentDtos;
         } catch (Exception e) {
             return null;
         }
@@ -118,12 +118,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<ResponseCommentDto> getALlUserComment(Long userId, Pageable pageable) {
         try {
-            Page<Comment> commentList= commentRepository.findBywriterId(userId, pageable);
-            List<ResponseCommentDto> commentDtoList = commentList.stream()
-                    .map(comment -> modelMapper.map(comment, ResponseCommentDto.class))
-                    .collect(Collectors.toList());
+            Page<Comment> commentLists = commentRepository.findBywriterId(userId, pageable);
+            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
 
-            return new PageImpl<>(commentDtoList, pageable, commentList.getTotalElements());
+            return responseCommentDtos;
         } catch (Exception e) {
             return null;
         }

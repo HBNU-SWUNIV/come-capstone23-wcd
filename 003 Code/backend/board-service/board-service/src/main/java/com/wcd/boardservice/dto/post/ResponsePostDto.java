@@ -1,5 +1,6 @@
 package com.wcd.boardservice.dto.post;
 
+import com.wcd.boardservice.dto.vote.ResponseVoteDto;
 import com.wcd.boardservice.dto.vote.VoteDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,5 @@ public class ResponsePostDto {
     private Long writerId;
     private String title;
     private String content;
-    private VoteDto voteDto;
+    private ResponseVoteDto responseVoteDto;
 }

@@ -51,4 +51,8 @@ public class Post extends BaseEntity{
     public void changeVote(Vote newVote) {
         this.vote = newVote;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

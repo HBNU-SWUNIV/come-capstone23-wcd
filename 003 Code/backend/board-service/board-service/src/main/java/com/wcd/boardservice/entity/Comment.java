@@ -29,4 +29,8 @@ public class Comment extends BaseEntity{
     private int commentGroup;
 
     private int commentOrder;
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }

@@ -1,6 +1,5 @@
 package com.wcd.boardservice.controller;
 
-import com.wcd.boardservice.dto.comment.CommentDto;
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
 import com.wcd.boardservice.service.CommentService;
 import org.springframework.core.env.Environment;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/clubs/{club-id}/posts/{post-id}/comments/")
+@RequestMapping("/users/{user-id}/comments")
 public class UserCommentController {
 
     Environment env;

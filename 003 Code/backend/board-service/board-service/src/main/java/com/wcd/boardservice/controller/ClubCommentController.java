@@ -4,6 +4,8 @@ import com.wcd.boardservice.dto.comment.CommentDto;
 import com.wcd.boardservice.dto.comment.RequestCommentDto;
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
 import com.wcd.boardservice.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

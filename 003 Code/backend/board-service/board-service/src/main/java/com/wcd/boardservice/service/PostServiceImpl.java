@@ -1,7 +1,12 @@
 package com.wcd.boardservice.service;
 
+import com.wcd.boardservice.dto.vote.RequestVoteDto;
+import com.wcd.boardservice.dto.vote.ResponseVoteDto;
 import com.wcd.boardservice.dto.vote.VoteDto;
+import com.wcd.boardservice.dto.vote.voteitem.RequestVoteItemDto;
+import com.wcd.boardservice.dto.vote.voteitem.ResponseVoteItemDto;
 import com.wcd.boardservice.dto.vote.voteitem.VoteItemDto;
+import com.wcd.boardservice.dto.vote.voterecord.ResponseVoteRecordDto;
 import com.wcd.boardservice.dto.vote.voterecord.VoteRecordDto;
 import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.RequestPostDto;
@@ -50,22 +55,22 @@ public class PostServiceImpl implements PostService{
             ResponsePostDto responsePostDto = modelMapper.map(savedPost, ResponsePostDto.class);
 
             // 만약 PostDto에 VoteDto가 포함되어 있다면,
-            if (requestPostDto.getVoteDto() != null) {
-                Vote newVote = modelMapper.map(requestPostDto.getVoteDto(), Vote.class);
+            if (requestPostDto.getRequestVoteDto() != null) {
+                Vote newVote = modelMapper.map(requestPostDto.getRequestVoteDto(), Vote.class);
                 newVote.setPost(savedPost);
 
                 Vote saveVote = voteRepository.save(newVote);
-                VoteDto savedVoteDto = modelMapper.map(saveVote, VoteDto.class);
+                ResponseVoteDto responseVoteDto = modelMapper.map(saveVote, ResponseVoteDto.class);
 
-                List<VoteItemDto> voteItemDtos = new ArrayList<>();
-                for(VoteItemDto voteItemDto : requestPostDto.getVoteDto().getVoteItemDtos()) {
-                    VoteItem voteItem = modelMapper.map(voteItemDto, VoteItem.class);
+                List<ResponseVoteItemDto> responseVoteItemDtos = new ArrayList<>();
+                for(RequestVoteItemDto requestVoteItemDto : requestPostDto.getRequestVoteDto().getRequestVoteItemDtos()) {
+                    VoteItem voteItem = modelMapper.map(requestVoteItemDto, VoteItem.class);
                     voteItem.setVote(newVote);
                     VoteItem savedVoteItem = voteItemRepository.save(voteItem);
-                    voteItemDtos.add(modelMapper.map(savedVoteItem, VoteItemDto.class));
+                    responseVoteItemDtos.add(modelMapper.map(savedVoteItem, ResponseVoteItemDto.class));
                 }
-                savedVoteDto.setVoteItemDtos(voteItemDtos);
-                responsePostDto.setVoteDto(savedVoteDto);
+                responseVoteDto.setResponseVoteItemDtos(responseVoteItemDtos);
+                responsePostDto.setResponseVoteDto(responseVoteDto);
             }
 
             return responsePostDto;
@@ -85,7 +90,7 @@ public class PostServiceImpl implements PostService{
                 throw new Exception();
             }
 
-            if (requestPostDto.getVoteDto().equals(null)) {
+            if (requestPostDto.getRequestVoteDto().equals(null)) {
 //                voteService.deleteVote(post.getVote().getId(), userId);
             }
 
@@ -122,21 +127,21 @@ public class PostServiceImpl implements PostService{
         try {
             Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
             ResponsePostDto responsePostDto = modelMapper.map(post, ResponsePostDto.class);
-            responsePostDto.setVoteDto(modelMapper.map(post.getVote(), VoteDto.class));
-            List<VoteItemDto> voteItemDtos = new ArrayList<>();
+            responsePostDto.setResponseVoteDto(modelMapper.map(post.getVote(), ResponseVoteDto.class));
+            List<ResponseVoteItemDto> responseVoteItemDtos = new ArrayList<>();
             for (VoteItem voteItem : post.getVote().getVoteItems()){
-                VoteItemDto voteItemDto = modelMapper.map(voteItem, VoteItemDto.class);
+                ResponseVoteItemDto responseVoteItemDto = modelMapper.map(voteItem, ResponseVoteItemDto.class);
 
-                List<VoteRecordDto> voteRecordDtos = new ArrayList<>();
+                List<ResponseVoteRecordDto> responseVoteRecordDtos = new ArrayList<>();
                 for (VoteRecord voteRecord : voteItem.getVoteRecords()) {
-                    VoteRecordDto voteRecordDto = modelMapper.map(voteRecord, VoteRecordDto.class);
-                    voteRecordDtos.add(voteRecordDto);
+                    ResponseVoteRecordDto responseVoteRecordDto = modelMapper.map(voteRecord, ResponseVoteRecordDto.class);
+                    responseVoteRecordDtos.add(responseVoteRecordDto);
                 }
-                voteItemDto.setVoteRecordDtos(voteRecordDtos);
+                responseVoteItemDto.setResponseVoteRecordDtos(responseVoteRecordDtos);
 
-                voteItemDtos.add(voteItemDto);
+                responseVoteItemDtos.add(responseVoteItemDto);
             }
-            responsePostDto.getVoteDto().setVoteItemDtos(voteItemDtos);
+            responsePostDto.getResponseVoteDto().setResponseVoteItemDtos(responseVoteItemDtos);
 
             return responsePostDto;
         } catch (NoSuchElementException e) {
@@ -147,12 +152,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
         try {
-            Page<Post> postList= postRepository.findAll(pageable);
-            List<ResponsePostListDto> responsePostListDtos = postList.stream()
-                    .map(post -> modelMapper.map(post, ResponsePostListDto.class))
-                    .collect(Collectors.toList());
+            Page<Post> postLists= postRepository.findAll(pageable);
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
 
-            return new PageImpl<>(responsePostListDtos, pageable, postList.getTotalElements());
+            return responsePostListDtos;
         } catch (Exception e) {
             return null;
         }
@@ -161,12 +164,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public Page<ResponsePostListDto> getAllClubPost(Long clubId, Pageable pageable) {
         try {
-            Page<Post> postList= postRepository.findByclubId(clubId, pageable);
-            List<ResponsePostListDto> responsePostListDtos = postList.stream()
-                    .map(post -> modelMapper.map(post, ResponsePostListDto.class))
-                    .collect(Collectors.toList());
+            Page<Post> postLists = postRepository.findByclubId(clubId, pageable);
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
 
-            return new PageImpl<>(responsePostListDtos, pageable, postList.getTotalElements());
+            return responsePostListDtos;
         } catch (Exception e) {
             return null;
         }
@@ -175,12 +176,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public Page<ResponsePostListDto> getAllUserPost(Long userId, Pageable pageable) {
         try {
-            Page<Post> postList= postRepository.findBywriterId(userId, pageable);
-            List<ResponsePostListDto> responsePostListDtos = postList.stream()
-                    .map(post -> modelMapper.map(post, ResponsePostListDto.class))
-                    .collect(Collectors.toList());
+            Page<Post> postLists = postRepository.findBywriterId(userId, pageable);
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
 
-            return new PageImpl<>(responsePostListDtos, pageable, postList.getTotalElements());
+            return responsePostListDtos;
         } catch (Exception e) {
             return null;
         }

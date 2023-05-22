@@ -1,6 +1,8 @@
 package com.wcd.boardservice.dto.vote;
 
+import com.wcd.boardservice.dto.vote.voteitem.ResponseVoteItemDto;
 import com.wcd.boardservice.dto.vote.voteitem.VoteItemDto;
+import com.wcd.boardservice.dto.vote.voterecord.ResponseVoteRecordDto;
 import com.wcd.boardservice.dto.vote.voterecord.VoteRecordDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +22,6 @@ public class ResponseVoteDto {
     private Boolean isMultipleSelection;
     private Boolean isBlind;
     private boolean isAddItem;
-    private List<VoteItemDto> voteItemDtos;
-    private List<VoteRecordDto> voteRecordDtos;
+    private List<ResponseVoteItemDto> responseVoteItemDtos;
+    private List<ResponseVoteRecordDto> responseVoteRecordDtos;
 }

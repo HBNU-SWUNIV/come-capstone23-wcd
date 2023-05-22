@@ -1,5 +1,6 @@
 package com.wcd.boardservice.dto.vote.voteitem;
 
+import com.wcd.boardservice.dto.vote.voterecord.ResponseVoteRecordDto;
 import com.wcd.boardservice.dto.vote.voterecord.VoteRecordDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ResponseVoteItemDto {
     private Long id;
-    private List<VoteRecordDto> voteRecordDtos;
+    private List<ResponseVoteRecordDto> responseVoteRecordDtos;
     private String value;
 }

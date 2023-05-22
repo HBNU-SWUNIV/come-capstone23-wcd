@@ -1,6 +1,6 @@
 package com.wcd.boardservice.dto.post;
 
-import com.wcd.boardservice.dto.vote.VoteDto;
+import com.wcd.boardservice.dto.vote.RequestVoteDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestPostDto {
-    private Long id;
     private String category;
     private Long clubId;
     private Long writerId;
     private String title;
     private String content;
-    private VoteDto voteDto;
+    private RequestVoteDto requestVoteDto;
 }

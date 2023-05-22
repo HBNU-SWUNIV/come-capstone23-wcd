@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ResponseCommentDto {
     private Long id;
-    private Post post;
+    private Long postId;
     private Long writerId;
     private String content;
     private int step;

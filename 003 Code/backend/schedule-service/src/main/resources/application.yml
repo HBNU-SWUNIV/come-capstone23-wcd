@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: schedule-service
+  datasource:
+    driver-class-name: org.h2.Driver  # Database? H2? ?????.
+    url: jdbc:h2:tcp://localhost/~/scheduledb  # H2 ?? ??
+    username: sa  # H2 ?? ? ??? username ?? (??? ??? ??)
+    password:  # H2 ?? ? ??? password ?? (??? ??? ??)
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  h2:
+    console:
+      enables: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+  logging:
+    level:
+      com.example.schedule-service: DEBUG
+
+# Swagger springdoc-ui Configuration
+springdoc:
+  packages-to-scan: com.wcd.schedule-service
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: board-service.html            # Swagger UI ?? => localhost:8000/demo-ui.html
+    tags-sorter: alpha            # alpha: ??? ? ?? ??, method: HTTP Method ? ??
+    operations-sorter: alpha      # alpha: ??? ? ?? ??, method: HTTP Method ? ??
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  cache:
+    disabled: true

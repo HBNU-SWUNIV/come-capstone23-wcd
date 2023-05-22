@@ -6,9 +6,10 @@ import com.wcd.boardservice.dto.post.ResponsePostDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PostService {
     ResponsePostDto createPost(RequestPostDto responsePostDto);
-
     ResponsePostDto updatePost(Long postId, Long userId, RequestPostDto responsePostDto);
     void deletePost(Long userId, Long postId);
     ResponsePostDto getPostById(Long postId);

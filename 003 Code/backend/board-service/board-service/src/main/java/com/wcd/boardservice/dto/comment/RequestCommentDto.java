@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestCommentDto {
-    private Post post;
+    private Long postId;
     private Long writerId;
     private String content;
     private int step;
