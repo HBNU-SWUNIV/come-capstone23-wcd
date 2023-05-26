@@ -2,6 +2,7 @@ package com.wcd.boardservice.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,16 +19,25 @@ public class Comment extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @NotNull
     private Post post;
 
+    @Column(name = "writer_id")
     private Long writerId;
 
+    @NotNull
     private String content;
 
-    private int step;
+    @Column(name = "comment_step")
+    @NotNull
+    private int commentStep;
 
+    @Column(name = "comment_group")
+    @NotNull
     private int commentGroup;
 
+    @Column(name = "comment_order")
+    @NotNull
     private int commentOrder;
 
     public void setPost(Post post) {

@@ -1,6 +1,7 @@
 package com.wcd.boardservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class Vote extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @NotNull
     private Post post;
 
     @Column(name = "club_id")
+    @NotNull
     private Long clubId;
 
     @Column(name = "writer_id")
@@ -34,15 +37,19 @@ public class Vote extends BaseEntity {
     @OneToMany(mappedBy = "vote", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<VoteRecord> voteRecords;
 
+    @NotNull
     private LocalDateTime deadline;
 
     @Column(name = "is_multiple_selection")
+    @NotNull
     private Boolean isMultipleSelection;
 
     @Column(name = "is_blind")
+    @NotNull
     private Boolean isBlind;
 
     @Column(name = "is_add_item")
+    @NotNull
     private boolean isAddItem;
 
     public void setPost(Post post) {

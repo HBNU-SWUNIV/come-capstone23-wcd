@@ -28,4 +28,5 @@ public class UserPostController {
         Page<ResponsePostListDto> postListDtos = postService.getAllUserPost(userId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(postListDtos);
     }
+}
 

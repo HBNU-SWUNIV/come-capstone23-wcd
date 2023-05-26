@@ -5,10 +5,10 @@ spring:
   application:
     name: board-service
   datasource:
-    driver-class-name: org.h2.Driver  # Database? H2? ?????.
-    url: jdbc:h2:tcp://localhost/~/boarddb  # H2 ?? ??
-    username: sa  # H2 ?? ? ??? username ?? (??? ??? ??)
-    password:  # H2 ?? ? ??? password ?? (??? ??? ??)
+    driver-class-name: org.mariadb.jdbc.Driver  # Database? H2? ?????.
+    url: jdbc:mariadb://127.0.0.1:3306/board_service_db # H2 ?? ??
+    username: root  # H2 ?? ? ??? username ?? (??? ??? ??)
+    password: seongjun5657 # H2 ?? ? ??? password ?? (??? ??? ??)
   jpa:
     hibernate:
       ddl-auto: create
@@ -35,7 +35,7 @@ eureka:
 
 # Swagger springdoc-ui Configuration
 springdoc:
-  packages-to-scan: com.wcd.board-service
+  packages-to-scan: com.wcd.boardservice
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
