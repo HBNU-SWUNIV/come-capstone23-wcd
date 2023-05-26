@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8734249d-f2c6-4a2e-bf45-0fd76d93d2ce" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../apigateway-service/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../apigateway-service/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/controller/UserPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/controller/UserPostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Vote.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/Vote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../club-service/club-service/src/main/java/com/wcd/clubservice/entity/ClubEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../club-service/club-service/src/main/java/com/wcd/clubservice/entity/ClubEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discovery-service/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../discovery-service/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../discovery-service/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../discovery-service/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../schedule-service/src/main/java/com/wcd/scheduleservice/service/ScheduleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../schedule-service/src/main/java/com/wcd/scheduleservice/service/ScheduleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/.idea/jpa-buddy.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/board-service">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/board-service">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OjVGb64ayjPMPFDG5ayXTERffv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;d64c751496b165bf06e0a0d220c369a9&quot;
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.BoardServiceApplication (1)">
+    <configuration name="CommentServiceTest.createCommentTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/board-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.wcd.boardservice.CommentServiceTest.createCommentTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PostServiceTest.createPostTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/board-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.wcd.boardservice.PostServiceTest.createPostTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PostServiceTest.createPostWithVoteWithVoteItemsTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/board-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.wcd.boardservice.PostServiceTest.createPostWithVoteWithVoteItemsTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PostServiceTest.deletePostTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/board-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.wcd.boardservice.PostServiceTest.deletePostTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="PostServiceTest.getPostTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/board-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.wcd.boardservice.PostServiceTest.getPostTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="BoardServiceApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wcd.boardservice.BoardServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardServiceApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="board-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wcd.boardservice.BoardServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardServiceApplication (3)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="board-service.board-service.main~1" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wcd.boardservice.BoardServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardServiceApplication (4)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="board-service.board-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wcd.boardservice.BoardServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wcd.boardservice.BoardServiceApplication" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.CommentServiceTest.createCommentTest" />
+      <item itemvalue="Gradle.PostServiceTest.createPostTest" />
+      <item itemvalue="Gradle.PostServiceTest.createPostWithVoteWithVoteItemsTest" />
+      <item itemvalue="Gradle.PostServiceTest.deletePostTest" />
+      <item itemvalue="Gradle.PostServiceTest.getPostTest" />
+      <item itemvalue="Spring Boot.BoardServiceApplication (3)" />
+      <item itemvalue="Spring Boot.BoardServiceApplication (4)" />
+      <item itemvalue="Spring Boot.BoardServiceApplication" />
+      <item itemvalue="Spring Boot.BoardServiceApplication (1)" />
+      <item itemvalue="Spring Boot.BoardServiceApplication (2)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.CommentServiceTest.createCommentTest" />
+        <item itemvalue="Gradle.PostServiceTest.getPostTest" />
+        <item itemvalue="Gradle.PostServiceTest.deletePostTest" />
+        <item itemvalue="Gradle.PostServiceTest.createPostWithVoteWithVoteItemsTest" />
+        <item itemvalue="Gradle.PostServiceTest.createPostTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8734249d-f2c6-4a2e-bf45-0fd76d93d2ce" name="Changes" comment="" />
+      <created>1682073883606</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682073883606</updated>
+      <workItem from="1682073884894" duration="55363000" />
+      <workItem from="1682919989103" duration="36968000" />
+      <workItem from="1683519230591" duration="92824000" />
+      <workItem from="1684282541605" duration="6579000" />
+      <workItem from="1684915588475" duration="10443000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
