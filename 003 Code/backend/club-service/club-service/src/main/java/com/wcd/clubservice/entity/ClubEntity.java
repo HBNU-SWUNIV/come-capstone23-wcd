@@ -20,6 +20,7 @@ public class ClubEntity implements Serializable {
     @Column(nullable = false)
     private Long hostId;
 
+
     @Column(nullable = false, unique = true)
     private String clubName;
 

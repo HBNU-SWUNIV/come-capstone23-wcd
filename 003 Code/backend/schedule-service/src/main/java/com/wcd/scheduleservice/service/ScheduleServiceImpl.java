@@ -46,7 +46,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new Exception());
             scheduleRepository.delete(schedule);
         } catch (Exception e) {
-            
+
         }
     }
 
