@@ -1,6 +1,7 @@
-package com.wcd.userservice.dto;
+package com.wcd.userservice.dto.user;
 
-import com.wcd.userservice.vo.response.ResponseClub;
+import com.wcd.userservice.dto.userevalution.UserEvaluationDto;
+import com.wcd.userservice.dto.club.ResponseClub;
 import lombok.Data;
 
 import java.time.LocalDate;

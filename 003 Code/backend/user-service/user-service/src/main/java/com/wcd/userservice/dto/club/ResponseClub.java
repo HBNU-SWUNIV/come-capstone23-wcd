@@ -1,4 +1,4 @@
-package com.wcd.userservice.vo.response;
+package com.wcd.userservice.dto.club;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wcd.userservice.enums.ApprovalMethod;

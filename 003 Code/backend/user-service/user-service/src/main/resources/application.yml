@@ -21,7 +21,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+#    show-sql: true
   profiles:
     include: oauth
 
@@ -30,7 +30,7 @@ access_token:
   secret: p2s5v8y/B?E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfUjWnZr4u7x!A%D*G-KaPdSg
 
 refresh_token:
-  expiration_time: 864000000
+  expiration_time: 86400000
   secret: PeShVmYq3t6w9z$C&E)H@McQfTjWnZr4u7x!A%D*G-JaNdRgUkXp2s5v8y/B?E(H
 
 eureka:
@@ -45,6 +45,8 @@ eureka:
 logging:
   level:
     com.example.userservice.client: DEBUG
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
 
 management:
   endpoint:

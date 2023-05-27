@@ -1,4 +1,4 @@
-package com.wcd.userservice.dto;
+package com.wcd.userservice.dto.userevalution;
 
 import lombok.Data;
 

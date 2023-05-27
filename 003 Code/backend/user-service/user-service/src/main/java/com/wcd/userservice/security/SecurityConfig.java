@@ -41,8 +41,6 @@ public class SecurityConfig {
     // HttpSecurity: HTTP 요청에 대한 보안 구성 지정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-
         // 사용자 인증 매니저, 인증 매니저는 사용자의 인증 정보를 확인
         AuthenticationManager authenticationManager = getAuthenticationManager(http);
 

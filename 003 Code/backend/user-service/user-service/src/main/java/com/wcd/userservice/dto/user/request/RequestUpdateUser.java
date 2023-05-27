@@ -1,4 +1,4 @@
-package com.wcd.userservice.vo.request;
+package com.wcd.userservice.dto.user.request;
 
 import com.wcd.userservice.enums.Gender;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
