@@ -1,6 +1,6 @@
 package com.wcd.userservice.service;
 
-import com.wcd.userservice.entity.Users;
+import com.wcd.userservice.entity.User;
 import com.wcd.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users userEntity = userRepository.findByLoginId(username);
+        User userEntity = userRepository.findByLoginId(username);
 
         // 해당하는 사용자가 없다면
         if(userEntity == null)
