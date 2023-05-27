@@ -1,4 +1,4 @@
-package com.wcd.boardservice;
+package com.wcd.scheduleservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,12 +8,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableDiscoveryClient
-public class BoardServiceApplication {
+public class ScheduleServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BoardServiceApplication.class, args);
+		SpringApplication.run(ScheduleServiceApplication.class, args);
 	}
 
 }
-
-
