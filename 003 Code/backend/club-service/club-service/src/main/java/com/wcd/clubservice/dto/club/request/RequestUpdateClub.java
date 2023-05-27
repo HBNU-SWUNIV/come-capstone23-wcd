@@ -1,9 +1,12 @@
-package com.wcd.clubservice.vo;
+package com.wcd.clubservice.dto.club.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@NoArgsConstructor
 public class RequestUpdateClub {
 
     @NotNull(message = "ClubName cannot be null")
