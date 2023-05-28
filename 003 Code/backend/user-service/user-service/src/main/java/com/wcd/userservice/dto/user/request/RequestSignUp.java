@@ -1,6 +1,6 @@
 package com.wcd.userservice.dto.user.request;
 
-import com.wcd.userservice.entity.User;
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.enums.Gender;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -37,8 +37,8 @@ public class RequestSignUp {
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
 
-    public User toEntity(String encryptedPwd) {
-        User user = User.builder()
+    public Users toEntity(String encryptedPwd) {
+        Users user = Users.builder()
                 .loginId(loginId)
                 .encryptedPwd(encryptedPwd)
                 .name(name)

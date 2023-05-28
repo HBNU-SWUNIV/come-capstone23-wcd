@@ -1,13 +1,11 @@
 package com.wcd.userservice.dto.user.request;
 
-import com.wcd.userservice.entity.User;
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.entity.UserEvaluation;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +16,7 @@ public class RequestUserEvaluation {
 
     private String review;
 
-    public UserEvaluation toEntity(User user) {
+    public UserEvaluation toEntity(Users user) {
         return UserEvaluation.builder()
                 .user(user)
                 .score(score)

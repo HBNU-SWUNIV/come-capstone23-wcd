@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserEvaluationController {
     private final UserEvaluationService userEvaluationService;
 
-    @PostMapping("/evaluation/user/{user-id}/")
+    @PostMapping("/evaluation/user/{user-id}")
     public ResponseEntity<Long> createUserEvaluation(@PathVariable("user-id") Long userId, @Valid @RequestBody RequestUserEvaluation requestUserEvaluation) {
         return ResponseEntity.status(HttpStatus.OK).body(userEvaluationService.createUserEvaluationByUserId(userId, requestUserEvaluation));
     }

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class User {
     private String profileImage;
 
     @Builder
-    public User(String loginId, String encryptedPwd, String name, String phoneNumber, LocalDate birthday, Gender gender, String profileImage) {
+    public Users(String loginId, String encryptedPwd, String name, String phoneNumber, LocalDate birthday, Gender gender, String profileImage) {
         this.loginId = loginId;
         this.encryptedPwd = encryptedPwd;
         this.name = name;
@@ -67,8 +67,8 @@ public class User {
             this.gender = requestUpdateUser.getGender();
         }
 
-        if (StringUtils.hasText(requestUpdateUser.getProfile_image())) {
-            this.profileImage = requestUpdateUser.getProfile_image();
+        if (StringUtils.hasText(requestUpdateUser.getProfileImage())) {
+            this.profileImage = requestUpdateUser.getProfileImage();
         }
     }
 }

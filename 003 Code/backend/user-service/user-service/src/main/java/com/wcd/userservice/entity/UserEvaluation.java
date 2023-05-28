@@ -17,7 +17,7 @@ public class UserEvaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     private int score;
 
@@ -25,7 +25,7 @@ public class UserEvaluation {
     private String review;
 
     @Builder
-    public UserEvaluation(User user, int score, String review) {
+    public UserEvaluation(Users user, int score, String review) {
         this.user = user;
         this.score = score;
         this.review = review;
