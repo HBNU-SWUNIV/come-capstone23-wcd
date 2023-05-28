@@ -2,16 +2,13 @@ package com.wcd.userservice.dto.user.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import com.wcd.userservice.dto.club.ResponseClub;
-import com.wcd.userservice.entity.User;
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.enums.Gender;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -26,7 +23,7 @@ public class ResponseUserById {
     private String profileImage;
 
     @Builder
-    public ResponseUserById(User user) {
+    public ResponseUserById(Users user) {
         this.id = user.getId();
         this.loginId = user.getLoginId();
         this.name = user.getName();

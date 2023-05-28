@@ -26,5 +26,5 @@ public class RequestUpdateUser {
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
 
-    private String profile_image;
+    private String profileImage;
 }

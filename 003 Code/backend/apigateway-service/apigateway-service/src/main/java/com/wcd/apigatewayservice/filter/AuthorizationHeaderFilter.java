@@ -12,9 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -59,10 +56,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
                 // 로그아웃이 없는(되어 있지 않은) 경우 해당 토큰은 정상적으로 작동하기
                 if (!ObjectUtils.isEmpty(isLogout)) {
+
                     return onError(exchange, "Please Login", HttpStatus.UNAUTHORIZED);
                 }
+
             }
             else {
+                log.info("JWT token is not valid");
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
