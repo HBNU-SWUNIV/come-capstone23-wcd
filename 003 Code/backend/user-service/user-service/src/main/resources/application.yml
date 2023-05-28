@@ -20,7 +20,7 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
 #    show-sql: true
   profiles:
     include: oauth

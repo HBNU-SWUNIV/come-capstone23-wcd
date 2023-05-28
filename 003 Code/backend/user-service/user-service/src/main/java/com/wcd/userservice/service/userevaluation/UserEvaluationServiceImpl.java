@@ -2,7 +2,7 @@ package com.wcd.userservice.service.userevaluation;
 
 import com.wcd.userservice.dto.user.request.RequestUserEvaluation;
 import com.wcd.userservice.dto.userevalution.response.ResponseUserEvaluationsByUserId;
-import com.wcd.userservice.entity.User;
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.entity.UserEvaluation;
 import com.wcd.userservice.repository.UserEvaluationRepository;
 import com.wcd.userservice.repository.UserRepository;
@@ -24,7 +24,7 @@ public class UserEvaluationServiceImpl implements UserEvaluationService{
 
     @Override
     public Long createUserEvaluationByUserId(Long userId, RequestUserEvaluation requestUserEvaluation) {
-        User user = userRepository.findById(userId)
+        Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found userId: " + userId));
 
         return userEvaluationRepository.save(requestUserEvaluation.toEntity(user)).getId();

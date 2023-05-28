@@ -67,8 +67,8 @@ public class Users {
             this.gender = requestUpdateUser.getGender();
         }
 
-        if (StringUtils.hasText(requestUpdateUser.getProfile_image())) {
-            this.profileImage = requestUpdateUser.getProfile_image();
+        if (StringUtils.hasText(requestUpdateUser.getProfileImage())) {
+            this.profileImage = requestUpdateUser.getProfileImage();
         }
     }
 }
