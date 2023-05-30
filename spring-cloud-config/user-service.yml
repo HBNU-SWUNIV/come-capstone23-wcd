@@ -6,13 +6,3 @@ spring:
     password:
 # gateway:
 #   ip:
-
-access_token:
-  expiration_time: 3600000
-  secret: p2s5v8y/B?E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfUjWnZr4u7x!A%D*G-KaPss
-  # 암호화
-  # secret: "{cipher}"
-  
-refresh_token:
-  expiration_time: 864000000
-  secret: PeShVmYq3t6w9z$C&E)H@McQfTjWnZr4u7x!A%D*G-JaNdRgUkXp2s5v8y/B?E(H
