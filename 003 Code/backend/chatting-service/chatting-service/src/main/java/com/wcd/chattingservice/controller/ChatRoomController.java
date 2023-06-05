@@ -39,4 +39,11 @@ public class ChatRoomController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/room/{club_id}")
+    public ResponseEntity<Void> deleteChatRoomByClubId(@PathVariable("club_id") Long clubId) {
+        chatRoomService.deleteChatRoomByClubId(clubId);
+
+        return ResponseEntity.noContent().build();
+    }
 }
