@@ -20,6 +20,9 @@ spring:
     host: 127.0.0.1
     port: 6379
   cloud:
+    config:
+      import:
+        - classpath:/bootstrap.yml
     gateway:
       default-filters:
         - name: GlobalFilter
@@ -103,8 +106,9 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+
 management:
-  endpoint:
+  endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace, busrefresh
+        include: refresh, health, beans, httpexchanges, busrefresh
