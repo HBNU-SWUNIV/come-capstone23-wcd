@@ -35,4 +35,11 @@ public class ChatRoomService {
     public void deleteChatRoom(Long chatRoomId) {
         chatRoomRepository.deleteById(chatRoomId);
     }
+
+    @Transactional
+    public void deleteChatRoomByClubId(Long clubId) {
+        if(chatRoomRepository.existsByClubId(clubId)) {
+            chatRoomRepository.deleteByClubId(clubId);
+        }
+    }
 }
