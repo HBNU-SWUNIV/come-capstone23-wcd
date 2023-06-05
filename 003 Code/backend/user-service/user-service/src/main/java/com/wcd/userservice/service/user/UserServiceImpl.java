@@ -1,5 +1,6 @@
 package com.wcd.userservice.service.user;
 
+import com.wcd.userservice.client.ClubServiceClient;
 import com.wcd.userservice.dto.user.response.ResponseUserById;
 import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final ClubServiceClient clubServiceClient;
 
 
     @Override
@@ -44,5 +46,6 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         userRepository.delete(user);
+        clubServiceClient.deleteMember(userId);
     }
 }
