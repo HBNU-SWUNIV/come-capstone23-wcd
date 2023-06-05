@@ -4,15 +4,17 @@ import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.Tag;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class RequestClub {
+
+    private MultipartFile multipartFile;
 
     @NotNull(message = "host_id cannot be null")
     private Long hostId;
@@ -25,8 +27,6 @@ public class RequestClub {
 
     private String description;
 
-    private String mainImageUrl;
-
     @NotNull(message = "approvalMethod cannot be null")
     private ApprovalMethod approvalMethod;
 
@@ -35,7 +35,7 @@ public class RequestClub {
 
     private List<String> tagList;
 
-    public Club toEntity() {
+    public Club toEntity(String mainImageUrl) {
         Club clubBuild = Club.builder()
                 .hostId(hostId)
                 .clubName(clubName)

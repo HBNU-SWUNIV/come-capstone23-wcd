@@ -9,4 +9,6 @@ public interface ClubMemberService {
     ResponseClubMembersByClubId getClubMembers(Long clubId);
 
     void deleteClubMember(Long userId, Long clubId);
+
+    void deleteMember(Long userId);
 }
