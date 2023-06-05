@@ -6,6 +6,7 @@ import com.wcd.clubservice.dto.club.response.ResponseClub;
 import com.wcd.clubservice.dto.club.response.ResponseClubByClubId;
 import com.wcd.clubservice.dto.club.response.ResponseClubsByUserId;
 import com.wcd.clubservice.entity.Club;
+import com.wcd.clubservice.file.FileStore;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import com.wcd.clubservice.repository.club.ClubRepository;
 import com.wcd.clubservice.dto.club.request.RequestUpdateClub;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,6 +28,7 @@ import java.util.NoSuchElementException;
 public class ClubServiceImpl implements ClubService{
     private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
+    private final FileStore fileStore;
 
     // 모임 조회
     @Override
@@ -37,7 +40,16 @@ public class ClubServiceImpl implements ClubService{
     @Transactional
     @Override
     public Long createClub(RequestClub requestClub) {
-        return clubRepository.save(requestClub.toEntity()).getId();
+        String mainImageUrl = null;
+
+        try {
+            mainImageUrl = fileStore.storeFile(requestClub.getMultipartFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return clubRepository.save(requestClub.toEntity(mainImageUrl)).getId();
     }
 
     // 모임 상세 조회 (user-id)
@@ -64,7 +76,15 @@ public class ClubServiceImpl implements ClubService{
         Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
 
-        club.updateClub(requestUpdateClub);
+        String mainImageUrl = null;
+
+        try {
+            mainImageUrl = fileStore.storeFile(requestUpdateClub.getMultipartFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        club.updateClub(requestUpdateClub, mainImageUrl);
 
         return clubId;
     }

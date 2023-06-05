@@ -38,7 +38,7 @@ public class ClubController {
 
     // 모임 생성
     @PostMapping("/club")
-    public ResponseEntity<Long> createClub(@Valid @RequestBody RequestClub requestClub) {
+    public ResponseEntity<Long> createClub(@Valid @ModelAttribute RequestClub requestClub) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clubService.createClub(requestClub));
     }
 
@@ -56,7 +56,7 @@ public class ClubController {
 
     // 모임 정보 수정
     @PutMapping("/club/{club-id}")
-    public ResponseEntity<Long> updateClub(@PathVariable("club-id") Long clubId, @Valid @RequestBody RequestUpdateClub requestUpdateClub) {
+    public ResponseEntity<Long> updateClub(@PathVariable("club-id") Long clubId, @Valid @ModelAttribute RequestUpdateClub requestUpdateClub) {
         return ResponseEntity.status(HttpStatus.OK).body(clubService.updateClubById(clubId, requestUpdateClub));
     }
 
