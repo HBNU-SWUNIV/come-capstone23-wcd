@@ -1,5 +1,5 @@
 <template>
-  <div id="nav_screen">
+  <div class="" id="nav_screen">
     <router-link to="/">홈</router-link>
     <router-link to="/notice">공지사항</router-link>
     <router-link to="/schedule">일정</router-link>
@@ -31,7 +31,6 @@
   width: 130px;
   height: 30px;
   font-size: 20px;
-  font-weight: bold;
   text-align: center;
   color: white;
 }

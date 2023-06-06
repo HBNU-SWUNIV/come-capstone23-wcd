@@ -6,6 +6,7 @@ import PageBoard from '../main_pages/PageBoard';
 import PageCam from '../main_pages/PageCam';
 import PageLogin from '../main_pages/PageLogin';
 import PageSignup from '../main_pages/PageSignup';
+import BoardWrite from '../board_pages/BoardWrite.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -44,6 +45,12 @@ const router = createRouter({
             path: '/signup',
             name: 'PageSignup',
             component: PageSignup,
+        },
+
+        {
+            path: '/board/write',
+            name: 'BoardWrite',
+            component: BoardWrite,
         },
     ]
 });

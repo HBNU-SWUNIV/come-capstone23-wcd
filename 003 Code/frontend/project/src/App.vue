@@ -3,7 +3,7 @@
   <LeftScreen/>
   <NavScreen/>
   <MainScreen/>
-  <div id="main_screen">
+  <div id="main_screen" class="d-flex flex-column justify-content-center">
     <router-view/>
   </div>
   <RightScreen/>
@@ -25,7 +25,6 @@ export default {
     RightScreen,
   }
 }
-
 </script>
 
 <style>
@@ -44,7 +43,6 @@ export default {
   top: 80px;
   background: #232324;
   border-radius: 15px 0px 0px 0px;
-  color:white;
 }
 </style>
 

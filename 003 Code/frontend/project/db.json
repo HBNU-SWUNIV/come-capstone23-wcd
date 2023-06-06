@@ -1,3 +1,27 @@
 {
-    
+  "users": [
+    {
+      "userName": "김강산",
+      "loginId": "tksl123456",
+      "password": "123456789",
+      "phoneNumber": "01011111111",
+      "birthday": "2023-06-22",
+      "gender": "여성",
+      "id": 1
+    }
+  ],
+  "boards": [
+    {
+      "boardTitle": "asdf",
+      "boardWriter": "asdf",
+      "boardContents": "asdf",
+      "id": 1
+    },
+    {
+      "boardTitle": "asdf;l",
+      "boardWriter": "12345",
+      "boardContents": "asdflk\nasdfkl\nasdf",
+      "id": 2
+    }
+  ]
 }

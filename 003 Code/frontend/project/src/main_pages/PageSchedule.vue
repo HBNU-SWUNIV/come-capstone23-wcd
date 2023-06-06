@@ -1,11 +1,27 @@
 <template>
-  <div>일정</div>
+  <div></div>
 </template>
 
 <script>
-export default {
 
-}
+// import axios from 'axios';
+
+// export default {
+//   setup() {
+//     axios.post(' http://localhost:3000/users', {
+//       'name' : 'ㅗㅑㅗㅑ',
+//       'job' : 'asdf'
+//     })
+//     .then(res => {
+//     	console.log(res);
+//     })
+//     .then(err => {
+//     	console.log(err);
+//     });
+//   }
+// }
+
+
 </script>
 
 <style>

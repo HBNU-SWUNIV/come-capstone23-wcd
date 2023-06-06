@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8734249d-f2c6-4a2e-bf45-0fd76d93d2ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../apigateway-service/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../apigateway-service/.idea/misc.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/build.gradle" afterDir="false" />
@@ -17,6 +18,11 @@
       <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/java/com/wcd/boardservice/entity/VoteRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/board-service/src/main/resources/application.yml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/board-service/.gitignore" beforeDir="false" />
+>>>>>>> 59ea997c745e1ed2c8dbeac913d4e1c05bd95829
       <change beforePath="$PROJECT_DIR$/../club-service/club-service/src/main/java/com/wcd/clubservice/entity/ClubEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../club-service/club-service/src/main/java/com/wcd/clubservice/entity/ClubEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../discovery-service/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../discovery-service/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../discovery-service/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../discovery-service/.idea/misc.xml" afterDir="false" />
@@ -106,6 +112,15 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+>>>>>>> 59ea997c745e1ed2c8dbeac913d4e1c05bd95829
   <component name="RunManager" selected="Spring Boot.BoardServiceApplication (1)">
     <configuration name="CommentServiceTest.createCommentTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -297,7 +312,11 @@
       <workItem from="1682919989103" duration="36968000" />
       <workItem from="1683519230591" duration="92824000" />
       <workItem from="1684282541605" duration="6579000" />
+<<<<<<< HEAD
       <workItem from="1684915588475" duration="10443000" />
+=======
+      <workItem from="1684915588475" duration="11691000" />
+>>>>>>> 59ea997c745e1ed2c8dbeac913d4e1c05bd95829
     </task>
     <servers />
   </component>

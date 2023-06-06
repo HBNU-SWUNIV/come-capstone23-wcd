@@ -1,5 +1,5 @@
 <template>
-  <div>화상채팅</div>
+  <div></div>
 </template>
 
 <script>
