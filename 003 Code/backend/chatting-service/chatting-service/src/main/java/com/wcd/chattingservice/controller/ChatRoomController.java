@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/room")
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
     private final Environment env;
 
-    @PostMapping("/")
+    @PostMapping("/room")
     public ResponseEntity<Long> createChatRoom(@RequestBody RequestChatRoom requestChatRoom) {
         Long chatRoomId = chatRoomService.createChatRoom(requestChatRoom);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(chatRoomId);
     }
 
-    @GetMapping("/{club_id}")
+    @GetMapping("/room/{club_id}")
     public ResponseEntity<ResponseChatRoom> getChatRoom(@PathVariable("club_id") Long clubId) {
         ResponseChatRoom responseChatRoom = chatRoomService.getChatRoom(clubId);
 
@@ -34,9 +33,16 @@ public class ChatRoomController {
     }
 
 
-    @DeleteMapping("/{chat_room_id}")
+    @DeleteMapping("/room/{chat_room_id}")
     public ResponseEntity<Void> deleteChatRoom(@PathVariable("chat_room_id") Long chatRoomId) {
         chatRoomService.deleteChatRoom(chatRoomId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/room/{club_id}")
+    public ResponseEntity<Void> deleteChatRoomByClubId(@PathVariable("club_id") Long clubId) {
+        chatRoomService.deleteChatRoomByClubId(clubId);
 
         return ResponseEntity.noContent().build();
     }

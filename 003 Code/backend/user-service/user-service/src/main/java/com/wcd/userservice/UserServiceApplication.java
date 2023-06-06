@@ -2,6 +2,8 @@ package com.wcd.userservice;
 
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.web.exchanges.HttpExchangeRepository;
+import org.springframework.boot.actuate.web.exchanges.InMemoryHttpExchangeRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -28,5 +30,10 @@ public class UserServiceApplication {
 	@Bean
 	public Logger.Level feignLoggerLevel() {
 		return Logger.Level.FULL;
+	}
+
+	@Bean
+	public HttpExchangeRepository httpExchangeRepository() {
+		return new InMemoryHttpExchangeRepository();
 	}
 }

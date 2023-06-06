@@ -12,9 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -48,21 +45,25 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
             }
             // HTTP 요청 헤더에서 Authorization 필드에 해당하는 값을 가져옴
-            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);;
             // authorizationHeader 문자열에 Bearer 문자열을 제거
-            String jwt = authorizationHeader.replace("Bearer", "");
+            String jwt = authorizationHeader.replace("Bearer ", "");
 
             // JWT 토큰의 서명을 검증하고, 만료 시간을 확인하여 JWT 토큰이 유효한지 검증
             if (jwt != null && isJwtValid(jwt)) {
+                log.info(jwt);
                 // Redis에 해당 accessToken logout 여부를 확인
                 String isLogout = (String) redisTemplate.opsForValue().get(jwt);
 
                 // 로그아웃이 없는(되어 있지 않은) 경우 해당 토큰은 정상적으로 작동하기
                 if (!ObjectUtils.isEmpty(isLogout)) {
+
                     return onError(exchange, "Please Login", HttpStatus.UNAUTHORIZED);
                 }
+
             }
             else {
+                log.info("JWT token is not valid");
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
