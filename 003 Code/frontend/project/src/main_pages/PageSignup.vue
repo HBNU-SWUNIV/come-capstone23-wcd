@@ -24,10 +24,25 @@
         class="form-control"
         id="password"
         v-model="password"
+        @blur="passwordValid(), passwordCheckValid()"
         placeholder="비밀번호"
       />
 
-      <input type="password" class="form-control" placeholder="비밀번호 확인" />
+      <div class="text-muted font-italic" v-if="!passwordValidFlag">
+        <small class="color-red">8~16자 영문, 숫자를 사용하세요.</small>
+      </div>
+
+      <input
+        type="password"
+        class="form-control"
+        placeholder="비밀번호 확인"
+        v-model="password_confirmation"
+        @blur="passwordCheckValid"
+      />
+
+      <div class="text-muted font-italic" v-if="!passwordCheckFlag">
+        <small class="color-red">비밀번호가 일치하지 않습니다.</small>
+      </div>
 
       <input
         type="tel"
@@ -60,7 +75,7 @@
         type="submit"
         class="btn btn-block text-center my-5"
         id="signup_btn"
-        @click = "postData"
+        @click="postData"
       >
         회원가입
       </button>
@@ -69,15 +84,44 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+
+// export default {
+//   data() {
+//     return {
+//       password: null,
+//       password_confirmation: null,
+//       passwordValidFlag: true,
+//       passwordCheckFlag: true,
+//     };
+//   },
+//   methods: {
+//     // 비밀번호 유효성
+//     passwordValid() {
+//       if (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/.test(this.password)) {
+//         this.passwordValidFlag = true;
+//       } else {
+//         this.passwordValidFlag = false;
+//       }
+//     },
+//     // 비밀번호 확인
+//     passwordCheckValid() {
+//       if (this.password === this.password_confirmation) {
+//         this.passwordCheckFlag = true;
+//       } else {
+//         this.passwordCheckFlag = false;
+//       }
+//     },
+//   },
+// };
 
 const data = () => {
-  const userName = document.getElementById('userName').value;
-  const loginId = document.getElementById('loginId').value;
-  const password = document.getElementById('password').value;
-  const phoneNumber = document.getElementById('phoneNumber').value;
-  const birthday = document.getElementById('birthday').value;
-  const gender = document.getElementById('gender').value;
+  const userName = document.getElementById("userName").value;
+  const loginId = document.getElementById("loginId").value;
+  const password = document.getElementById("password").value;
+  const phoneNumber = document.getElementById("phoneNumber").value;
+  const birthday = document.getElementById("birthday").value;
+  const gender = document.getElementById("gender").value;
 
   return {
     userName: userName,
@@ -86,27 +130,27 @@ const data = () => {
     phoneNumber: phoneNumber,
     birthday: birthday,
     gender: gender,
-  }
-}
+  };
+};
 
 export default {
-
   setup() {
-
     const postData = () => {
-      axios.post(' http://localhost:3000/users', data())
-      .then(res => {
-    	  console.log(res);
-      })
-      .then(err => {
-    	  console.log(err);
-      });
+      axios
+        .post(" http://localhost:3000/users", data())
+        .then((res) => {
+          console.log(res);
+        })
+        .then((err) => {
+          console.log(err);
+        });
     };
+
     return {
       postData,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style>

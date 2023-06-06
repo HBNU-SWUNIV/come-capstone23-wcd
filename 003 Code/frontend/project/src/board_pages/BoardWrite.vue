@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex flex-row-reverse mt-3">
       <button type="button" class="btn" id="board_save_btn" @click="saveBoard">저장</button>
-      <button type="button" class="btn" id="board_list_btn">목록</button>
+      <button type="button" class="btn" id="board_cancel_btn">취소</button>
     </div>
   </div>
 </template>
@@ -55,8 +55,8 @@ export default {
   background-color: green;
   color: white;
 }
-#board_list_btn {
-  background-color: skyblue;
-  color: black;
+#board_cancel_btn {
+  background-color: red;
+  color: white;
 }
 </style>

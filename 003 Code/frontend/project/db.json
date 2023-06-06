@@ -8,6 +8,15 @@
       "birthday": "2023-06-22",
       "gender": "여성",
       "id": 1
+    },
+    {
+      "userName": "asdf",
+      "loginId": "asdf",
+      "password": "asdf",
+      "phoneNumber": "asdf",
+      "birthday": "2023-06-03",
+      "gender": "남성",
+      "id": 2
     }
   ],
   "boards": [

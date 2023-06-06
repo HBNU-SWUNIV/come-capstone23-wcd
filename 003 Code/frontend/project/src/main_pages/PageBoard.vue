@@ -18,7 +18,6 @@
       <button class="btn" type="submit" id="board_search">검색</button>
 
     </div>
-
   </div>
 
   <div class="row-vh d-flex flex-row align-items-center" id="board_area">
@@ -28,7 +27,7 @@
     <div style="margin-left: 150px;"> 날짜 </div>
   </div>
 
-  <div class="" id="contents_area">
+  <div id="contents_area">
     <button type="button" class="btn" @click="boardCreate" id="boardCreateBtn">등록</button>
   </div>
 </template>
@@ -85,6 +84,11 @@ const boardCreate = () => {
   height: 40px;
 }
 #boardCreateBtn {
+  position: absolute;
+  height: 40px;
+  width: 60px;
+  left: 1350px;
+  top: 900px;
   background-color: bisque;
   color:black;
 }

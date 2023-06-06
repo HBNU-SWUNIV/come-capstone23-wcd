@@ -20,7 +20,9 @@
     <div style="margin-left: 450px">날짜</div>
   </div>
 
-  <div class="" id="contents_area"></div>
+  <div class="" id="contents_area">
+    
+  </div>
 </template>
 
 <script>
