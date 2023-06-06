@@ -20,7 +20,6 @@ import java.util.List;
 public class Club implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id")
     private Long id;
 
     @Column(nullable = false)

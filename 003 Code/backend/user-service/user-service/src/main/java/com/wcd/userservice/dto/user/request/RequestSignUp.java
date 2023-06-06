@@ -6,14 +6,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class RequestSignUp {
+
+    private MultipartFile profileImage;
 
     @NotNull(message = "Id cannot be null")
     @Size(min = 2, message = "login_id not be less than two characters")
@@ -37,7 +39,7 @@ public class RequestSignUp {
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
 
-    public Users toEntity(String encryptedPwd) {
+    public Users toEntity(String encryptedPwd, String profileImageUrl) {
         Users user = Users.builder()
                 .loginId(loginId)
                 .encryptedPwd(encryptedPwd)
@@ -45,6 +47,7 @@ public class RequestSignUp {
                 .phoneNumber(phoneNumber)
                 .birthday(birthday)
                 .gender(gender)
+                .profileImage(profileImageUrl)
                 .build();
 
         return user;

@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/health_check")
     public String status() {
-        return env.getProperty("access_token.secret");
+        return env.getProperty("test.t1");
     }
 
     // 회원 조회 (user-id)
@@ -33,7 +33,7 @@ public class UserController {
 
     // 회원 수정 (user-id)
     @PutMapping("/user/{user-id}")
-    public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @RequestBody RequestUpdateUser requestUpdateUser) {
+    public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
     }
 

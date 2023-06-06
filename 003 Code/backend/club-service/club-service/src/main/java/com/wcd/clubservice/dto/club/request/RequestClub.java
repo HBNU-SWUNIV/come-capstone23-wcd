@@ -4,14 +4,16 @@ import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.Tag;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class RequestClub {
 
     private MultipartFile multipartFile;
@@ -44,6 +46,8 @@ public class RequestClub {
                 .mainImageUrl(mainImageUrl)
                 .approvalMethod(approvalMethod)
                 .maximumPeople(maximumPeople)
+                .recruitment(true)
+                .createdAt(LocalDateTime.now())
                 .build();
 
         this.tagList.stream()
