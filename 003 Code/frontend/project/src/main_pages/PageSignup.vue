@@ -86,71 +86,71 @@
 <script>
 import axios from "axios";
 
-// export default {
-//   data() {
-//     return {
-//       password: null,
-//       password_confirmation: null,
-//       passwordValidFlag: true,
-//       passwordCheckFlag: true,
-//     };
-//   },
-//   methods: {
-//     // 비밀번호 유효성
-//     passwordValid() {
-//       if (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/.test(this.password)) {
-//         this.passwordValidFlag = true;
-//       } else {
-//         this.passwordValidFlag = false;
-//       }
-//     },
-//     // 비밀번호 확인
-//     passwordCheckValid() {
-//       if (this.password === this.password_confirmation) {
-//         this.passwordCheckFlag = true;
-//       } else {
-//         this.passwordCheckFlag = false;
-//       }
-//     },
-//   },
-// };
-
-const data = () => {
-  const userName = document.getElementById("userName").value;
-  const loginId = document.getElementById("loginId").value;
-  const password = document.getElementById("password").value;
-  const phoneNumber = document.getElementById("phoneNumber").value;
-  const birthday = document.getElementById("birthday").value;
-  const gender = document.getElementById("gender").value;
-
-  return {
-    userName: userName,
-    loginId: loginId,
-    password: password,
-    phoneNumber: phoneNumber,
-    birthday: birthday,
-    gender: gender,
-  };
-};
-
 export default {
-  setup() {
-    const postData = () => {
-      axios
-        .post(" http://localhost:3000/users", data())
-        .then((res) => {
-          console.log(res);
-        })
-        .then((err) => {
-          console.log(err);
-        });
-    };
-
+  data() {
     return {
-      postData,
+      password: null,
+      password_confirmation: null,
+      passwordValidFlag: true,
+      passwordCheckFlag: true,
     };
   },
+  methods: {
+    // 비밀번호 유효성
+    passwordValid() {
+      if (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/.test(this.password)) {
+        this.passwordValidFlag = true;
+      } else {
+        this.passwordValidFlag = false;
+      }
+    },
+    // 비밀번호 확인
+    passwordCheckValid() {
+      if (this.password === this.password_confirmation) {
+        this.passwordCheckFlag = true;
+      } else {
+        this.passwordCheckFlag = false;
+      }
+    },
+  },
 };
+
+// const data = () => {
+//   const userName = document.getElementById("userName").value;
+//   const loginId = document.getElementById("loginId").value;
+//   const password = document.getElementById("password").value;
+//   const phoneNumber = document.getElementById("phoneNumber").value;
+//   const birthday = document.getElementById("birthday").value;
+//   const gender = document.getElementById("gender").value;
+
+//   return {
+//     userName: userName,
+//     loginId: loginId,
+//     password: password,
+//     phoneNumber: phoneNumber,
+//     birthday: birthday,
+//     gender: gender,
+//   };
+// };
+
+// export default {
+//   setup() {
+//     const postData = () => {
+//       axios
+//         .post(" http://localhost:3000/users", data())
+//         .then((res) => {
+//           console.log(res);
+//         })
+//         .then((err) => {
+//           console.log(err);
+//         });
+//     };
+
+//     return {
+//       postData,
+//     };
+//   },
+// };
 </script>
 
 <style>
