@@ -22,11 +22,7 @@ public class UserController {
 
     @GetMapping("/health_check")
     public String status() {
-        return String.format("It's Working in User Service"
-                + ", port(local.server.port)=" + env.getProperty("local.server.port")
-                + ", port(server.port)=" + env.getProperty("local.server.port")
-                + ", token secret=" + env.getProperty("token.secret")
-                + ", token expiration time=" + env.getProperty("token.expiration_time"));
+        return env.getProperty("test.t1");
     }
 
     // 회원 조회 (user-id)
@@ -37,7 +33,7 @@ public class UserController {
 
     // 회원 수정 (user-id)
     @PutMapping("/user/{user-id}")
-    public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @RequestBody RequestUpdateUser requestUpdateUser) {
+    public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
     }
 

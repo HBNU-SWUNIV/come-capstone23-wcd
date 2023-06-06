@@ -43,7 +43,14 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         ClubMember clubMember = clubMemberRepository.findByUserIdAndClubId(userId, clubId)
                 .orElseThrow(() -> new NoSuchElementException("ClubMember not found with userId and clubId" + userId + "and" + clubId));
 
-        log.info("{}" + clubMember.toString());
         clubMemberRepository.delete(clubMember);
+    }
+
+    @Transactional
+    @Override
+    public void deleteMember(Long userId) {
+        if(clubMemberRepository.existsByUserId(userId)) {
+            clubMemberRepository.deleteByUserId(userId);
+        }
     }
 }

@@ -33,4 +33,10 @@ public class ClubMemberController {
         clubMemberService.deleteClubMember(userId, clubId);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/member/{user-id}")
+    public ResponseEntity<Void> deleteMember(@PathVariable("user-id") Long userId) {
+        clubMemberService.deleteMember(userId);
+        return ResponseEntity.noContent().build();
+    }
 }

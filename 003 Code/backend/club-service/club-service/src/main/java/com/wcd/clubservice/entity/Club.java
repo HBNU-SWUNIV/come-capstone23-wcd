@@ -20,7 +20,6 @@ import java.util.List;
 public class Club implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id")
     private Long id;
 
     @Column(nullable = false)
@@ -74,7 +73,7 @@ public class Club implements Serializable {
     }
 
     // 모임 정보 업데이트
-    public void updateClub(RequestUpdateClub requestUpdateClub) {
+    public void updateClub(RequestUpdateClub requestUpdateClub, String mainImageUrl) {
         if (StringUtils.hasText(requestUpdateClub.getClubName())) {
             this.clubName = requestUpdateClub.getClubName();
         }
@@ -88,7 +87,7 @@ public class Club implements Serializable {
         }
 
         if (StringUtils.hasText(requestUpdateClub.getClubName())) {
-            this.mainImageUrl = requestUpdateClub.getMainImageUrl();
+            this.mainImageUrl = mainImageUrl;
         }
 
         if (StringUtils.hasText(requestUpdateClub.getClubName())) {

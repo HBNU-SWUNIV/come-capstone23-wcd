@@ -20,6 +20,9 @@ spring:
     host: 127.0.0.1
     port: 6379
   cloud:
+    config:
+      import:
+        - classpath:/bootstrap.yml
     gateway:
       default-filters:
         - name: GlobalFilter
@@ -90,21 +93,23 @@ spring:
           uri: lb://CLUB-SERVICE
           predicates:
             - Path=/club-service/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/club-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
         - id: chatting-service
           uri: lb://CHATTING-SERVICE
           predicates:
             - Path=/chatting-service/**
-            - Method=GET,POST,DELETE
+            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
+
 
 management:
-  endpoint:
+  endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace, busrefresh
+        include: refresh, health, beans, httpexchanges, busrefresh

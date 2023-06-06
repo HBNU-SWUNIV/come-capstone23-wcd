@@ -50,7 +50,7 @@ public class Users {
         this.profileImage = profileImage;
     }
 
-    public void updateUser(RequestUpdateUser requestUpdateUser) {
+    public void updateUser(RequestUpdateUser requestUpdateUser, String profileImageUrl) {
         if (StringUtils.hasText(requestUpdateUser.getName())) {
             this.name = requestUpdateUser.getName();
         }
@@ -67,8 +67,8 @@ public class Users {
             this.gender = requestUpdateUser.getGender();
         }
 
-        if (StringUtils.hasText(requestUpdateUser.getProfileImage())) {
-            this.profileImage = requestUpdateUser.getProfileImage();
+        if (StringUtils.hasText(profileImageUrl)) {
+            this.profileImage = profileImageUrl;
         }
     }
 }

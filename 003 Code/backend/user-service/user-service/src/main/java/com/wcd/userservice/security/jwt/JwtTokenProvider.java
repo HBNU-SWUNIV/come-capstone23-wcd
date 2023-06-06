@@ -4,7 +4,6 @@ import com.wcd.userservice.exception.CustomException;
 import com.wcd.userservice.service.MyUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;

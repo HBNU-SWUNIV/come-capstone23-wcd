@@ -1,5 +1,6 @@
 package com.wcd.userservice.service.auth;
 
+import com.wcd.userservice.file.FileStore;
 import com.wcd.userservice.dto.user.request.RequestSignUp;
 import com.wcd.userservice.exception.CustomException;
 import com.wcd.userservice.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -30,6 +32,8 @@ public class AuthServiceImpl implements AuthService{
     private final JwtTokenProvider jwtTokenProvider;
 
     private final RedisTemplate<String, String> redisTemplate;
+
+    private final FileStore fileStore;
 
     // 토큰 재발급
     @Transactional
@@ -72,7 +76,15 @@ public class AuthServiceImpl implements AuthService{
     @Transactional
     @Override
     public Long signUp(RequestSignUp requestSignUp) {
-        return userRepository.save(requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()))).getId();
+        String profileImageUrl = null;
+
+        try {
+            profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return userRepository.save(requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()), profileImageUrl)).getId();
     }
 
     @Override
@@ -91,8 +103,8 @@ public class AuthServiceImpl implements AuthService{
             redisTemplate.delete(authentication.getName());
         }
 
-        // 해당 Access Token 유효시간을 가져와 BlackList에 저장장
+        // 해당 Access Token 유효시간을 가져와 BlackList에 저장
         Long expiration = jwtTokenProvider.getAccessTokenExpiration(tokenDto.getAccess_token());
-        redisTemplate.opsForValue().set(tokenDto.getAccess_token(), "logout", expiration);
+        redisTemplate.opsForValue().set(tokenDto.getAccess_token(), "logout", expiration * 1000, TimeUnit.MICROSECONDS);
     }
 }
