@@ -5,13 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class RequestUpdateUser {
+    MultipartFile profileImage;
+
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, message = "Name not be less than w characters")
     private String name;
@@ -25,6 +27,4 @@ public class RequestUpdateUser {
 
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
-
-    private String profileImage;
 }
