@@ -21,9 +21,8 @@ public interface ClubMemberRepository extends JpaRepository<ClubMember, Long> {
     List<Club> findClubByUserId(@Param("userId") Long userId);
 
     @Modifying
-    @Query("DELETE FROM Member m WHERE m.userId = :userId")
-    void deleteByUserId(Long userId);
+    @Query("DELETE FROM ClubMember cm WHERE cm.userId = :userId")
+    void deleteByUserId(@Param("userId") Long userId);
 
-    boolean existsByUserId();
-=
+    boolean existsByUserId(Long userId);
 }

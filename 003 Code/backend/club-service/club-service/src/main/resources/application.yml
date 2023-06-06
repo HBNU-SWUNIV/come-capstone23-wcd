@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: club-service
-  datasource:
-    uri: jdbc:mariadb://localhost:3306/mydb
-    username: sa
   h2:
     console:
       enables: true
@@ -14,9 +11,9 @@ spring:
         web-allow-others: true
       path: /h2-console
 
-file:
-  dir: /image/
-  url: http://211.115.222.246:1000/
+  config:
+    import:
+      - classpath:/bootstrap.yml
 
 eureka:
   instance:
@@ -27,6 +24,16 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
+file:
+  dir: ./image/
+  url: http://211.115.222.246:1000/
+
 logging:
   level:
     com.example.orderservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh

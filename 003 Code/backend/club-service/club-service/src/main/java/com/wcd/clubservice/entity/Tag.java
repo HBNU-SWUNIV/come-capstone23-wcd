@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -49,7 +49,7 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     @Transactional
     @Override
     public void deleteMember(Long userId) {
-        if(clubMemberRepository.existsByUserId()) {
+        if(clubMemberRepository.existsByUserId(userId)) {
             clubMemberRepository.deleteByUserId(userId);
         }
     }
