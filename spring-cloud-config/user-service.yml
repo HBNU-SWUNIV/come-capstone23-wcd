@@ -3,7 +3,8 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/user_service
     username: root
-    password: "{cipher}AQBU8x1G+3JHLQhEog1wyJT1KHRI3/IMRwUyDTF7bFQqRKjQDFpgI5iU8xQKoci2xRLahE8suflxuj48iaFSjV4PFqg5f669Eq/HLA8Y1vROgjBg8r/zlAuDsfHVcH1XnOzRfVDdCPrf0BfmrH4jJDTCL6Eq06SIJ0ok13gplQdUSZvODGWmDSEG/xz/Sw3uiKe0NneIeUiXJDQsOlEp1fTYNK+Wj/18J8VFZgpMHSfa9FNVd5dStyVxGYe/SU7aySYszWZflbELphFUPn63ka7GyGt2MfGvfJIame8NkNolczs0WT82adDWUQ6MpcjchNqN5oS4cglVZE0Wym0zMDpc+WhaCqprq/+UWiIUoykw9cate36UDv8afnCnFwI/Ors="
+    password: seongjun5657
+#     "{cipher}AQBU8x1G+3JHLQhEog1wyJT1KHRI3/IMRwUyDTF7bFQqRKjQDFpgI5iU8xQKoci2xRLahE8suflxuj48iaFSjV4PFqg5f669Eq/HLA8Y1vROgjBg8r/zlAuDsfHVcH1XnOzRfVDdCPrf0BfmrH4jJDTCL6Eq06SIJ0ok13gplQdUSZvODGWmDSEG/xz/Sw3uiKe0NneIeUiXJDQsOlEp1fTYNK+Wj/18J8VFZgpMHSfa9FNVd5dStyVxGYe/SU7aySYszWZflbELphFUPn63ka7GyGt2MfGvfJIame8NkNolczs0WT82adDWUQ6MpcjchNqN5oS4cglVZE0Wym0zMDpc+WhaCqprq/+UWiIUoykw9cate36UDv8afnCnFwI/Ors="
   jpa:
     show-sql: true
     properties:
