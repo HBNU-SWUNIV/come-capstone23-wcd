@@ -3,7 +3,7 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://10.1.1.24:3307/user_service
     username: root
-    password: "{cipher}AQBU8x1G+3JHLQhEog1wyJT1KHRI3/IMRwUyDTF7bFQqRKjQDFpgI5iU8xQKoci2xRLahE8suflxuj48iaFSjV4PFqg5f669Eq/HLA8Y1vROgjBg8r/zlAuDsfHVcH1XnOzRfVDdCPrf0BfmrH4jJDTCL6Eq06SIJ0ok13gplQdUSZvODGWmDSEG/xz/Sw3uiKe0NneIeUiXJDQsOlEp1fTYNK+Wj/18J8VFZgpMHSfa9FNVd5dStyVxGYe/SU7aySYszWZflbELphFUPn63ka7GyGt2MfGvfJIame8NkNolczs0WT82adDWUQ6MpcjchNqN5oS4cglVZE0Wym0zMDpc+WhaCqprq/+UWiIUoykw9cate36UDv8afnCnFwI/Ors="
+    password: "{cipher}AQBatMFoS7Gk8zeH/yDqh17exaCOb6vF9lk7H7/rhtCx05bdUBdbukeO1yk9ATSRg8qZciCY1aR/pDSVayqQmF1qrmXLFC4odwTlI/EGIvn1EiBefLbxrk+5WobAnC1bEKmxpYXBm4u7X/y7L/NE5SpKEAhL09py8tZv3IDIbsCK3NFACoUqb+G02nYSNnsI5shivkcElSW1TrIEiiTgQqioA/Drj8rXaWzgoDZ8SoRVZgeH4APNKooW3FMjkLvLEApFnFkR9IRPhUy77zQB/gwkd/3Xb+9igY2jAR1J1qO0u3Oe+yxtgvTTLBpk8tLsIFM0cpwG+vq+6w+x1NGLdhxrK+39BUMbod/WqWfN6TBRXi90B1Q8phI2BHOOeQaI+k4="
   jpa:
     show-sql: true
     properties:
