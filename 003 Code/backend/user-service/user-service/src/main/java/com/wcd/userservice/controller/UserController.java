@@ -1,11 +1,10 @@
 package com.wcd.userservice.controller;
 
-import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
-import com.wcd.userservice.security.jwt.dto.TokenDto;
 import com.wcd.userservice.service.user.UserService;
 import com.wcd.userservice.dto.user.request.RequestUpdateUser;
-import com.wcd.userservice.dto.user.request.RequestSignUp;
 import com.wcd.userservice.dto.user.response.ResponseUserById;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "유저관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
@@ -22,22 +22,22 @@ public class UserController {
 
     @GetMapping("/health_check")
     public String status() {
-        return env.getProperty("test.t1");
+        return "hi";
     }
 
-    // 회원 조회 (user-id)
+    @Operation(summary = "회원 정보 조회", description = "해당 user-id의 회원 정보 조회")
     @GetMapping("/user/{user-id}")
     public ResponseEntity<ResponseUserById> getUserById(@PathVariable("user-id") Long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(userId));
     }
 
-    // 회원 수정 (user-id)
+    @Operation(summary = "회원 정보 수정", description = "해당 user-id의 회원 정보 수정")
     @PutMapping("/user/{user-id}")
     public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
     }
 
-    // 회원 삭제 (user-id)
+    @Operation(summary = "회원 삭제", description = "해당 user-id의 회원 삭제")
     @DeleteMapping("/user/{user-id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("user-id") Long userId) {
         userService.deleteUser(userId);
