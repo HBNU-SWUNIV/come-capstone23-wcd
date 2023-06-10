@@ -1,36 +1,56 @@
 {
   "users": [
     {
-      "userName": "김강산",
-      "loginId": "tksl123456",
-      "password": "123456789",
-      "phoneNumber": "01011111111",
-      "birthday": "2023-06-22",
-      "gender": "여성",
+      "userName": "전재윤",
+      "loginId": "wjswodbs",
+      "password": "wjswodbs",
+      "phoneNumber": "01077979297",
+      "birthday": "2023-05-30",
+      "gender": "남성",
       "id": 1
     },
     {
       "userName": "asdf",
       "loginId": "asdf",
       "password": "asdf",
-      "phoneNumber": "asdf",
-      "birthday": "2023-06-03",
+      "phoneNumber": "sadf",
+      "birthday": "2023-06-16",
       "gender": "남성",
       "id": 2
     }
   ],
   "boards": [
     {
-      "boardTitle": "asdf",
-      "boardWriter": "asdf",
-      "boardContents": "asdf",
+      "boardTitle": "안녕하세요",
+      "boardWriter": "전재윤",
+      "boardContents": "first contents",
+      "boardDate": "2023-06-08",
+      "boardTime": "07:55:37",
       "id": 1
     },
     {
-      "boardTitle": "asdf;l",
-      "boardWriter": "12345",
-      "boardContents": "asdflk\nasdfkl\nasdf",
-      "id": 2
+      "boardTitle": "반갑습니다",
+      "boardWriter": "김강산",
+      "boardContents": "ㅎㅇㅎㅇ",
+      "boardDate": "2023-06-08",
+      "boardTime": "15:09:46",
+      "id": 3
+    },
+    {
+      "boardTitle": "",
+      "boardWriter": "",
+      "boardContents": "",
+      "boardDate": "2023-06-08",
+      "boardTime": "18:36:21",
+      "id": 5
+    },
+    {
+      "boardTitle": "안녕하세요 여러분",
+      "boardWriter": "노성준",
+      "boardContents": "ㅎㅇㅎㅇ",
+      "boardDate": "2023-06-10",
+      "boardTime": "17:47:03",
+      "id": 6
     }
   ]
 }
