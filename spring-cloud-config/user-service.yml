@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://211.115.222.246:3307/user_service
+    url: jdbc:mariadb://10.1.1.24:3307/user_service
     username: root
 #     password: "{cipher}AQBA9GCVlpL/WmvJWBc3nv0PiuCVcKqhT3+u5UXzvoh3WXBe5ji0+txmehR7HbfZAFSd0IVZu6j6Y8WUtx7RGYKBiqpeEuToSEtHWKT2I5WHLUM2O6MJP4SqHbSndjGA5JSUK8TJ+H9qpjPbwsXJWyEcy5nN+hlgtXqhIOPJKedddqC5qA3pTSf569SEmbm7CsxYFIyZjarlBTj+g4JoVecWwBp0LDmdLB1NhE7VCCLJeswtM6Y++mhXQPJe0maodL1uO0ZwGI7i4WrauwknmtY4Cq/m+MaWetE4EyeWl1MHIVpMKewxlc2xGi4XBH0e/g8H76k3snTaYPGM62fXZau2Hxqsb/671ZUTgO0a7qyt7jqSSIFtYONkL5zsx/hwy90="
     password: "{cipher}AQBatMFoS7Gk8zeH/yDqh17exaCOb6vF9lk7H7/rhtCx05bdUBdbukeO1yk9ATSRg8qZciCY1aR/pDSVayqQmF1qrmXLFC4odwTlI/EGIvn1EiBefLbxrk+5WobAnC1bEKmxpYXBm4u7X/y7L/NE5SpKEAhL09py8tZv3IDIbsCK3NFACoUqb+G02nYSNnsI5shivkcElSW1TrIEiiTgQqioA/Drj8rXaWzgoDZ8SoRVZgeH4APNKooW3FMjkLvLEApFnFkR9IRPhUy77zQB/gwkd/3Xb+9igY2jAR1J1qO0u3Oe+yxtgvTTLBpk8tLsIFM0cpwG+vq+6w+x1NGLdhxrK+39BUMbod/WqWfN6TBRXi90B1Q8phI2BHOOeQaI+k4="
