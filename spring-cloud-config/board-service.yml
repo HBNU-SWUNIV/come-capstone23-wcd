@@ -10,9 +10,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
         ddl-auto: create-drop
-  cloud:
-    refresh:
-      extra-refreshable: com.zaxxer.hikari.HikariDataSource
       
   rabbitmq:
     host: 211.115.222.246
