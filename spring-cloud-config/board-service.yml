@@ -2,7 +2,7 @@ spring:
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://211.115.222.246:1018/board_service
-    username: root
+    username: admin
     password: "{cipher}AQBatMFoS7Gk8zeH/yDqh17exaCOb6vF9lk7H7/rhtCx05bdUBdbukeO1yk9ATSRg8qZciCY1aR/pDSVayqQmF1qrmXLFC4odwTlI/EGIvn1EiBefLbxrk+5WobAnC1bEKmxpYXBm4u7X/y7L/NE5SpKEAhL09py8tZv3IDIbsCK3NFACoUqb+G02nYSNnsI5shivkcElSW1TrIEiiTgQqioA/Drj8rXaWzgoDZ8SoRVZgeH4APNKooW3FMjkLvLEApFnFkR9IRPhUy77zQB/gwkd/3Xb+9igY2jAR1J1qO0u3Oe+yxtgvTTLBpk8tLsIFM0cpwG+vq+6w+x1NGLdhxrK+39BUMbod/WqWfN6TBRXi90B1Q8phI2BHOOeQaI+k4="
   jpa:
     show-sql: true
