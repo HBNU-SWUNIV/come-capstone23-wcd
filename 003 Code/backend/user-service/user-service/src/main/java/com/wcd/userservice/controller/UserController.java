@@ -22,7 +22,12 @@ public class UserController {
 
     @GetMapping("/health_check")
     public String status() {
-        return "hi";
+        return env.getProperty("file.dir");
+    }
+
+    @GetMapping("/health_check2")
+    public String status2() {
+        return env.getProperty("refresh_token.secret");
     }
 
     @Operation(summary = "회원 정보 조회", description = "해당 user-id의 회원 정보 조회")

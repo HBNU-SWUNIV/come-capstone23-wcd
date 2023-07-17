@@ -106,6 +106,24 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
+        - id: board-service
+          uri: lb://BOARD-SERVICE
+          predicates:
+            - Path=/board-service/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+        - id: schedule-service
+          uri: lb://SCHEDULE-SERVICE
+          predicates:
+            - Path=/schedule-service/**
+            - Method=GET,POST,PUT,DELETE
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
 
 management:
