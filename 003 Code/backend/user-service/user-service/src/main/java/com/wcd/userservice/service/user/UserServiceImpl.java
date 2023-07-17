@@ -1,5 +1,7 @@
 package com.wcd.userservice.service.user;
 
+import com.wcd.userservice.dto.user.request.RequestUsernames;
+import com.wcd.userservice.dto.user.response.ResponseUsernames;
 import com.wcd.userservice.file.FileStore;
 import com.wcd.userservice.client.ClubServiceClient;
 import com.wcd.userservice.dto.user.response.ResponseUserById;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -59,5 +62,12 @@ public class UserServiceImpl implements UserService{
 
         userRepository.delete(user);
         clubServiceClient.deleteMember(userId);
+    }
+
+    @Override
+    public ResponseUsernames getUserNamesByIds(RequestUsernames requestUsernames) {
+        List<Users> users = userRepository.findByIdIn(requestUsernames.getUserIds());
+
+        return ResponseUsernames.builder().userList(users).build();
     }
 }
