@@ -23,7 +23,7 @@ public class ResponseClubMembersByClubId {
     public ResponseClubMembersByClubId(List<ClubMember> clubMemberEntityList) {
         List<ClubMemberDto> clubMemberList = clubMemberEntityList.stream()
                 .map(clubMember -> ClubMemberDto.builder()
-                        .clubId(clubMember.getId())
+                        .clubId(clubMember.getClub().getId())
                         .userId(clubMember.getUserId())
                         .isOnline(clubMember.isOnline())
                         .grade(clubMember.getGrade())

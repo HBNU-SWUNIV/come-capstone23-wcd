@@ -44,8 +44,8 @@ public class ClubEntity implements Serializable {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClubMemberEntity> clubMemberList;
+    private List<ClubMember> clubMemberList;
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TagEntity> tagList;
+    private List<Tag> tagList;
 }
