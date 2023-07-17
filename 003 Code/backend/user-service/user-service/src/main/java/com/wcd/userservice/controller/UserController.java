@@ -1,5 +1,7 @@
 package com.wcd.userservice.controller;
 
+import com.wcd.userservice.dto.user.request.RequestUsernames;
+import com.wcd.userservice.dto.user.response.ResponseUsernames;
 import com.wcd.userservice.service.user.UserService;
 import com.wcd.userservice.dto.user.request.RequestUpdateUser;
 import com.wcd.userservice.dto.user.response.ResponseUserById;
@@ -47,5 +49,9 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable("user-id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<ResponseUsernames> getUserNamesByIds(@RequestBody RequestUsernames requestUsernames) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserNamesByIds(requestUsernames));
     }
 }
