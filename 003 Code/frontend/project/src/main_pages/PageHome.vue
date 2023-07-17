@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    
+    <img id="home_img" src="../assets/home.png" alt="Logo" />
   </div>
 </template>
 
@@ -16,5 +16,9 @@ export default {
 </script>
 
 <style>
-
+#home_img {
+  margin-left:20px;
+  width:1450px;
+  height:950px;
+}
 </style>

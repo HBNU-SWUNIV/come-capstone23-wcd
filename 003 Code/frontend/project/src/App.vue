@@ -1,5 +1,4 @@
 <template>
-
   <LeftScreen/>
   <NavScreen/>
   <MainScreen/>
@@ -7,7 +6,6 @@
     <router-view/>
   </div>
   <RightScreen/>
-
 </template>
 
 <script>
@@ -45,5 +43,3 @@ export default {
   border-radius: 15px 0px 0px 0px;
 }
 </style>
-
-<!-- json-server --watch db.json -->

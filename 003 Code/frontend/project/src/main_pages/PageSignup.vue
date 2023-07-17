@@ -1,6 +1,6 @@
 <template>
   <div class="item align-self-center">
-    <form class="item align-self-center" id="signup_form">
+    <form class="item align-self-center" id="signup_form" @submit.prevent="onSubmit">
       <div class="logo mb-3" id="signup_title">회원가입</div>
 
       <input
@@ -24,25 +24,15 @@
         class="form-control"
         id="password"
         v-model="password"
-        @blur="passwordValid(), passwordCheckValid()"
         placeholder="비밀번호"
       />
-
-      <div class="text-muted font-italic" v-if="!passwordValidFlag">
-        <small class="color-red">8~16자 영문, 숫자를 사용하세요.</small>
-      </div>
 
       <input
         type="password"
         class="form-control"
         placeholder="비밀번호 확인"
         v-model="password_confirmation"
-        @blur="passwordCheckValid"
       />
-
-      <div class="text-muted font-italic" v-if="!passwordCheckFlag">
-        <small class="color-red">비밀번호가 일치하지 않습니다.</small>
-      </div>
 
       <input
         type="tel"
@@ -85,72 +75,49 @@
 
 <script>
 import axios from "axios";
+import { useRouter } from "vue-router";
 
-export default {
-  data() {
-    return {
-      password: null,
-      password_confirmation: null,
-      passwordValidFlag: true,
-      passwordCheckFlag: true,
-    };
-  },
-  methods: {
-    // 비밀번호 유효성
-    passwordValid() {
-      if (/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/.test(this.password)) {
-        this.passwordValidFlag = true;
-      } else {
-        this.passwordValidFlag = false;
-      }
-    },
-    // 비밀번호 확인
-    passwordCheckValid() {
-      if (this.password === this.password_confirmation) {
-        this.passwordCheckFlag = true;
-      } else {
-        this.passwordCheckFlag = false;
-      }
-    },
-  },
+const data = () => {
+  const userName = document.getElementById("userName").value;
+  const loginId = document.getElementById("loginId").value;
+  const password = document.getElementById("password").value;
+  const phoneNumber = document.getElementById("phoneNumber").value;
+  const birthday = document.getElementById("birthday").value;
+  const gender = document.getElementById("gender").value;
+
+  return {
+    userName: userName,
+    loginId: loginId,
+    password: password,
+    phoneNumber: phoneNumber,
+    birthday: birthday,
+    gender: gender,
+  };
 };
 
-// const data = () => {
-//   const userName = document.getElementById("userName").value;
-//   const loginId = document.getElementById("loginId").value;
-//   const password = document.getElementById("password").value;
-//   const phoneNumber = document.getElementById("phoneNumber").value;
-//   const birthday = document.getElementById("birthday").value;
-//   const gender = document.getElementById("gender").value;
+export default {
+  setup() {
+    const router = useRouter();
+    
+    const postData = () => {
+      axios
+        .post("http://localhost:3000/users", data())
+        .then((res) => {
+          console.log(res);
+        })
+        .then((err) => {
+          console.log(err);
+        });
+        router.push({
+            path: "/login",
+          });
+    };
 
-//   return {
-//     userName: userName,
-//     loginId: loginId,
-//     password: password,
-//     phoneNumber: phoneNumber,
-//     birthday: birthday,
-//     gender: gender,
-//   };
-// };
-
-// export default {
-//   setup() {
-//     const postData = () => {
-//       axios
-//         .post(" http://localhost:3000/users", data())
-//         .then((res) => {
-//           console.log(res);
-//         })
-//         .then((err) => {
-//           console.log(err);
-//         });
-//     };
-
-//     return {
-//       postData,
-//     };
-//   },
-// };
+    return {
+      postData,
+    };
+  },
+};
 </script>
 
 <style>
@@ -186,5 +153,33 @@ export default {
   font-size: 20px;
   color: white;
   background-color: #383838;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+}
+.white-bg {
+  width: 90%;
+  margin: 80px auto;
+  background: white;
+  border-radius: 5px;
+  padding: 20px 0;
+}
+.close {
+  cursor: pointer;
+  border: none;
+  background: #6667ab;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+.close:hover {
+  color: white;
+  font-weight: bold;
+  transform: scale(1.1);
+  transition: all 0.5s;
 }
 </style>
