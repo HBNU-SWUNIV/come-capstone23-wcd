@@ -107,8 +107,6 @@ public class JwtTokenProvider {
 
     /**
      * Access 토큰을 검증
-     * @param token
-     * @return
      */
     public boolean validateAccessToken(String access_token) {
         try {
@@ -130,8 +128,6 @@ public class JwtTokenProvider {
 
     /**
      * Refresh 토큰을 검증
-     * @param token
-     * @return
      */
     public boolean validateRefreshToken(String refresh_token) {
         try {

@@ -21,8 +21,8 @@ spring:
       - classpath:/bootstrap.yml
 
 file:
-  dir: ./image/
-  url: http://211.115.222.246:1000/
+  dir: /image/
+  url: http://211.115.222.246:1000/image/
 
 eureka:
   instance:
@@ -37,4 +37,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, busrefresh, httpexchanges, info, configprops
+        include: refresh, health, beans, busrefresh, httpexchanges, info, configprops, env

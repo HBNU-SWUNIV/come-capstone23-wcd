@@ -32,10 +32,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private RedisTemplate<String, String> redisTemplate;
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager) {
-        super.setAuthenticationManager(authenticationManager);
-    }
-
     public AuthenticationFilter(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, Environment env, RedisTemplate<String, String> redisTemplate, JwtTokenProvider jwtTokenProvider) {
         super.setAuthenticationManager(authenticationManager);
         this.myUserDetailsService = myUserDetailsService;
