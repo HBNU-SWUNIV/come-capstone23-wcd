@@ -3,7 +3,7 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://211.115.222.246:1019/board_service
     username: root
-    password: "{cipher}AQBatMFoS7Gk8zeH/yDqh17exaCOb6vF9lk7H7/rhtCx05bdUBdbukeO1yk9ATSRg8qZciCY1aR/pDSVayqQmF1qrmXLFC4odwTlI/EGIvn1EiBefLbxrk+5WobAnC1bEKmxpYXBm4u7X/y7L/NE5SpKEAhL09py8tZv3IDIbsCK3NFACoUqb+G02nYSNnsI5shivkcElSW1TrIEiiTgQqioA/Drj8rXaWzgoDZ8SoRVZgeH4APNKooW3FMjkLvLEApFnFkR9IRPhUy77zQB/gwkd/3Xb+9igY2jAR1J1qO0u3Oe+yxtgvTTLBpk8tLsIFM0cpwG+vq+6w+x1NGLdhxrK+39BUMbod/WqWfN6TBRXi90B1Q8phI2BHOOeQaI+k4="
+    password: "{cipher}AQBl27T25pwaioxIoIb4Er2pX0E1+sIaJXRYmJjO5SNuEiYbNLvCoPZwMFmKXdskUBnnUTDhzqVo5Hxe0i2oTU3F7u1yWAO+Ynvts+JFeKOHAuNWQs7CeYSqbtWUQ2a5uMDaBhudMVvXB9C1hS8z7s/lD20l6NOQqE7fq0ywNsZhMA4092sW5wp0rcrVD/S563N+3tUwUuXjHT0ZHErDW29U3vy5soJzwhAh9wbnsapGdL9qkBWX8JjZSmceO5GPA9nBIGsb0dvmIBGs1k0ltSHtB+y0pr0YdUpMkWXv9ehqXU6q1zE5MhegMWm4bvvuh8BBLNlqhBz3kpQJ12td/Y3FmVFcGV+80Qhr6iecun1TXay2iIZUbV7X9ByPXTl2WZo="
   jpa:
     show-sql: true
     properties:
@@ -15,4 +15,4 @@ spring:
     host: 211.115.222.246
     port: 5672
     username: guest
-    password: "{cipher}AQBAp8wk3XZDuSdXHs/j//HGyNvzHNrbSK7dG6khACfypYBWu438p9GC7m5acSdQq4yivtUNkZkcaGGzaxL6f2OD/WKLxU0cVnLrzM1M8UPvCevjicOzjJdmId7cxkg6yLCWj1ma/HVBg5rYu/Rqb70z/j9N00GIrv7Vpepg5AP12KA6c9pK26aOHiXsi/Hl8xZLy3WcYCU71YhHVsWdZGfKjPUHwC0T3YIXgvmuqeXKD1SdFppKhEBdMloabDey2GB+inmYVhBdZIntwJhKz88sFb2OyewarOzhvd0GDh8C0k28jT0gSqTZUjXEWoDqsEixXDVIYf7iMa65DhuNyW9KHV+s1dw4lFWdQcTXYgzdKzTFmR3uMASut0wzteINakw="
+    password: "{cipher}AQDSrvg0mJsIddgPsLUP9JHnOD1GoqNUxqQKH6AOE9+Ppwb7dJVhcY2wEAdTGN/QpEtwo5olmdInrScG626i8m7/9QB05loFc/bEcpI/pcN5Cfv5KNqwNFMPeA0aBc8Cvd11uuOWNy8a2gnW3LQo30SNIAfDRAOqyavELkZUmv3PKNAFK2didrIeH/Fp4LCvmpxCih3JNjOll64HgDGjP0YJZqgRKio6XNAAfXbiINV6+4k2neMe4xUrfnx0mR65HLFbP028kFCjsE4QGth36wN/7o5zd7Jbn118FiDwXhjVdzQZtPeMopoqciiGI5g/9rRqSSuoWmYa8xMYpO+BJJYAyEKg5CEOb5MVtl/Nn5svrzTZfLq9w7RqLvSbJT0lDvs="
