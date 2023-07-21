@@ -41,9 +41,9 @@ public class JwtTokenProvider {
                         + Long.parseLong(env.getProperty("access_token.expiration_time"))))
                 // JWT 토큰에 서명 추가
                 .signWith(secretKey, SignatureAlgorithm.HS512)
-                // JWT 토큰을 문자열로 변환
                 .compact();
 
+        // JWT 토큰을 문자열로 변환
         return access_token;
     }
 
