@@ -1,6 +1,8 @@
 package com.wcd.userservice.security.jwt;
 
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.exception.CustomException;
+import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.service.MyUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -24,31 +26,34 @@ public class JwtTokenProvider {
 
     private final Environment env;
     private final MyUserDetailsService myUserDetailsService;
+    private final UserRepository userRepository;
 
     public String generateAccessToken(Authentication authentication) {
+        Users user = userRepository.findByLoginId(authentication.getName());
         // HMAC SHA-512 알고리즘으로 생성된 Secret Key 생성
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
 
         String access_token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
-                .setSubject(authentication.getName())
+                .setSubject(user.getId().toString())
                 // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
                 .setExpiration(new Date(System.currentTimeMillis()
                         + Long.parseLong(env.getProperty("access_token.expiration_time"))))
                 // JWT 토큰에 서명 추가
                 .signWith(secretKey, SignatureAlgorithm.HS512)
-                // JWT 토큰을 문자열로 변환
                 .compact();
 
+        // JWT 토큰을 문자열로 변환
         return access_token;
     }
 
     public String generateRefreshToken(Authentication authentication) {
+        Users user = userRepository.findByLoginId(authentication.getName());
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("refresh_token.secret").getBytes(StandardCharsets.UTF_8));
 
         String refresh_token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
-                .setSubject(authentication.getName())
+                .setSubject(user.getId().toString())
                 // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
                 .setExpiration(new Date(System.currentTimeMillis()
                         + Long.parseLong(env.getProperty("refresh_token.expiration_time"))))

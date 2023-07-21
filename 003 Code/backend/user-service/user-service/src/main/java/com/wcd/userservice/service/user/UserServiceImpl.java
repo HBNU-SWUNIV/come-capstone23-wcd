@@ -2,6 +2,7 @@ package com.wcd.userservice.service.user;
 
 import com.wcd.userservice.dto.user.request.RequestUsernames;
 import com.wcd.userservice.dto.user.response.ResponseUsernames;
+import com.wcd.userservice.exception.UserNotFoundException;
 import com.wcd.userservice.file.FileStore;
 import com.wcd.userservice.client.ClubServiceClient;
 import com.wcd.userservice.dto.user.response.ResponseUserById;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseUserById getUserById(Long userId) {
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         return ResponseUserById.builder().user(user).build();
     }
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long updateUserById(Long userId, RequestUpdateUser requestUpdateUser) {
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         String profileImageUrl = null;
 
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(Long userId) {
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         userRepository.delete(user);
         clubServiceClient.deleteMember(userId);
