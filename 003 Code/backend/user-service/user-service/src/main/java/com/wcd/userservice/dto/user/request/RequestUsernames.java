@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(description = "사용자 이름 요청ㅇ")
+@Schema(description = "사용자 이름 요청")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
