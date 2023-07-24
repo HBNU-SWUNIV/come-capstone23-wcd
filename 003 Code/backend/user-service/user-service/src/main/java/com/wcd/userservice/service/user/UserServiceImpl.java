@@ -11,7 +11,6 @@ import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.dto.user.request.RequestUpdateUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +44,7 @@ public class UserServiceImpl implements UserService{
         String profileImageUrl = null;
 
         try {
+            fileStore.deleteFile(user.getProfileImage());
             profileImageUrl = fileStore.storeFile(requestUpdateUser.getProfileImage());
         } catch (IOException e) {
             e.printStackTrace();

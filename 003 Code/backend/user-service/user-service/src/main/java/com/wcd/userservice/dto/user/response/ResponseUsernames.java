@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,14 +16,12 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseUsernames {
 
-    private List<Map<String, String>> userNames;
+    private Map<String, String> userNames;
 
     @Builder
     public ResponseUsernames(List<Users> userList) {
         for (Users user : userList) {
-            Map<String, String> userNameMap = new HashMap<>();
-            userNameMap.put(user.getId().toString(), user.getName());
-            userNames.add(userNameMap);
+            userNames.put(user.getId().toString(), user.getName());
         }
     }
 }

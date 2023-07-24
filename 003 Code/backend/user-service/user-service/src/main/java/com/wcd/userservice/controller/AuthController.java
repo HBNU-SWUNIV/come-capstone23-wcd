@@ -22,20 +22,16 @@ public class AuthController {
     @Operation(summary = "토큰 재발급", description = "만료된 토큰 재발급 받기")
     @PostMapping("/regenerateToken")
     public ResponseEntity<TokenDto> regenerateToken(@RequestBody RegenerateTokenDto refreshTokenDto) {
-        TokenDto tokenDto = authService.regenerateToken(refreshTokenDto);
-
-        return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
+        return ResponseEntity.status(HttpStatus.OK).body(authService.regenerateToken(refreshTokenDto));
     }
 
     @Operation(summary = "회원가입", description = "회원가입 API")
-    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<Long> signUp(@Valid @ModelAttribute RequestSignUp requestSignUp) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.signUp(requestSignUp));
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃 API")
-    // 로그아웃
     @PostMapping("/user/logout")
     public ResponseEntity<Void> logout(@RequestBody TokenDto tokenDto) {
         authService.logout(tokenDto);
