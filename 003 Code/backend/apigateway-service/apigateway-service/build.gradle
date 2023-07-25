@@ -31,13 +31,15 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp:4.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 }
 
 dependencyManagement {
