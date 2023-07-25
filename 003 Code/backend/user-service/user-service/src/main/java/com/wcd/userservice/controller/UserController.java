@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원 이름 조회", description = "해당 회원 user-id의 user-name 조회")
-    @GetMapping("/user/userNames")
+    @PostMapping("/user/userNames")
     public ResponseEntity<ResponseUsernames> getUserNamesByIds(@RequestBody RequestUsernames requestUsernames) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserNamesByIds(requestUsernames));
     }

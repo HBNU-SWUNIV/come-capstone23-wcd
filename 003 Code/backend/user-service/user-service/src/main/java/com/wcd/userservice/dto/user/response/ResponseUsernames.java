@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class ResponseUsernames {
 
     @Builder
     public ResponseUsernames(List<Users> userList) {
+        this.userNames = new HashMap<>();
         for (Users user : userList) {
             userNames.put(user.getId().toString(), user.getName());
         }
