@@ -34,8 +34,8 @@ public class ClubPostController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId, @RequestBody RequestPostDto requestPostDto) {
-        ResponsePostDto responsePostDto = postService.createPost(requestPostDto);
+    public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId, @RequestHeader("user-id") Long userId, @RequestBody RequestPostDto requestPostDto) {
+        ResponsePostDto responsePostDto = postService.createPost(userId, requestPostDto);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 

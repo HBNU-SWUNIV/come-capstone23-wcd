@@ -1,14 +1,12 @@
 package com.wcd.boardservice.service;
 
 import com.wcd.boardservice.client.UserServiceClient;
-import com.wcd.boardservice.dto.vote.RequestVoteDto;
+import com.wcd.boardservice.dto.user.RequestUserNamesDto;
+import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
 import com.wcd.boardservice.dto.vote.ResponseVoteDto;
-import com.wcd.boardservice.dto.vote.VoteDto;
 import com.wcd.boardservice.dto.vote.voteitem.RequestVoteItemDto;
 import com.wcd.boardservice.dto.vote.voteitem.ResponseVoteItemDto;
-import com.wcd.boardservice.dto.vote.voteitem.VoteItemDto;
 import com.wcd.boardservice.dto.vote.voterecord.ResponseVoteRecordDto;
-import com.wcd.boardservice.dto.vote.voterecord.VoteRecordDto;
 import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.RequestPostDto;
 import com.wcd.boardservice.dto.post.ResponsePostDto;
@@ -23,14 +21,11 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import javax.swing.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,8 +53,23 @@ public class PostServiceImpl implements PostService{
         this.userServiceClient = userServiceClient;
     }
 
+    private Map<Long, String> getUserNames(List userIds) {
+        RequestUserNamesDto requestUserNamesDto = new RequestUserNamesDto(userIds);
+        ResponseUserNamesDto responseUserNamesDto = new ResponseUserNamesDto();
+        responseUserNamesDto.setUserNames(userServiceClient.getUserNames(requestUserNamesDto).getUserNames());
+//            Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames();
+
+        Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> Long.parseLong(entry.getKey()),
+                        Map.Entry::getValue
+                ));
+
+        return writerIdToNameMap;
+    }
+
     @Override
-    public ResponsePostDto createPost(RequestPostDto requestPostDto) {
+    public ResponsePostDto createPost(Long writerId, RequestPostDto requestPostDto) {
         try {
             // PostDto를 Post 엔티티로 변환
             Post newPost = modelMapper.map(requestPostDto, Post.class);
@@ -69,8 +79,10 @@ public class PostServiceImpl implements PostService{
 
             // Call userServiceClient to get user names.
             List writerIds = new ArrayList();
-            writerIds.add(savedPost.getWriterId());
-            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+            writerIds.add(writerId);
+
+            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
+
             responsePostDto.setWriterName(writerIdToNameMap.get(savedPost.getWriterId()));
 
             // 만약 PostDto에 VoteDto가 포함되어 있다면,
@@ -149,26 +161,29 @@ public class PostServiceImpl implements PostService{
             // Call userServiceClient to get user names.
             List writerIds = new ArrayList();
             writerIds.add(post.getWriterId());
-            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
+
             ResponsePostDto responsePostDto = modelMapper.map(post, ResponsePostDto.class);
             responsePostDto.setWriterName(writerIdToNameMap.get(post.getWriterId()));
 
-            responsePostDto.setResponseVoteDto(modelMapper.map(post.getVote(), ResponseVoteDto.class));
+            if (responsePostDto.getResponseVoteDto() != null) {
+                responsePostDto.setResponseVoteDto(modelMapper.map(post.getVote(), ResponseVoteDto.class));
 
-            List<ResponseVoteItemDto> responseVoteItemDtos = new ArrayList<>();
-            for (VoteItem voteItem : post.getVote().getVoteItems()){
-                ResponseVoteItemDto responseVoteItemDto = modelMapper.map(voteItem, ResponseVoteItemDto.class);
+                List<ResponseVoteItemDto> responseVoteItemDtos = new ArrayList<>();
+                for (VoteItem voteItem : post.getVote().getVoteItems()){
+                    ResponseVoteItemDto responseVoteItemDto = modelMapper.map(voteItem, ResponseVoteItemDto.class);
 
-                List<ResponseVoteRecordDto> responseVoteRecordDtos = new ArrayList<>();
-                for (VoteRecord voteRecord : voteItem.getVoteRecords()) {
-                    ResponseVoteRecordDto responseVoteRecordDto = modelMapper.map(voteRecord, ResponseVoteRecordDto.class);
-                    responseVoteRecordDtos.add(responseVoteRecordDto);
+                    List<ResponseVoteRecordDto> responseVoteRecordDtos = new ArrayList<>();
+                    for (VoteRecord voteRecord : voteItem.getVoteRecords()) {
+                        ResponseVoteRecordDto responseVoteRecordDto = modelMapper.map(voteRecord, ResponseVoteRecordDto.class);
+                        responseVoteRecordDtos.add(responseVoteRecordDto);
+                    }
+                    responseVoteItemDto.setResponseVoteRecordDtos(responseVoteRecordDtos);
+
+                    responseVoteItemDtos.add(responseVoteItemDto);
                 }
-                responseVoteItemDto.setResponseVoteRecordDtos(responseVoteRecordDtos);
-
-                responseVoteItemDtos.add(responseVoteItemDto);
+                responsePostDto.getResponseVoteDto().setResponseVoteItemDtos(responseVoteItemDtos);
             }
-            responsePostDto.getResponseVoteDto().setResponseVoteItemDtos(responseVoteItemDtos);
 
             return responsePostDto;
         } catch (NoSuchElementException e) {
@@ -202,7 +217,7 @@ public class PostServiceImpl implements PostService{
                     .collect(Collectors.toList());
 
             // Call userServiceClient to get user names.
-            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
 
             // Convert each post to ResponsePostListDto and replace userId with userName.
             Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> {
@@ -230,7 +245,7 @@ public class PostServiceImpl implements PostService{
                     .collect(Collectors.toList());
 
             // Call userServiceClient to get user names.
-            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
 
             // Convert each post to ResponsePostListDto and replace userId with userName.
             Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> {
@@ -251,7 +266,23 @@ public class PostServiceImpl implements PostService{
     public Page<ResponsePostListDto> getAllUserPost(Long userId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findBywriterId(userId, pageable);
-            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+
+            // Collect userIds from post lists.
+            List<Long> writerIds = postLists.stream()
+                    .map(Post::getWriterId)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // Call userServiceClient to get user names.
+            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
+
+            // Convert each post to ResponsePostListDto and replace userId with userName.
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> {
+                ResponsePostListDto dto = modelMapper.map(postList, ResponsePostListDto.class);
+                dto.setWriterName(writerIdToNameMap.get(postList.getWriterId()));
+                return dto;
+            });
 
             return responsePostListDtos;
         } catch (Exception e) {

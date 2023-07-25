@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface PostService {
-    ResponsePostDto createPost(RequestPostDto responsePostDto);
+    ResponsePostDto createPost(Long userId, RequestPostDto responsePostDto);
     ResponsePostDto updatePost(Long postId, Long userId, RequestPostDto responsePostDto);
     void deletePost(Long userId, Long postId);
     ResponsePostDto getPostById(Long postId);
