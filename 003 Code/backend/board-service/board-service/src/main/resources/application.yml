@@ -1,18 +1,9 @@
 server:
-  port: 8080
+  port: 0
 
 spring:
   application:
     name: board-service
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver  # Database? H2? ?????.
-    url: jdbc:mariadb://127.0.0.1:3306/board_service_db # H2 ?? ??
-    username: root  # H2 ?? ? ??? username ?? (??? ??? ??)
-    password: seongjun5657 # H2 ?? ? ??? password ?? (??? ??? ??)
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
   h2:
     console:
       enables: true

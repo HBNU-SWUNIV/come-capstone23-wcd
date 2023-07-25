@@ -14,5 +14,5 @@ import java.util.List;
 public class ResponseVoteItemDto {
     private Long id;
     private List<ResponseVoteRecordDto> responseVoteRecordDtos;
-    private String value;
+    private String vote_item_value;
 }

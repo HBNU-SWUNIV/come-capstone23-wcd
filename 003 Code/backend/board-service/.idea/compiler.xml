@@ -11,9 +11,6 @@
         <module name="board-service.board-service.main~1" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="board-service.board-service.main" target="17" />
-      <module name="board-service.board-service.test" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>
