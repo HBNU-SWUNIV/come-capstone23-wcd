@@ -15,7 +15,7 @@ spring:
     host: 211.115.222.246
     port: 5672
     username: guest
-    password: "{cipher}AQBAp8wk3XZDuSdXHs/j//HGyNvzHNrbSK7dG6khACfypYBWu438p9GC7m5acSdQq4yivtUNkZkcaGGzaxL6f2OD/WKLxU0cVnLrzM1M8UPvCevjicOzjJdmId7cxkg6yLCWj1ma/HVBg5rYu/Rqb70z/j9N00GIrv7Vpepg5AP12KA6c9pK26aOHiXsi/Hl8xZLy3WcYCU71YhHVsWdZGfKjPUHwC0T3YIXgvmuqeXKD1SdFppKhEBdMloabDey2GB+inmYVhBdZIntwJhKz88sFb2OyewarOzhvd0GDh8C0k28jT0gSqTZUjXEWoDqsEixXDVIYf7iMa65DhuNyW9KHV+s1dw4lFWdQcTXYgzdKzTFmR3uMASut0wzteINakw="
+    password: "{cipher}AQAOpNa4kE1/0SuIdsJIzX86GefXTeuHo8hEUlcQ/pMb3RKu+P98RSXsslRoNq5iaL+yl87whYxj2PeKY5W3rxN3d3bipurOE4udGgEZaUj61xXIzpZOmfhUI6lHjfpTtX9ln7u6U0WdNCaXVwYYVMsEhBYlpPFg2KbhHfmhXREcUI8l0Fuy6UOLhe1fsHXXi7RXoRGKclfuUtnA8i1Ipo9E8uccybKUSaLtmIqNLVTwH4wQbfb2QnjBuYGEzMxD0piQ+Pizbn6ow9bH0okj1+u+GbDL0UZEpsl04cecKDN06/to3x88a7GNsG+/BGxRWKypAiuUl5HiYQfS1qZc9fHMhB+9YoWyPdXGk2M8BLp7ewLe6uQBruSxXpZ1uRCQKD4="
 
 aa: 
   text: "dassdad"
