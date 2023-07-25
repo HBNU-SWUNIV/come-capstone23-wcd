@@ -1,5 +1,7 @@
 package com.wcd.apigatewayservice.filter;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -35,6 +37,43 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     public static class Config { }
 
+//    @Override
+//    public GatewayFilter apply(Config config) {
+//        return (((exchange, chain) -> {
+//            ServerHttpRequest request = exchange.getRequest();
+//
+//            // HTTP 요청의 Authorization 헤더가 있는지 확인
+//            if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
+//                return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
+//            }
+//            // HTTP 요청 헤더에서 Authorization 필드에 해당하는 값을 가져옴
+//            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);;
+//            // authorizationHeader 문자열에 Bearer 문자열을 제거
+//            String jwt = authorizationHeader.replace("Bearer ", "");
+//
+//            // JWT 토큰의 서명을 검증하고, 만료 시간을 확인하여 JWT 토큰이 유효한지 검증
+//            if (jwt != null && isJwtValid(jwt)) {
+//                log.info(jwt);
+//                // Redis에 해당 accessToken logout 여부를 확인
+//                String isLogout = (String) redisTemplate.opsForValue().get(jwt);
+//
+//                // 로그아웃이 없는(되어 있지 않은) 경우 해당 토큰은 정상적으로 작동하기
+//                if (!ObjectUtils.isEmpty(isLogout)) {
+//
+//                    return onError(exchange, "Please Login", HttpStatus.UNAUTHORIZED);
+//                }
+//
+//            }
+//            else {
+//                log.info("JWT token is not valid");
+//                return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
+//            }
+//
+//            return chain.filter(exchange);
+//
+//        }));
+//    }
+
     @Override
     public GatewayFilter apply(Config config) {
         return (((exchange, chain) -> {
@@ -67,8 +106,26 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
-            return chain.filter(exchange);
+            Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
 
+            // 1번
+            Jws<Claims> jws =  Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(jwt);
+            String subject = jws.getBody().getSubject();
+
+//            // 2번
+//            // JWT 토큰을 파싱하기 위한 빌더 객체 생성 및 토큰에 사용될 서명 키 설정
+//            JwtParserBuilder jwtParserBuilder = Jwts.parserBuilder().setSigningKey(secretKey);
+//            subject = jwtParserBuilder
+//                    .build()
+//                    // 파싱 대상 JWT 토큰을 Jws(JWT Signature를 포함하는 객체) 객체로 파싱
+//                    .parseClaimsJws(jwt)
+//                    // 파싱된 JWT 내용을 가져옴
+//                    .getBody()
+//                    // JWT의 subject 값을 가져옴
+//                    .getSubject();
+
+            return chain.filter(exchange.mutate().request(r -> r.headers(headers -> headers.add("user-id", subject))).build());
+//            return chain.filter(exchange);
         }));
     }
 
