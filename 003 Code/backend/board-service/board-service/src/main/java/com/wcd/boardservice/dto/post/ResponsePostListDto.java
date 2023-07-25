@@ -10,6 +10,7 @@ public class ResponsePostListDto {
     private String category;
     private Long clubId;
     private Long writerId;
+    private String writerName;
     private String title;
     private LocalDateTime createdAt;
     private Long voteId;

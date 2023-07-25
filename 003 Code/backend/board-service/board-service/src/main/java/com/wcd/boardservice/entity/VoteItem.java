@@ -26,7 +26,7 @@ public class VoteItem extends BaseEntity {
     private List<VoteRecord> voteRecords;
 
     @NotNull
-    private String value;
+    private String vote_item_value;
 
     public void setVote(Vote vote) {
         this.vote = vote;

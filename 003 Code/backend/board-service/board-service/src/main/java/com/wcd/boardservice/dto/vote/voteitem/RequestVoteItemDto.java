@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestVoteItemDto {
-    private String value;
+    private String vote_item_value;
 }

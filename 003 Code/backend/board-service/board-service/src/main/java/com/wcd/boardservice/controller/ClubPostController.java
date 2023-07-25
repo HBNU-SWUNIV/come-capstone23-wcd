@@ -1,5 +1,6 @@
 package com.wcd.boardservice.controller;
 
+import com.wcd.boardservice.client.UserServiceClient;
 import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.RequestPostDto;
 import com.wcd.boardservice.dto.post.ResponsePostDto;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,7 @@ public class ClubPostController {
     @GetMapping("/")
     public ResponseEntity<Page<ResponsePostListDto>> getAllCLubPosts(@PathVariable("club-id") Long clubId, Pageable pageable) {
         Page<ResponsePostListDto> responsePostListDtos = postService.getAllClubPost(clubId, pageable);
+
         return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }
 

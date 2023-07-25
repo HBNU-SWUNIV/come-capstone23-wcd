@@ -1,5 +1,6 @@
 package com.wcd.boardservice.service;
 
+import com.wcd.boardservice.client.UserServiceClient;
 import com.wcd.boardservice.dto.vote.RequestVoteDto;
 import com.wcd.boardservice.dto.vote.ResponseVoteDto;
 import com.wcd.boardservice.dto.vote.VoteDto;
@@ -28,22 +29,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class PostServiceImpl implements PostService{
-    @Autowired
     PostRepository postRepository;
-    @Autowired
     VoteRepository voteRepository;
-    @Autowired
     VoteItemRepository voteItemRepository;
-    @Autowired
     VoteService voteService;
-    @Autowired
     ModelMapper modelMapper;
+    UserServiceClient userServiceClient;
+
+    @Autowired
+    public PostServiceImpl(PostRepository postRepository,
+                           VoteRepository voteRepository,
+                           VoteItemRepository voteItemRepository,
+                           VoteService voteService,
+                           ModelMapper modelMapper,
+                           UserServiceClient userServiceClient) {
+        this.postRepository = postRepository;
+        this.voteRepository = voteRepository;
+        this.voteItemRepository = voteItemRepository;
+        this.voteService = voteService;
+        this.modelMapper = modelMapper;
+        this.userServiceClient = userServiceClient;
+    }
 
     @Override
     public ResponsePostDto createPost(RequestPostDto requestPostDto) {
@@ -53,6 +66,12 @@ public class PostServiceImpl implements PostService{
 
             Post savedPost = postRepository.save(newPost);
             ResponsePostDto responsePostDto = modelMapper.map(savedPost, ResponsePostDto.class);
+
+            // Call userServiceClient to get user names.
+            List writerIds = new ArrayList();
+            writerIds.add(savedPost.getWriterId());
+            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+            responsePostDto.setWriterName(writerIdToNameMap.get(savedPost.getWriterId()));
 
             // 만약 PostDto에 VoteDto가 포함되어 있다면,
             if (requestPostDto.getRequestVoteDto() != null) {
@@ -126,8 +145,16 @@ public class PostServiceImpl implements PostService{
     public ResponsePostDto getPostById(Long postId) {
         try {
             Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
+
+            // Call userServiceClient to get user names.
+            List writerIds = new ArrayList();
+            writerIds.add(post.getWriterId());
+            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
             ResponsePostDto responsePostDto = modelMapper.map(post, ResponsePostDto.class);
+            responsePostDto.setWriterName(writerIdToNameMap.get(post.getWriterId()));
+
             responsePostDto.setResponseVoteDto(modelMapper.map(post.getVote(), ResponseVoteDto.class));
+
             List<ResponseVoteItemDto> responseVoteItemDtos = new ArrayList<>();
             for (VoteItem voteItem : post.getVote().getVoteItems()){
                 ResponseVoteItemDto responseVoteItemDto = modelMapper.map(voteItem, ResponseVoteItemDto.class);
@@ -149,11 +176,40 @@ public class PostServiceImpl implements PostService{
         }
     }
 
+//    @Override
+//    public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
+//        try {
+//            List<Long> userIds = new ArrayList<>();
+//            userServiceClient.getUserNames(userIds);
+//            Page<Post> postLists= postRepository.findAll(pageable);
+//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+//
+//            return responsePostListDtos;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+
     @Override
     public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
         try {
             Page<Post> postLists= postRepository.findAll(pageable);
-            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+
+            // Collect userIds from post lists.
+            List<Long> writerIds = postLists.stream()
+                    .map(Post::getWriterId)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // Call userServiceClient to get user names.
+            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+
+            // Convert each post to ResponsePostListDto and replace userId with userName.
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> {
+                ResponsePostListDto dto = modelMapper.map(postList, ResponsePostListDto.class);
+                dto.setWriterName(writerIdToNameMap.get(postList.getWriterId()));
+                return dto;
+            });
 
             return responsePostListDtos;
         } catch (Exception e) {
@@ -165,13 +221,31 @@ public class PostServiceImpl implements PostService{
     public Page<ResponsePostListDto> getAllClubPost(Long clubId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findByclubId(clubId, pageable);
-            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
+
+            // Collect userIds from post lists.
+            List<Long> writerIds = postLists.stream()
+                    .map(Post::getWriterId)
+                    .distinct()
+                    .collect(Collectors.toList());
+
+            // Call userServiceClient to get user names.
+            Map<String, String> writerIdToNameMap = userServiceClient.getUserNames(writerIds);
+
+            // Convert each post to ResponsePostListDto and replace userId with userName.
+            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> {
+                ResponsePostListDto dto = modelMapper.map(postList, ResponsePostListDto.class);
+                dto.setWriterName(writerIdToNameMap.get(postList.getWriterId()));
+                return dto;
+            });
+
 
             return responsePostListDtos;
         } catch (Exception e) {
             return null;
         }
     }
+
 
     @Override
     public Page<ResponsePostListDto> getAllUserPost(Long userId, Pageable pageable) {
