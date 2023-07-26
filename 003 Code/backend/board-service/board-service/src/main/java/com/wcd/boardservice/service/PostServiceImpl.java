@@ -1,5 +1,6 @@
 package com.wcd.boardservice.service;
 
+import com.wcd.boardservice.client.ClubServiceClient;
 import com.wcd.boardservice.client.UserServiceClient;
 import com.wcd.boardservice.dto.user.RequestUserNamesDto;
 import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
@@ -37,6 +38,7 @@ public class PostServiceImpl implements PostService{
     VoteService voteService;
     ModelMapper modelMapper;
     UserServiceClient userServiceClient;
+    ClubServiceClient clubServiceClient;
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
@@ -44,46 +46,36 @@ public class PostServiceImpl implements PostService{
                            VoteItemRepository voteItemRepository,
                            VoteService voteService,
                            ModelMapper modelMapper,
-                           UserServiceClient userServiceClient) {
+                           UserServiceClient userServiceClient,
+                           ClubServiceClient clubServiceClient) {
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.voteItemRepository = voteItemRepository;
         this.voteService = voteService;
         this.modelMapper = modelMapper;
         this.userServiceClient = userServiceClient;
-    }
-
-    private Map<Long, String> getUserNames(List userIds) {
-        RequestUserNamesDto requestUserNamesDto = new RequestUserNamesDto(userIds);
-        ResponseUserNamesDto responseUserNamesDto = new ResponseUserNamesDto();
-        responseUserNamesDto.setUserNames(userServiceClient.getUserNames(requestUserNamesDto).getUserNames());
-//            Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames();
-
-        Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames().entrySet().stream()
-                .collect(Collectors.toMap(
-                        entry -> Long.parseLong(entry.getKey()),
-                        Map.Entry::getValue
-                ));
-
-        return writerIdToNameMap;
+        this.clubServiceClient = clubServiceClient;
     }
 
     @Override
-    public ResponsePostDto createPost(Long writerId, RequestPostDto requestPostDto) {
+    public ResponsePostDto createPost(Long clubId, Long writerId, RequestPostDto requestPostDto) {
         try {
+            if(!clubServiceClient.isUserMemberOfClub(clubId, writerId)) {
+                throw new Exception();
+            }
+
             // PostDto를 Post 엔티티로 변환
             Post newPost = modelMapper.map(requestPostDto, Post.class);
-
+            newPost.setClubId(clubId);
+            newPost.setWriterId(writerId);
             Post savedPost = postRepository.save(newPost);
             ResponsePostDto responsePostDto = modelMapper.map(savedPost, ResponsePostDto.class);
 
             // Call userServiceClient to get user names.
             List writerIds = new ArrayList();
             writerIds.add(writerId);
-
             Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
-
-            responsePostDto.setWriterName(writerIdToNameMap.get(savedPost.getWriterId()));
+            responsePostDto.setWriterName(writerIdToNameMap.get(writerId));
 
             // 만약 PostDto에 VoteDto가 포함되어 있다면,
             if (requestPostDto.getRequestVoteDto() != null) {
@@ -139,17 +131,18 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void deletePost(Long userId, Long postId) {
+    public void deletePost(Long writerId, Long postId) {
         try {
             Post deletePost = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
-            if (!deletePost.getWriterId().equals(userId)) {
-                throw new Exception("");
+            if (!deletePost.getWriterId().equals(writerId)) {
+                throw new Exception();
             }
             postRepository.delete(deletePost);
         } catch (NoSuchElementException e) {
 
         } catch (Exception e) {
-
+            System.err.println("Error while creating post: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -191,20 +184,6 @@ public class PostServiceImpl implements PostService{
         }
     }
 
-//    @Override
-//    public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
-//        try {
-//            List<Long> userIds = new ArrayList<>();
-//            userServiceClient.getUserNames(userIds);
-//            Page<Post> postLists= postRepository.findAll(pageable);
-//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
-//
-//            return responsePostListDtos;
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
-
     @Override
     public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
         try {
@@ -236,7 +215,6 @@ public class PostServiceImpl implements PostService{
     public Page<ResponsePostListDto> getAllClubPost(Long clubId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findByclubId(clubId, pageable);
-//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
 
             // Collect userIds from post lists.
             List<Long> writerIds = postLists.stream()
@@ -253,7 +231,6 @@ public class PostServiceImpl implements PostService{
                 dto.setWriterName(writerIdToNameMap.get(postList.getWriterId()));
                 return dto;
             });
-
 
             return responsePostListDtos;
         } catch (Exception e) {
@@ -266,7 +243,6 @@ public class PostServiceImpl implements PostService{
     public Page<ResponsePostListDto> getAllUserPost(Long userId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findBywriterId(userId, pageable);
-//            Page<ResponsePostListDto> responsePostListDtos = postLists.map(postList -> modelMapper.map(postList, ResponsePostListDto.class));
 
             // Collect userIds from post lists.
             List<Long> writerIds = postLists.stream()
@@ -288,5 +264,19 @@ public class PostServiceImpl implements PostService{
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private Map<Long, String> getUserNames(List userIds) {
+        RequestUserNamesDto requestUserNamesDto = new RequestUserNamesDto(userIds);
+        ResponseUserNamesDto responseUserNamesDto = new ResponseUserNamesDto();
+        responseUserNamesDto.setUserNames(userServiceClient.getUserNames(requestUserNamesDto).getUserNames());
+
+        Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> Long.parseLong(entry.getKey()),
+                        Map.Entry::getValue
+                ));
+
+        return writerIdToNameMap;
     }
 }

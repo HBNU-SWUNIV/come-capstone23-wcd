@@ -27,33 +27,42 @@ public class ClubPostController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<ResponsePostListDto>> getAllCLubPosts(@PathVariable("club-id") Long clubId, Pageable pageable) {
+    public ResponseEntity<Page<ResponsePostListDto>> getAllCLubPosts(@PathVariable("club-id") Long clubId,
+                                                                     Pageable pageable) {
         Page<ResponsePostListDto> responsePostListDtos = postService.getAllClubPost(clubId, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId, @RequestHeader("user-id") Long userId, @RequestBody RequestPostDto requestPostDto) {
-        ResponsePostDto responsePostDto = postService.createPost(userId, requestPostDto);
+    public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId,
+                                                         @RequestHeader("user-id") Long writerId,
+                                                         @RequestBody RequestPostDto requestPostDto) {
+        ResponsePostDto responsePostDto = postService.createPost(clubId, writerId, requestPostDto);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
     @GetMapping("/{post-id}")
-    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId, @PathVariable("post-id") Long postId) {
+    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId,
+                                                   @PathVariable("post-id") Long postId) {
         ResponsePostDto responsePostDto = postService.getPostById(postId);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
     @PatchMapping("/{post-id}")
-    public ResponseEntity<ResponsePostDto> updatePost(@PathVariable("club-id") Long clubId, @PathVariable("post-id") Long postId, @RequestBody RequestPostDto requestPostDto) {
-        ResponsePostDto responsePostDto = postService.updatePost(postId, requestPostDto.getWriterId(), requestPostDto);
+    public ResponseEntity<ResponsePostDto> updatePost(@PathVariable("club-id") Long clubId,
+                                                      @PathVariable("post-id") Long postId,
+                                                      @RequestHeader("user-id") Long writerId,
+                                                      @RequestBody RequestPostDto requestPostDto) {
+        ResponsePostDto responsePostDto = postService.updatePost(postId, writerId, requestPostDto);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
     @DeleteMapping("/{post-id}")
-    public HttpStatus deletePost(@PathVariable("club-id") Long clubId, @PathVariable("post-id") Long postId, @RequestBody Long userId) {
-        postService.deletePost(userId, postId);
+    public HttpStatus deletePost(@PathVariable("club-id") Long clubId,
+                                 @PathVariable("post-id") Long postId,
+                                 @RequestHeader("user-id") Long writerId) {
+        postService.deletePost(writerId, postId);
         return HttpStatus.OK;
     }
 }

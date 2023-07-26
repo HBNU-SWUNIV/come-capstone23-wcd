@@ -62,4 +62,12 @@ public class Post extends BaseEntity{
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setWriterId(Long writerId) {
+        this.writerId = writerId;
+    }
+
+    public void setClubId(Long clubId) {
+        this.clubId = clubId;
+    }
 }

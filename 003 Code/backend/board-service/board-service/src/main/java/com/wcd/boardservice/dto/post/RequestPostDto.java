@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestPostDto {
     private String category;
-    private Long clubId;
-    private Long writerId;
     private String title;
     private String content;
     private RequestVoteDto requestVoteDto;
