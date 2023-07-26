@@ -25,4 +25,6 @@ public interface ClubMemberRepository extends JpaRepository<ClubMember, Long> {
     void deleteByUserId(@Param("userId") Long userId);
 
     boolean existsByUserId(Long userId);
+
+    boolean existsByClubIdAndUserId(Long clubId, Long userId);
 }

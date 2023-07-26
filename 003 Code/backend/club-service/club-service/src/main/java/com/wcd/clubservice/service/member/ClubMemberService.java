@@ -11,4 +11,6 @@ public interface ClubMemberService {
     void deleteClubMember(Long userId, Long clubId);
 
     void deleteMember(Long userId);
+
+    boolean isUserMemberOfClub(Long clubId, Long userId);
 }

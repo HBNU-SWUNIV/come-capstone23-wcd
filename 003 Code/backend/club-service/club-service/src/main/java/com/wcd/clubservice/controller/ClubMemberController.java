@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,11 @@ public class ClubMemberController {
     public ResponseEntity<Void> deleteMember(@PathVariable("user-id") Long userId) {
         clubMemberService.deleteMember(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/member/{user-id}/club/{club-id}")
+    public boolean isUserMemberOfClub(@PathVariable("club-id") Long clubId,@PathVariable("user-id") Long userId) {
+        // 해당 모임의 유저인지 판단하는 로직
+        return clubMemberService.isUserMemberOfClub(clubId, userId);
     }
 }

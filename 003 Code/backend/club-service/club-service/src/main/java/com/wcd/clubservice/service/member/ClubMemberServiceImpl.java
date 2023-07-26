@@ -53,4 +53,13 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             clubMemberRepository.deleteByUserId(userId);
         }
     }
+
+    @Override
+    public boolean isUserMemberOfClub(Long clubId, Long userId) {
+        if(clubMemberRepository.existsByClubIdAndUserId(clubId, userId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
