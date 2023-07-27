@@ -49,8 +49,9 @@ public class ClubController {
 
     @Operation(summary = "모임 생성", description = "모임 생성")
     @PostMapping("/club")
-    public ResponseEntity<Long> createClub(@Valid @ModelAttribute RequestClub requestClub) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(clubService.createClub(requestClub));
+    public ResponseEntity<Long> createClub(@RequestHeader("user-id") Long hostId,
+                                           @Valid @ModelAttribute RequestClub requestClub) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(clubService.createClub(hostId, requestClub));
     }
 
     @Operation(summary = "모임 조회", description = "user-id에 해당하는 유저의 모임 조회")

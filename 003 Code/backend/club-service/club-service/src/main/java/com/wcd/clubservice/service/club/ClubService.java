@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 public interface ClubService {
     Page<ResponseClub> getClubs(ClubSearchCondition clubSearchCondition, Pageable pageable);
 
-    Long createClub(RequestClub requestClub);
+    Long createClub(Long hostId, RequestClub requestClub);
 
     ResponseClubByClubId getClubById(Long clubId);
 

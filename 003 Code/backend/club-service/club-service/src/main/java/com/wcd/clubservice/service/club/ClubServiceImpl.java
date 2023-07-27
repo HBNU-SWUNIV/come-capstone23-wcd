@@ -39,9 +39,7 @@ public class ClubServiceImpl implements ClubService{
     // 모임 생성
     @Transactional
     @Override
-    public Long createClub(RequestClub requestClub) {
-
-
+    public Long createClub(Long hostId,RequestClub requestClub) {
         String mainImageUrl = null;
 
         try {
@@ -50,8 +48,7 @@ public class ClubServiceImpl implements ClubService{
             e.printStackTrace();
         }
 
-
-        return clubRepository.save(requestClub.toEntity(mainImageUrl)).getId();
+        return clubRepository.save(requestClub.toEntity(hostId, mainImageUrl)).getId();
     }
 
     // 모임 상세 조회 (user-id)

@@ -20,9 +20,9 @@ public class RequestClub {
     @Schema(description = "모임 메인 사진")
     private MultipartFile multipartFile;
 
-    @Schema(description = "모임장 유저번호", example = "1")
-    @NotNull(message = "host_id cannot be null")
-    private Long hostId;
+//    @Schema(description = "모임장 유저번호", example = "1")
+//    @NotNull(message = "host_id cannot be null")
+//    private Long hostId;
 
     @Schema(description = "모임 이름", example = "WCD 모임")
     @NotNull(message ="clubName cannot be null")
@@ -45,7 +45,7 @@ public class RequestClub {
 
     private List<String> tagList;
 
-    public Club toEntity(String mainImageUrl) {
+    public Club toEntity(Long hostId, String mainImageUrl) {
         Club clubBuild = Club.builder()
                 .hostId(hostId)
                 .clubName(clubName)
