@@ -15,4 +15,4 @@ spring:
     host: 127.0.0.1
     port: 5672
     username: guest
-    password: "{cipher}AQBAp8wk3XZDuSdXHs/j//HGyNvzHNrbSK7dG6khACfypYBWu438p9GC7m5acSdQq4yivtUNkZkcaGGzaxL6f2OD/WKLxU0cVnLrzM1M8UPvCevjicOzjJdmId7cxkg6yLCWj1ma/HVBg5rYu/Rqb70z/j9N00GIrv7Vpepg5AP12KA6c9pK26aOHiXsi/Hl8xZLy3WcYCU71YhHVsWdZGfKjPUHwC0T3YIXgvmuqeXKD1SdFppKhEBdMloabDey2GB+inmYVhBdZIntwJhKz88sFb2OyewarOzhvd0GDh8C0k28jT0gSqTZUjXEWoDqsEixXDVIYf7iMa65DhuNyW9KHV+s1dw4lFWdQcTXYgzdKzTFmR3uMASut0wzteINakw="
+    password: "{cipher}AQDU0lC/bvJY2gDG8x8gv2n8UQRLHMfT8aCr/Obq+I+/R10NHJk4cmbR/S41EZMeQrUEXvQyhz9VnJLRMwjHJ5boIY3To5qM2pLicvvKZADeEsVyZeT93YJg7Z1RFjdFZtoDHO1d8VOWCupj7slUKFbEmdODBvIoKuIq7cFuMiaVJ5XL4fYt334u3/2FHvLlj8++Fj8FczTb6uKL/07pxJT0u0vh9vsoCAw+Ww75uqqlLXpXyiTh2F9RotZjL1psQxQYaqzlf3gFp/xYhHbkml+UXtHfFCxtBsOIHLt7Mm5mzdYnaUG2c7cKlgvSs2EYXsEwQoIDfoPbmQtgBGI48SVEv1Hl8iIKh8g2H6vfToB+nyl3qfbw0TR01eUbKaR+QrI="
