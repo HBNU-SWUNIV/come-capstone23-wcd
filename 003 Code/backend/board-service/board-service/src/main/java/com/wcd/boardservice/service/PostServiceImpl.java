@@ -1,6 +1,5 @@
 package com.wcd.boardservice.service;
 
-import com.wcd.boardservice.client.ClubServiceClient;
 import com.wcd.boardservice.client.UserServiceClient;
 import com.wcd.boardservice.dto.user.RequestUserNamesDto;
 import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
@@ -25,7 +24,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,10 +58,6 @@ public class PostServiceImpl implements PostService{
     @Override
     public ResponsePostDto createPost(Long clubId, Long writerId, RequestPostDto requestPostDto) {
         try {
-            if(!clubServiceClient.isUserMemberOfClub(clubId, writerId)) {
-                throw new Exception();
-            }
-
             // PostDto를 Post 엔티티로 변환
             Post newPost = modelMapper.map(requestPostDto, Post.class);
             newPost.setClubId(clubId);
@@ -212,7 +206,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Page<ResponsePostListDto> getAllClubPost(Long clubId, Pageable pageable) {
+    public Page<ResponsePostListDto> getClubAllPost(Long clubId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findByclubId(clubId, pageable);
 
@@ -240,7 +234,7 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public Page<ResponsePostListDto> getAllUserPost(Long userId, Pageable pageable) {
+    public Page<ResponsePostListDto> getUserAllPost(Long userId, Pageable pageable) {
         try {
             Page<Post> postLists = postRepository.findBywriterId(userId, pageable);
 

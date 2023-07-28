@@ -39,7 +39,7 @@ public class ClubServiceImpl implements ClubService{
     // 모임 생성
     @Transactional
     @Override
-    public Long createClub(Long hostId,RequestClub requestClub) {
+    public Long createClub(Long hostId, RequestClub requestClub) {
         String mainImageUrl = null;
 
         try {

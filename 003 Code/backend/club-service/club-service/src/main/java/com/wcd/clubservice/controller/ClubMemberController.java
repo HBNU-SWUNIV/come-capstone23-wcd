@@ -46,7 +46,8 @@ public class ClubMemberController {
     }
 
     @GetMapping("/member/{user-id}/club/{club-id}")
-    public boolean isUserMemberOfClub(@PathVariable("club-id") Long clubId,@PathVariable("user-id") Long userId) {
+    public boolean isUserMemberOfClub(@PathVariable("user-id") Long userId,
+                                      @PathVariable("club-id") Long clubId) {
         // 해당 모임의 유저인지 판단하는 로직
         return clubMemberService.isUserMemberOfClub(clubId, userId);
     }

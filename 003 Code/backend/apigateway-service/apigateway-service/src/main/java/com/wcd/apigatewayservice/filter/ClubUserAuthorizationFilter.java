@@ -4,12 +4,15 @@ import com.wcd.apigatewayservice.client.ClubServiceClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.HandlerMapping;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class ClubUserAuthorizationFilter extends AbstractGatewayFilterFactory<Cl
 
     @Override
     public GatewayFilter apply(Config config) {
-        return ((exchange, chain) -> {
+        return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();
 
@@ -37,23 +40,25 @@ public class ClubUserAuthorizationFilter extends AbstractGatewayFilterFactory<Cl
             Long userId = Long.parseLong(request.getHeaders().getFirst("user-id"));
 
             // Getting clubId from path variable
-            Map<String, Long> pathVariables = exchange.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            Long clubId = null;
+            Map<String, String> pathVariables = ServerWebExchangeUtils.getUriTemplateVariables(exchange);
+            String clubId = null;
             if (pathVariables != null) {
                 clubId = pathVariables.get("club-id");
             }
-
+            Long clubIdL = Long.parseLong(clubId);
             // Now use the userId and clubId to call the clubServiceClient
-            boolean isUserMemberOfClub = clubServiceClient.isUserMemberOfClub(clubId, userId);
+            Mono<Boolean> isUserMemberOfClubMono = clubServiceClient.isUserMemberOfClub(clubIdL, userId);
 
-            if (!isUserMemberOfClub) {
-                // if user is not in the club, you can return a specific HTTP status or message
-                response.setStatusCode(HttpStatus.FORBIDDEN);
-                return response.setComplete();
-            }
+            return isUserMemberOfClubMono.flatMap(isUserMemberOfClub -> {
+                if (!isUserMemberOfClub) {
+                    // if user is not in the club, you can return a specific HTTP status or message
+                    response.setStatusCode(HttpStatus.FORBIDDEN);
+                    return response.setComplete();
+                }
 
-            return chain.filter(exchange);
-        });
+                return chain.filter(exchange);
+            });
+        };
     }
 
     public static class Config {

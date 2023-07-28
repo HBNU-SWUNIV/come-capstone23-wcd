@@ -3,10 +3,7 @@ package com.wcd.clubservice.entity;
 import com.wcd.clubservice.dto.club.request.RequestUpdateClub;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Club implements Serializable {

@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/clubs/{club-id}/posts/{post-id}/comments/")
+@RequestMapping("/clubs/{club-id}/posts/{post-id}/")
 public class ClubCommentController {
 
     Environment env;
@@ -25,7 +25,7 @@ public class ClubCommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/comments")
     public ResponseEntity<Page<ResponseCommentDto>> getAllPostComments(@PathVariable("club-id") Long clubId,
                                                               @PathVariable("post-id") Long postId,
                                                               Pageable pageable) {
@@ -33,7 +33,7 @@ public class ClubCommentController {
         return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
     }
 
-    @PostMapping("/")
+    @PostMapping("/comments")
     public ResponseEntity<ResponseCommentDto> createNewComment(@PathVariable("club-id") Long clubId,
                                                        @PathVariable("post-id") Long postId,
                                                        @RequestBody RequestCommentDto requestCommentDto) {
@@ -41,7 +41,7 @@ public class ClubCommentController {
         return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
-    @PatchMapping("/{comment-id}")
+    @PatchMapping("/comments/{comment-id}")
     public ResponseEntity<ResponseCommentDto> updateComment(@PathVariable("club-id") Long clubId,
                                                     @PathVariable("post-id") Long postId,
                                                     @PathVariable("comment-id") Long commentId,
@@ -50,7 +50,7 @@ public class ClubCommentController {
         return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
-    @DeleteMapping("/{comment-id}")
+    @DeleteMapping("/comments/{comment-id}")
     public HttpStatus deleteComment(@PathVariable("club-id") Long clubId,
                                     @PathVariable("post-id") Long postId,
                                     @PathVariable("comment-id") Long commentId,
