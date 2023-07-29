@@ -1,11 +1,9 @@
 package com.wcd.boardservice.controller;
 
-import com.wcd.boardservice.dto.comment.CommentDto;
 import com.wcd.boardservice.dto.comment.RequestCommentDto;
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
+import com.wcd.boardservice.dto.comment.UpdateRequestCommentDto;
 import com.wcd.boardservice.service.CommentService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,29 +22,22 @@ public class ClubCommentController {
         this.env = env;
         this.commentService = commentService;
     }
-
-    @GetMapping("/comments")
-    public ResponseEntity<Page<ResponseCommentDto>> getAllPostComments(@PathVariable("club-id") Long clubId,
-                                                              @PathVariable("post-id") Long postId,
-                                                              Pageable pageable) {
-        Page<ResponseCommentDto> commentListDtos = commentService.getAllPostComment(postId, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
-    }
-
     @PostMapping("/comments")
     public ResponseEntity<ResponseCommentDto> createNewComment(@PathVariable("club-id") Long clubId,
-                                                       @PathVariable("post-id") Long postId,
-                                                       @RequestBody RequestCommentDto requestCommentDto) {
-        ResponseCommentDto responseCommentDto = commentService.createComment(requestCommentDto);
+                                                               @PathVariable("post-id") Long postId,
+                                                               @RequestHeader("user-id") Long writerId,
+                                                               @RequestBody RequestCommentDto requestCommentDto) {
+        ResponseCommentDto responseCommentDto = commentService.createComment(clubId, postId, writerId, requestCommentDto);
         return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
     @PatchMapping("/comments/{comment-id}")
     public ResponseEntity<ResponseCommentDto> updateComment(@PathVariable("club-id") Long clubId,
-                                                    @PathVariable("post-id") Long postId,
-                                                    @PathVariable("comment-id") Long commentId,
-                                                    @RequestBody RequestCommentDto requestCommentDto) {
-        ResponseCommentDto responseCommentDto = commentService.updateComment(commentId, requestCommentDto.getWriterId(), requestCommentDto);
+                                                            @PathVariable("post-id") Long postId,
+                                                            @RequestHeader("user-id") Long writerId,
+                                                            @PathVariable("comment-id") Long commentId,
+                                                            @RequestBody UpdateRequestCommentDto updateRequestCommentDto) {
+        ResponseCommentDto responseCommentDto = commentService.updateComment(commentId, writerId, updateRequestCommentDto);
         return ResponseEntity.status(HttpStatus.OK).body(responseCommentDto);
     }
 
@@ -54,8 +45,16 @@ public class ClubCommentController {
     public HttpStatus deleteComment(@PathVariable("club-id") Long clubId,
                                     @PathVariable("post-id") Long postId,
                                     @PathVariable("comment-id") Long commentId,
-                                    @RequestBody Long userId) {
-        commentService.deleteComment(commentId, userId);
+                                    @RequestHeader("user-id") Long writerId) {
+        commentService.deleteComment(commentId, writerId);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/comments")
+    public ResponseEntity<Page<ResponseCommentDto>> getAllPostComments(@PathVariable("club-id") Long clubId,
+                                                                       @PathVariable("post-id") Long postId,
+                                                                       Pageable pageable) {
+        Page<ResponseCommentDto> commentListDtos = commentService.getAllPostComment(postId, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
     }
 }

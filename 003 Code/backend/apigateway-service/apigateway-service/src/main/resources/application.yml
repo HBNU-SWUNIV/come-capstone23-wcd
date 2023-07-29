@@ -110,7 +110,7 @@ spring:
           uri: lb://BOARD-SERVICE
           predicates:
             - Path=/board-service/clubs/{club-id}/**
-            - Method=GET,POST,PUT,DELETE
+            - Method=GET,POST,PUT, PATCH, DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/board-service/(?<segment>.*), /$\{segment}
