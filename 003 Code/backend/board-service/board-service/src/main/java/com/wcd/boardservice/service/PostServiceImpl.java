@@ -36,7 +36,6 @@ public class PostServiceImpl implements PostService{
     VoteService voteService;
     ModelMapper modelMapper;
     UserServiceClient userServiceClient;
-    ClubServiceClient clubServiceClient;
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
@@ -44,15 +43,13 @@ public class PostServiceImpl implements PostService{
                            VoteItemRepository voteItemRepository,
                            VoteService voteService,
                            ModelMapper modelMapper,
-                           UserServiceClient userServiceClient,
-                           ClubServiceClient clubServiceClient) {
+                           UserServiceClient userServiceClient) {
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.voteItemRepository = voteItemRepository;
         this.voteService = voteService;
         this.modelMapper = modelMapper;
         this.userServiceClient = userServiceClient;
-        this.clubServiceClient = clubServiceClient;
     }
 
     @Override
