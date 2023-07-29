@@ -3,6 +3,7 @@ package com.wcd.boardservice.controller;
 import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.RequestPostDto;
 import com.wcd.boardservice.dto.post.ResponsePostDto;
+import com.wcd.boardservice.dto.post.UpdateRequestPostDto;
 import com.wcd.boardservice.service.PostService;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -22,14 +23,6 @@ public class ClubPostController {
         this.postService = postService;
     }
 
-    @GetMapping("/posts")
-    public ResponseEntity<Page<ResponsePostListDto>> getAllCLubPosts(@PathVariable("club-id") Long clubId,
-                                                                     Pageable pageable) {
-        Page<ResponsePostListDto> responsePostListDtos = postService.getClubAllPost(clubId, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
-    }
-
     @PostMapping("/posts")
     public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId,
                                                          @RequestHeader("user-id") Long writerId,
@@ -38,19 +31,12 @@ public class ClubPostController {
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
-    @GetMapping("/posts/{post-id}")
-    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId,
-                                                   @PathVariable("post-id") Long postId) {
-        ResponsePostDto responsePostDto = postService.getPostById(postId);
-        return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
-    }
-
     @PatchMapping("/posts/{post-id}")
     public ResponseEntity<ResponsePostDto> updatePost(@PathVariable("club-id") Long clubId,
                                                       @PathVariable("post-id") Long postId,
                                                       @RequestHeader("user-id") Long writerId,
-                                                      @RequestBody RequestPostDto requestPostDto) {
-        ResponsePostDto responsePostDto = postService.updatePost(postId, writerId, requestPostDto);
+                                                      @RequestBody UpdateRequestPostDto updateRequestPostDto) {
+        ResponsePostDto responsePostDto = postService.updatePost(postId, writerId, updateRequestPostDto);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
@@ -60,5 +46,29 @@ public class ClubPostController {
                                  @RequestHeader("user-id") Long writerId) {
         postService.deletePost(writerId, postId);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/posts/{post-id}")
+    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId,
+                                                   @PathVariable("post-id") Long postId) {
+        ResponsePostDto responsePostDto = postService.getPostById(postId);
+        return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<Page<ResponsePostListDto>> getAllPostsInClub(@PathVariable("club-id") Long clubId,
+                                                                       Pageable pageable) {
+        Page<ResponsePostListDto> responsePostListDtos = postService.getAllPostInClub(clubId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
+    }
+
+    @GetMapping("/users/{user-id}")
+    public ResponseEntity<Page<ResponsePostListDto>> getAllPostsByUserInClub(@PathVariable("club-id") Long clubId,
+                                                                             @PathVariable("user-id") Long userId,
+                                                                             Pageable pageable) {
+        Page<ResponsePostListDto> responsePostListDtos = postService.getAllPostByUserInClub(clubId, userId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }
 }

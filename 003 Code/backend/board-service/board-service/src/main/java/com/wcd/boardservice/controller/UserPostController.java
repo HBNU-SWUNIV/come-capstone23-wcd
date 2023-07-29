@@ -25,7 +25,7 @@ public class UserPostController {
 
     @GetMapping("/posts")
     public ResponseEntity<Page<ResponsePostListDto>> getUserAllPosts(@PathVariable("user-id") Long userId, Pageable pageable) {
-        Page<ResponsePostListDto> postListDtos = postService.getUserAllPost(userId, pageable);
+        Page<ResponsePostListDto> postListDtos = postService.getAllPostByUser(userId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(postListDtos);
     }
 }
