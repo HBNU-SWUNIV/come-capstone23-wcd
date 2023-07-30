@@ -44,100 +44,51 @@ import axios from "axios";
 import router from "../router/index";
 import store from "@/vuex/store";
 
-export default {
-  setup() {
+export default{
+  setup(){
     const loginId = ref("");
     const password = ref("");
-
-    // const user = {
-    //   id: 1,
-    //   username: "example_user",
-    //   isLogin: true,
-    // };
 
     const LoginSubmit = async () => {
       const loginData = {
         loginId: loginId.value,
-        password: password.value,
+        password: password.value
       };
-      try {
-        if (loginId.value === "") {
-          alert("ID를 입력하세요.");
-          return;
-        }
-        if (password.value === "") {
-          alert("비밀번호를 입력하세요.");
-          return;
-        }
-        await axios
-          .post("http://localhost:3000/login", JSON.stringify(loginData))
-          .then((res) => {
-            console.log(res);
-            alert("로그인 되었습니다.");
-            // store.commit("changeLoginState");
-            // localStorage.setItem('user', JSON.stringify(user));
-            // localStorage.setItem('isLogin', 'true')
-            store.dispatch('login')
 
-            router.push({
-              name: "HomePage",
-            });
-          });
-      } catch (err) {
-        alert("다시 시도해주세요.");
-        console.log(err);
-      }
-    };
-
-    return {
-      loginId,
-      password,
-      LoginSubmit,
-    };
-  },
-};
-</script>
-
-<!-- <script>
-import {reactive} from 'vue'
-import router from "../router/index";
-
-export default{
-  setup(){
-    const loginData = reactive({
-      loginId:'',
-      password:'',
-    })
-
-    const LoginSubmit = async () => {
       try{
-        
-        const response = await fetch('/api/login',{
-          method:'POST',
-          header:{
-            'Content-Type':'application/json',
-          },
-          body:JSON.stringify(loginData),
-        });
-        
-        const {access_token, refresh_token} = await response.json();
-        
-        localStorage.setItem('access_token', access_token);
-        localStorage.setItem('refresh_token', refresh_token);
-        router.push({
-          name:'HomePage'
-        })
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'text/plain'
+          }
+        }
+
+        await axios.post('http://localhost:8000/user-service/login', loginData, config)
+            .then((res) => {
+              if (res.status === 200) {
+                // 모든 헤더 이름은 소문자
+                let accessToken = res.headers["access_token"]; // 응답헤더에서 토큰 받기
+                let refreshToken = res.headers['refresh_token']; // 응답헤더에서 토큰 받기
+                localStorage.setItem('access_token', accessToken);
+                localStorage.setItem('refresh_token', refreshToken);
+                store.dispatch('login')
+                router.push({
+                  name: 'HomePage'
+                });
+              }
+            })
       } catch(error){
         console.error(error)
       }
     }
     return{
-      loginData,
+      loginId,
+      password,
       LoginSubmit,
     }
   }
 }
-</script> -->
+</script>
 
 
 <style>

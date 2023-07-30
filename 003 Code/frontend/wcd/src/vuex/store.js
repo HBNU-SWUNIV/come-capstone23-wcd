@@ -19,7 +19,7 @@ import { createStore } from 'vuex';
 
 const store = createStore({
   state: {
-    isLogin: localStorage.getItem('isLogin') === 'true' || false,
+    isLogin: localStorage.getItem('access_token') === null || false,
     selectedMeetingId: null,
   },
   mutations: {
@@ -42,7 +42,7 @@ const store = createStore({
     },
     checkLoginState({ commit }) {
       // Local Storage에서 로그인 상태를 가져와서 Vuex 스토어에 저장
-      const isLoggedIn = localStorage.getItem('isLogin') === 'true';
+      const isLoggedIn = localStorage.getItem('access_token') === !null;
       commit('SET_LOGIN_STATE', isLoggedIn);
     },
   },

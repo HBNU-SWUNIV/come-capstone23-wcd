@@ -5,6 +5,14 @@
       <form class="SignupForm" @submit.prevent="SignupSubmit">
         <div class="SignupBox">
           <input
+              type="file"
+              class="form-control"
+              id="profileImage"
+              v-on:change="handleFileUpload"
+              placeholder="프로필 이미지"
+          />
+
+          <input
             type="text"
             class="form-control"
             id="name"
@@ -58,8 +66,8 @@
             </div>
             <select class="custom-select" id="gender" v-model="gender">
               <option selected>선택...</option>
-              <option value="남성">남성</option>
-              <option value="여성">여성</option>
+              <option value="MALE">남성</option>
+              <option value="FEMALE">여성</option>
             </select>
           </div>
         </div>
@@ -95,16 +103,25 @@ export default {
     const phoneNumber = ref("");
     const birthday = ref("");
     const gender = ref("");
+    const profileImage = ref(null);
+
+    const handleFileUpload = (event) => {
+      profileImage.value = event.target.files[0];
+    };
+
+    // 빈 Blob을 생성합니다.
+    const emptyFile = new Blob([""], { type: "image/jpeg" });
 
     const SignupSubmit = async () => {
-      const SignupData = {
-        name: name.value,
-        loginId: loginId.value,
-        password: password.value,
-        phoneNumber: phoneNumber.value,
-        birthday: birthday.value,
-        gender: gender.value,
-      };
+      let SignupData = new FormData();
+      SignupData.append('profileImage', emptyFile);
+      SignupData.append('loginId', loginId.value);
+      SignupData.append('password', password.value);
+      SignupData.append('name', name.value);
+      SignupData.append('phoneNumber', phoneNumber.value);
+      SignupData.append('birthday', birthday.value);
+      SignupData.append('gender', gender.value);
+
       try {
         if (name.value === "") {
           alert("이름을 입력하세요.");
@@ -116,6 +133,10 @@ export default {
         }
         if (password.value === "") {
           alert("비밀번호를 입력하세요.");
+          return;
+        }
+        if (password.value !== pwCheck.value) {
+          alert("비밀번호 확인이 일치하지 않습니다.");
           return;
         }
         if (phoneNumber.value === "") {
@@ -130,15 +151,20 @@ export default {
           alert("성별을 선택하세요.");
           return;
         }
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
         await axios
-          .post("http://localhost:3000/signup", JSON.stringify(SignupData))
-          .then((res) => {
-            console.log(res);
-            alert("회원가입 되었습니다.");
-            router.push({
-              name: "LoginPage",
+            .post("http://localhost:8000/user-service/signup", SignupData, config)
+            .then((res) => {
+              console.log(res);
+              alert("회원가입 되었습니다.");
+              router.push({
+                name: "LoginPage",
+              });
             });
-          });
       } catch (err) {
         console.log(err);
       }
@@ -152,53 +178,14 @@ export default {
       phoneNumber,
       birthday,
       gender,
+      profileImage,
+      handleFileUpload,
       SignupSubmit,
     };
   },
 };
 </script>
 
-<!-- <script>
-import { reactive } from "vue";
-import router from '../router/index'
-
-export default {
-  setup() {
-    const signupData = reactive({
-      name: "",
-      loginId: "",
-      password: "",
-      phoneNumber: "",
-      birthday: "",
-      gender: "",
-    });
-
-    const SignupSubmit = async () => {
-      try {
-        
-        const response = await fetch("/api/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupData),
-        });
-        
-        router.push({
-          name: "LoginPage",
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    return{
-      signupData,
-      SignupSubmit,
-    }
-  },
-};
-</script> -->
 
 <style>
 .SignupPage {
@@ -257,8 +244,4 @@ a {
   margin-left: 20px;
   text-decoration: none;
 }
-</style>
-
-<style scoped>
-
 </style>
