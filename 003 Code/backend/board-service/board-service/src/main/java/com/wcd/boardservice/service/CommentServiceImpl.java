@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -105,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getAllComment(Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findAll(pageable);
-            Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
             return responseCommentDtos;
         } catch (Exception e) {
             return null;
@@ -116,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getAllCommentsInPost(Long postId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findBypostId(postId, pageable);
-            Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
             return responseCommentDtos;
         } catch (Exception e) {
             return null;
@@ -127,7 +126,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getAllCommentsByUserInClub(Long clubId, Long writerId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findByClubIdAndWriterId(clubId, writerId, pageable);
-            Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
 
             return responseCommentDtos;
         } catch (Exception e) {
@@ -139,7 +138,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getALlUserComment(Long userId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findBywriterId(userId, pageable);
-            Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
 
             return responseCommentDtos;
         } catch (Exception e) {
@@ -161,8 +160,8 @@ public class CommentServiceImpl implements CommentService {
 //        }
 //    }
 
-    // postLists에 작성자 명을 더한 리스트를 반환하는 메서드
-    private Page<ResponseCommentDto> getPostListWithWriterNames (Page<Comment> commentLists) {
+    // commentLists에 작성자 명을 더한 리스트를 반환하는 메서드
+    private Page<ResponseCommentDto> geCommentListWithWriterNames(Page<Comment> commentLists) {
         // Collect userIds from post lists.
         List<Long> writerIds = commentLists.stream()
                 .map(Comment::getWriterId)
