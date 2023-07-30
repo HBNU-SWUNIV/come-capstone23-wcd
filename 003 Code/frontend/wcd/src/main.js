@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router/index'
 import store from './vuex/store'
+import router from './router/index'
 
 createApp(App)
-.use(router)
 .use(store)
+.use(router)
 .mount('#app')
+
+store.dispatch('checkLoginState');
