@@ -27,7 +27,7 @@ public class ClubServiceClient {
 
     public Mono<Boolean> isUserMemberOfClub(Long clubId, Long userId) {
         return webClient.get()
-                .uri("lb://CLUB-SERVICE/member/{userId}/club/{clubId}", userId, clubId)
+                .uri("lb://CLUB-SERVICE/clubs/{clubId}/members/{userId}", userId, clubId)
                 .retrieve()
                 .bodyToMono(Boolean.class);
     }
