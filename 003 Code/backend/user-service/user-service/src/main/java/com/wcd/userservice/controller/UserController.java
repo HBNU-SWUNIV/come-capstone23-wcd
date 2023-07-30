@@ -51,9 +51,15 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "회원 이름 조회", description = "해당 회원 user-id의 user-name 조회")
+    @Operation(summary = "회원 이름 목록 조회", description = "해당 회원들의 user-id의 user-name 조회")
     @PostMapping("/user/userNames")
     public ResponseEntity<ResponseUsernames> getUserNamesByIds(@RequestBody RequestUsernames requestUsernames) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserNamesByIds(requestUsernames));
+    }
+
+    @Operation(summary = "회원 이름 조회", description = "해당 회원 user-id의 user-name 조회")
+    @PostMapping("/user/userName")
+    public String getUserNameById(@RequestBody Long userId) {
+        return userService.getUserNameById(userId);
     }
 }
