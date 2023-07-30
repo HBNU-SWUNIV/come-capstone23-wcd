@@ -42,10 +42,7 @@ public class CommentServiceImpl implements CommentService {
 
             Comment savedComment = commentRepository.save(newComment);
 
-            List<Long> writerIds = new ArrayList<>();
-            writerIds.add(writerId);
-            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
-            ResponseCommentDto responseCommentDto = savedComment.toResponseCommentDto(writerIdToNameMap.get(writerId));
+            ResponseCommentDto responseCommentDto = savedComment.toResponseCommentDto(userServiceClient.getUserNameById(writerId));
 
             return responseCommentDto;
         } catch (Exception e) {
@@ -66,10 +63,7 @@ public class CommentServiceImpl implements CommentService {
 
             comment.update(updateRequestCommentDto);
 
-            List<Long> writerIds = new ArrayList<>();
-            writerIds.add(writerId);
-            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
-            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(writerIdToNameMap.get(writerId));
+            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(userServiceClient.getUserNameById(writerId));
 
             return responseCommentDto;
         } catch (NoSuchElementException e) {
@@ -99,10 +93,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
 
-            List<Long> writerIds = new ArrayList<>();
-            writerIds.add(comment.getWriterId());
-            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
-            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(writerIdToNameMap.get(comment.getWriterId()));
+            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(userServiceClient.getUserNameById(comment.getWriterId()));
 
             return responseCommentDto;
         } catch (NoSuchElementException e) {
@@ -122,10 +113,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<ResponseCommentDto> getAllPostComment(Long postId, Pageable pageable) {
+    public Page<ResponseCommentDto> getAllCommentsInPost(Long postId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findBypostId(postId, pageable);
             Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+            return responseCommentDtos;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Page<ResponseCommentDto> getAllCommentsByUserInClub(Long clubId, Long writerId, Pageable pageable) {
+        try {
+            Page<Comment> commentLists = commentRepository.findByClubIdAndWriterId(clubId, writerId, pageable);
+            Page<ResponseCommentDto> responseCommentDtos = getPostListWithWriterNames(commentLists);
+
             return responseCommentDtos;
         } catch (Exception e) {
             return null;
