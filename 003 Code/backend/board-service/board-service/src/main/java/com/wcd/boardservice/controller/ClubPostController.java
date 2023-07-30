@@ -62,13 +62,4 @@ public class ClubPostController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }
-
-    @GetMapping("/users/{user-id}")
-    public ResponseEntity<Page<ResponsePostListDto>> getAllPostsByUserInClub(@PathVariable("club-id") Long clubId,
-                                                                             @PathVariable("user-id") Long userId,
-                                                                             Pageable pageable) {
-        Page<ResponsePostListDto> responsePostListDtos = postService.getAllPostByUserInClub(clubId, userId, pageable);
-
-        return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
-    }
 }

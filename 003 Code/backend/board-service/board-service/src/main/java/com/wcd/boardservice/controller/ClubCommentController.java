@@ -57,13 +57,4 @@ public class ClubCommentController {
         Page<ResponseCommentDto> commentListDtos = commentService.getAllCommentsInPost(postId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
     }
-
-    @GetMapping("/comments")
-    public ResponseEntity<Page<ResponseCommentDto>> getAllCommentsByUserInClub(@PathVariable("club-id") Long clubId,
-                                                                               @PathVariable("post-id") Long postId,
-                                                                               @RequestHeader("user-id") Long writerId,
-                                                                               Pageable pageable) {
-        Page<ResponseCommentDto> commentListDtos = commentService.getAllCommentsByUserInClub(clubId, writerId, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(commentListDtos);
-    }
 }
