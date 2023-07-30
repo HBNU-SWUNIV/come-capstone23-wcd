@@ -1,14 +1,20 @@
 package com.wcd.clubservice.service.member;
 
 import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
+import com.wcd.clubservice.dto.clubMember.response.ResponseClubMember;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
+import com.wcd.clubservice.enums.Grade;
+
+import java.util.List;
 
 public interface ClubMemberService {
-    Long createClubMember(RequestJoinClubMember requestJoinClubMember);
+    Long createClubMember(Long clubId, Long userId);
 
-    ResponseClubMembersByClubId getClubMembers(Long clubId);
+    List<ResponseClubMember> getClubMembers(Long clubId);
 
     void deleteClubMember(Long userId, Long clubId);
+
+    Long setClubMemberGrade(Long clubId, Long userId, Grade grade);
 
     void deleteMember(Long userId);
 

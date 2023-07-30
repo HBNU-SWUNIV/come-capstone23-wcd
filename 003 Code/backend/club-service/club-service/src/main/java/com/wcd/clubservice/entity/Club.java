@@ -1,6 +1,7 @@
 package com.wcd.clubservice.entity;
 
 import com.wcd.clubservice.dto.club.request.RequestUpdateClub;
+import com.wcd.clubservice.dto.club.response.ResponseClub;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import jakarta.persistence.*;
 import lombok.*;
@@ -95,5 +96,22 @@ public class Club implements Serializable {
         if (StringUtils.hasText(requestUpdateClub.getClubName())) {
             this.recruitment = requestUpdateClub.isRecruitment();
         }
+    }
+
+    public ResponseClub toResponseClub(String hostName) {
+        return ResponseClub.builder()
+                .id(this.id)
+                .hostId(this.hostId)
+                .hostName(hostName)
+                .clubName(this.clubName)
+                .category(this.category)
+                .description(this.description)
+                .mainImageUrl(this.mainImageUrl)
+                .approvalMethod(this.approvalMethod)
+                .maximumPeople(this.maximumPeople)
+                .recruitment(this.recruitment)
+                .createdAt(this.createdAt)
+                .build();
+
     }
 }

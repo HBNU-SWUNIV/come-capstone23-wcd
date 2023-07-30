@@ -1,5 +1,5 @@
 package com.wcd.clubservice.enums;
 
 public enum Grade {
-    GOLD, SILVER, BRONZE
+    HOST, ADMIN, GOLD, SILVER, BRONZE
 }
