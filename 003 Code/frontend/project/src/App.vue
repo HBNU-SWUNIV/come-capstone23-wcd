@@ -1,45 +1,67 @@
 <template>
-  <LeftScreen/>
-  <NavScreen/>
-  <MainScreen/>
-  <div id="main_screen" class="d-flex flex-column justify-content-center">
-    <router-view/>
+  <div class="BasicDisplay">
+    <div class="BasicWrap">
+      <MyClub />
+      <div class="MiddleWrap">
+        <HomeNavBar v-if="!hasParams" />
+        <NavBar v-else/>
+        <MainScreen />
+      </div>
+      <ChatNav />
+    </div>
   </div>
-  <RightScreen/>
 </template>
 
 <script>
-import LeftScreen from '@/components/LeftScreen'
-import NavScreen from '@/components/NavScreen'
-import MainScreen from '@/components/MainScreen'
-import RightScreen from '@/components/RightScreen'
+import ChatNav from "./components/ChatNav.vue";
+import MainScreen from "./components/MainScreen.vue";
+import MyClub from "./components/MyClub.vue";
+import HomeNavBar from "./components/HomeNavBar.vue";
+import NavBar from './components/NavBar.vue'
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
-  name: 'App',
   components: {
-    LeftScreen,
-    NavScreen,
+    MyClub,
+    HomeNavBar,
     MainScreen,
-    RightScreen,
-  }
-}
+    ChatNav,
+    NavBar,
+  },
+  setup() {
+    const route = useRoute();
+
+    const hasParams = computed(() => {
+      return Object.keys(route.params).length > 0;
+    });
+
+    return {
+      hasParams,
+    };
+  },
+};
 </script>
 
 <style>
-#app{
-  position: relative;
-  width: 1920px;
+.BasicDisplay {
   height: 1080px;
+  width: 1920px;
+}
+.BasicWrap {
+  display: flex;
+  height: 1080px;
+  width: 1920px;
   background-color: #383838;
 }
-
-#main_screen{
-  position: absolute;
+.MiddleWrap {
+  height: 100%;
   width: 1500px;
-  height: 1000px;
-  left: 120px;
-  top: 80px;
-  background: #232324;
-  border-radius: 15px 0px 0px 0px;
+}
+.routerlink:hover {
+  color: purple;
+}
+.LoginRouterlink:hover {
+  color: purple;
 }
 </style>
