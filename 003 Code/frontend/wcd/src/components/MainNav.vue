@@ -61,6 +61,8 @@ export default {
       // localStorage.removeItem('isLogin');
       // store.state.isLogin = false;
       store.dispatch('logout')
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       router.push({
         name:'HomePage'
       })

@@ -75,6 +75,8 @@ export default{
                 router.push({
                   name: 'HomePage'
                 });
+              } else {
+                // 로그인 실패 시 구현 해야함
               }
             })
       } catch(error){

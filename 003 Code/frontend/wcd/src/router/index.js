@@ -101,7 +101,7 @@ const routes = [
         component: NoticeDetail,
     },
     {
-        path: '/:id/board-detail/:num',
+        path: '/clubs/:clubId/board-detail/:boardId',
         name: 'BoardDetail',
         component: BoardDetail,
     }

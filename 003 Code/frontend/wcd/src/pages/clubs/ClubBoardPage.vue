@@ -29,66 +29,22 @@
     </div>
 
     <div class="BoardContentsArea">
-      <div
-        class="d-flex flex-row mt-4"
-        v-for="board in displayedBoards"
-        :key="board.id"
-      >
-        <div
-          class="Contents"
-          style="width: 100px; text-align: center; margin-left: 115px"
-        >
+      <div class="d-flex flex-row mt-4" v-for="board in displayedBoardsWithClubId" :key="board.id">
+        <div class="Contents" style="width: 100px; text-align: center; margin-left: 115px">
           <label> {{ board.id }} </label>
         </div>
-        <div
-          class="Contents"
-          style="width: 650px; text-align: left; margin-left: 100px; cursor: pointer;"
-          @click="goBoardDetail(board.id)"
-        >
+        <div class="Contents" style="width: 650px; text-align: left; margin-left: 100px; cursor: pointer;" @click="goBoardDetail(currentClubId, board.id)">
           <label> {{ board.title }}</label>
         </div>
-        <div
-          class="Contents"
-          style="width: 200px; text-align: center; margin-left: 30px"
-        >
-          <label>내가 누구게</label>
+        <div class="Contents" style="width: 200px; text-align: center; margin-left: 30px">
+          <label> {{ board.writerName }}</label> <!-- Displaying writerName -->
         </div>
-        <div
-          class="Contents"
-          style="width: 250px; text-align: center; margin-left: 20px"
-        >
-          <label>2020-01-01</label>
+        <div class="Contents" style="width: 250px; text-align: center; margin-left: 20px">
+          <label>{{ formatDate(board.createdAt) }}</label> <!-- Displaying formatted createdAt -->
         </div>
       </div>
     </div>
-    <div class="PageNavArea" v-if="totalPages > 1">
-      <div
-        class="PageBox"
-        @click="prevPage"
-        v-show="currentPage !== 1"
-        style="cursor: pointer"
-      >
-        이전
-      </div>
-      <div
-        class="PageBox"
-        v-for="pageNumber in totalPages"
-        :key="pageNumber"
-        @click="gotoPage(pageNumber)"
-        :class="{ active: currentPage === pageNumber }"
-        style="cursor: pointer"
-      >
-        {{ pageNumber }}
-      </div>
-      <div
-        class="PageBox"
-        @click="nextPage"
-        v-show="currentPage !== totalPages"
-        style="cursor: pointer"
-      >
-        다음
-      </div>
-    </div>
+    <!-- ... (rest of the template) ... -->
   </div>
 </template>
 
@@ -103,72 +59,102 @@ export default {
     const route = useRoute();
     const currentClubId = route.params.id;
 
-    const displayedBoardsWithClubId = computed(() => {
-      return boards.value.filter((board) => board.clubId === currentClubId);
-    });
-
     const goCreateBoardPage = () => {
       router.push({
         name: "CreateBoardPage",
       });
     };
 
-    const goBoardDetail = (id) => {
+    // Function to format date as "YYYY-MM-DD HH:mm:ss" or "HH:mm:ss" for current day posts
+    const formatDate = (timestamp) => {
+      const date = new Date(timestamp);
+      const now = new Date();
+
+      const isToday =
+          date.getDate() === now.getDate() &&
+          date.getMonth() === now.getMonth() &&
+          date.getFullYear() === now.getFullYear();
+
+      if (isToday) {
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+      } else {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+    };
+
+    const goBoardDetail = (clubId, boardId) => {
       router.push({
-        name:'BoardDetail',
+        name: 'BoardDetail',
         params: {
-          num: id,
+          clubId: clubId,
+          boardId: boardId,
         },
       })
     }
-
     const perPage = 10; // 페이지 당 보여줄 항목 수
     const boards = ref([]);
     const currentPage = ref(1);
 
+    // JWT 토큰 가져오기
+    const access_token = localStorage.getItem('access_token');
+
+    // JWT 토큰이 존재하는 경우에만 헤더 설정
+    if (access_token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+    }
+
     // JSON 서버에서 데이터 받아오기
+    // const fetchData = async () => {
+    //   const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts`);
+    //   const responseData = response.data;
+    //
+    //   boards.value = responseData.content; // 게시글 목록 설정
+    // };
+
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/boards");
-      const boardsData = response.data.map((item) => {
-        const parsedItem = JSON.parse(Object.keys(item)[0]);
-        parsedItem.id = item.id;
-        return parsedItem;
-      });
+      const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts`);
+      const responseData = response.data;
 
-      const filteredBoards = boardsData.filter(
-        (item) => item.clubId === currentClubId
-      );
-
-      boards.value = filteredBoards.sort((a, b) => b.id - a.id); // id를 내림차순으로 정렬
+      boards.value = responseData.content.sort((a, b) => b.id - a.id); // 게시글 목록 설정, 내림차순으로 정렬
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기로 데이터 받아오기
 
-    const displayedBoards = computed(() => {
+    const displayedBoardsWithClubId = computed(() => {
       const start = (currentPage.value - 1) * perPage;
       const end = start + perPage;
       return boards.value.slice(start, end);
     });
 
     const totalPages = computed(() => {
-      return Math.ceil(boards.value.length / perPage);
+      return boards.value.length > 0 ? fetchData.totalPages : 0;
     });
 
     const prevPage = () => {
-      currentPage.value--;
+      if (currentPage.value > 1) {
+        currentPage.value--;
+      }
     };
 
     const nextPage = () => {
-      currentPage.value++;
+      if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+      }
     };
 
     const gotoPage = (pageNumber) => {
-      currentPage.value = pageNumber;
+      if (pageNumber >= 1 && pageNumber <= totalPages.value) {
+        currentPage.value = pageNumber;
+      }
     };
 
     return {
       goCreateBoardPage,
-      displayedBoards,
       totalPages,
       currentPage,
       prevPage,
@@ -177,10 +163,12 @@ export default {
       currentClubId,
       displayedBoardsWithClubId,
       goBoardDetail,
+      formatDate, // Expose the formatDate function to the template
     };
   },
 };
 </script>
+
 
 <style>
 .SearchArea {

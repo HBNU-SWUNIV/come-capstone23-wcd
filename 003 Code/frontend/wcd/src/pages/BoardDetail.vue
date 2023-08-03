@@ -1,25 +1,25 @@
 <template>
   <div>
     <div class="TitleArea">
-      <label class="BoardTitle">{{ boards.title }}</label>
+      <label class="BoardTitle">{{ board.title }}</label>
     </div>
     <div class="InfoArea">
-      <label class="BoardInfo">[ 작성자 ]</label>
-      <label class="BoardInfo">2020-01-25</label>
+      <label class="BoardInfo">[ 작성자: {{ board.writerName }}]</label>
+      <label class="BoardInfo">{{ board.createdAt }}</label>
     </div>
     <div class="ContentArea">
-      <label class="BoardContent">{{ boards.content }}</label>
+      <label class="BoardContent">{{ board.content }}</label>
     </div>
     <div class="BtnArea">
       <button
-        class="button"
-        style="background-color: gray"
-        @click="goBoardPage"
+          class="button"
+          style="background-color: gray"
+          @click="goBoardPage"
       >
         목록
       </button>
       <button class="button" style="background-color: green">수정</button>
-      <button class="button" style="background-color: red" @click="deleteBoard(boards.id)">
+      <button class="button" style="background-color: red" @click="deleteBoard(board.id)">
         삭제
       </button>
     </div>
@@ -34,40 +34,53 @@ import router from "@/router/index";
 
 export default {
   setup() {
-    const boards = ref([]);
+    const board = ref({});
     const route = useRoute();
-    const currentBoardId = route.params.num;
+    const currentClubId = route.params.clubId;
+    const currentBoardId = route.params.boardId;
 
     const goBoardPage = () => {
       router.push({
         name: "ClubBoardPage",
         params: {
-          id: route.params.id,
+          id: currentClubId,
         },
       });
     };
 
+    // JWT 토큰 가져오기
+    const access_token = localStorage.getItem('access_token');
+
+    // JWT 토큰이 존재하는 경우에만 헤더 설정
+    if (access_token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+    }
+
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/boards");
-      const boardsData = response.data.map((item) => {
-        const parsedItem = JSON.parse(Object.keys(item)[0]);
-        parsedItem.id = item.id;
-        return parsedItem;
-      });
-      console.log(boardsData)
-      boards.value = boardsData[currentBoardId - 1];
+      const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts/${currentBoardId}`);
+      board.value = response.data;
+
+      // 날짜와 시간을 분 단위까지만 표시
+      const date = new Date(board.value.createdAt);
+
+      // Get Year, Month and Date
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // JavaScript months are 0-based
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}.${month}.${day}`;
+
+      // Get Hours and Minutes in 24-hour format
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}`;
+
+      board.value.createdAt = `${formattedDate} ${formattedTime}`;
     };
 
-    const deleteBoard = async (id) => {
+    const deleteBoard = async () => {
       try {
-        // JSON-Server API의 URL을 포함한 요청 주소를 생성합니다.
-        const url = `http://localhost:3000/boards/${id}`;
-
-        // 서버에 DELETE 요청을 보냅니다.
+        const url = `http://localhost:8000/board-service/clubs/${currentClubId}/posts/${currentBoardId}`;
         await axios.delete(url);
-
-        // 성공적으로 삭제되면 원하는 동작을 수행하도록 추가적인 로직을 구현합니다.
-        console.log(`ID ${id}에 해당하는 데이터가 성공적으로 삭제되었습니다.`);
         alert("게시글이 삭제 되었습니다.");
         goBoardPage();
       } catch (error) {
@@ -75,10 +88,11 @@ export default {
       }
     };
 
+    console.log("클럽: ", currentClubId, "게시판: ", currentBoardId)
     fetchData();
 
     return {
-      boards,
+      board,
       goBoardPage,
       deleteBoard,
     };

@@ -70,6 +70,23 @@
           />
         </div>
 
+        <!-- 태그 입력란 -->
+        <div class="Tag-Box">
+          <label class="Tag-Label">태그 입력</label>
+          <input
+              class="Tag-Input"
+              type="text"
+              v-model="tagInput"
+              @keydown.enter.prevent="addTag"
+          />
+          <div class="Tags">
+            <span v-for="(tag, index) in tags" :key="index" class="Tag">
+              {{ tag }}
+              <button class="Tag-Remove-Btn" @click="removeTag(index)">x</button>
+            </span>
+          </div>
+        </div>
+
         <div class="Btn-Box">
           <button class="Cancel-Btn" @click="CancelSubmit">취소</button>
           <button class="Create-Btn" type="submit">생성</button>
@@ -89,6 +106,8 @@ export default {
     const clubName = ref("");
     const description = ref("");
     const maximumPeople = ref("");
+    const tagInput = ref(""); // 태그 입력 값을 관리하는 변수
+    const tags = ref([]); // 입력된 태그들을 배열로 관리
 
     const goClubHome = (id) => {
       router.push({
@@ -105,31 +124,61 @@ export default {
       });
     };
 
+    // 빈 Blob을 생성합니다.
+    const emptyFile = new Blob(["dsdsdscsd"], { type: "image/jpeg" });
+
+    // 태그를 추가하는 함수
+    const addTag = () => {
+      if (tagInput.value) {
+        tags.value.push(tagInput.value);
+        tagInput.value = "";
+      }
+    };
+
+    // 태그를 제거하는 함수
+    const removeTag = (index) => {
+      tags.value.splice(index, 1);
+    };
+
     const CreateClubSubmit = async () => {
-      const ClubData = {
-        hostId: "testId",
-        clubName: clubName.value,
-        category: category.value,
-        description: description.value,
-        mainImageUrl: "test",
-        approvalMethod: approvalMethod.value,
-        maximumPeople: maximumPeople.value,
-        recruitment: true,
-        createdAt: "2020-01-02",
-      };
+      const formData = new FormData();
+      formData.append("mainImageUrl", emptyFile);
+      formData.append("clubName", clubName.value);
+      formData.append("category", category.value);
+      formData.append("description", description.value);
+      formData.append("approvalMethod", approvalMethod.value);
+      formData.append("maximumPeople", maximumPeople.value);
+
+      // 태그들을 FormData에 추가
+      tags.value.forEach((tag) => {
+        formData.append(`tagList`, tag);
+      });
+
       try {
         if (clubName.value === "") {
           alert("모임이름을 입력하세요.");
           return;
         }
-        await axios
-          .post("http://localhost:3000/clubs", JSON.stringify(ClubData))
-          .then((res) => {
-            console.log(res);
-            const createdClub = res.data;
-            alert("모임이 생성되었습니다.");
-            goClubHome(createdClub.id);
-          });
+
+        // JWT 토큰 가져오기
+        const access_token = localStorage.getItem('access_token');
+
+        // JWT 토큰이 존재하는 경우에만 헤더 설정
+        if (access_token) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        }
+        const res = await axios.post("http://localhost:8000/club-service/clubs", formData, config);
+        console.log(res);
+        const createdClub = res.data;
+        alert("모임이 생성되었습니다.");
+        goClubHome(createdClub);
+
       } catch (err) {
         alert("다시 시도해주세요.");
         console.log(err);
@@ -150,10 +199,10 @@ export default {
     ];
     const category = ref("");
 
-    const approvalType = ref("manual");
+    // const approvalType = ref("manual");
     const approvalOptions = [
-      { value: "manual", label: "수동 승인" },
-      { value: "auto", label: "자동 승인" },
+      { value: "APPROVAL", label: "수동 승인" },
+      { value: "FREE", label: "자동 승인" },
     ];
     const approvalMethod = ref("");
 
@@ -165,14 +214,17 @@ export default {
       CreateClubSubmit,
       categories,
       category,
-      approvalType,
-      approvalOptions,
       approvalMethod,
+      tagInput,
+      tags,
+      approvalOptions,
       maximumPeople,
+      addTag,
+      removeTag,
     };
   },
 };
-</script>
+  </script>
   
 <style>
 .ClubCreatePage {

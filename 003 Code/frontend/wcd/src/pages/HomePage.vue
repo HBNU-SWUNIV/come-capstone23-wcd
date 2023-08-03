@@ -1,21 +1,19 @@
-<!-- 로그인 되어있을때 /모임 추천화면(홈화면)
-  params없으면 모임 추천화면
-  로그인 되어있지 않을때 "로그인이 필요한 서비스입니다."" -->
 <template>
   <div class="HomePage">
-    <div class="LoginScreen" v-if="$store.state.isLogin">
+    <!-- 로그인 상태일 때 -->
+    <div v-if="$store.state.isLogin">
       <label class="Recommend-Message">나의 모임</label>
       <div class="scrollable-container">
         <div
-          class="scrollable-content d-flex flex-row"
-          v-for="club in clubs"
-          :key="club.id"
-          @click="goClubHome(club.id)"
+            class="scrollable-content d-flex flex-row"
+            v-for="club in clubs"
+            :key="club.id"
+            @click="goClubHome(club.id)"
         >
           <!-- 모임 정보 표시 -->
           <img
-            class="MyClub-Logo"
-            src="https://demo.ycart.kr/shopboth_farm_max5_001/data/editor/1612/cd2f39a0598c81712450b871c218164f_1482469221_493.jpg"
+              class="MyClub-Logo"
+              src="https://demo.ycart.kr/shopboth_farm_max5_001/data/editor/1612/cd2f39a0598c81712450b871c218164f_1482469221_493.jpg"
           />
           <div class="information d-flex flex-column ml-3">
             <h3>{{ club.clubName }}</h3>
@@ -26,20 +24,17 @@
       </div>
       <div class="NoneClubs" v-if="clubs.length === 0">
         <img
-          class="NotLoginImg"
-          src="https://cdn-icons-png.flaticon.com/512/11046/11046384.png "
+            class="NotLoginImg"
+            src="https://cdn-icons-png.flaticon.com/512/11046/11046384.png"
         />
         <label class="NeedLogin">가입한 모임이 없습니다.</label>
         <div class="LoginLinkArea mt-4">
-          <router-link class="LoginRouterlink" :to="{ name: 'ClubSearchPage' }"
-            >모임검색</router-link
-          >
+          <router-link class="LoginRouterlink" :to="{ name: 'ClubSearchPage' }">모임검색</router-link>
           <router-link
-            class="LoginRouterlink"
-            style="margin-left: 80px"
-            :to="{ name: 'ClubCreatePage' }"
-            >모임생성</router-link
-          >
+              class="LoginRouterlink"
+              style="margin-left: 80px"
+              :to="{ name: 'ClubCreatePage' }"
+          >모임생성</router-link>
         </div>
       </div>
     </div>
@@ -75,14 +70,23 @@ export default {
 
     const getClubs = async () => {
       try {
-        await axios.get("http://localhost:3000/clubs").then((response) => {
-          const clubsData = response.data.map((item) => {
-            const parsedItem = JSON.parse(Object.keys(item)[0]);
-            parsedItem.id = item.id;
-            return parsedItem;
-          });
-          clubs.value = clubsData;
-        });
+        // JWT 토큰 가져오기
+        const access_token = localStorage.getItem('access_token');
+
+        // JWT 토큰이 존재하는 경우에만 헤더 설정
+        if (access_token) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+        }
+
+        await axios.get("http://localhost:8000/club-service/clubs")
+            .then((res) => {
+              if(res.status === 200) {
+                clubs.value = res.data.content;
+              } else {
+                // 조회 실패 시 구현해야함
+              }
+            });
+
       } catch (error) {
         console.error("클럽 목록을 불러오는 중 오류가 발생했습니다.", error);
       }
@@ -99,20 +103,17 @@ export default {
 
     const deleteClub = async (id) => {
       try {
-        // JSON-Server API의 URL을 포함한 요청 주소를 생성합니다.
-        const url = `http://localhost:3000/clubs/${id}`;
-
         // 서버에 DELETE 요청을 보냅니다.
-        await axios.delete(url);
+        await axios.delete(`http://localhost:8000/club-service/clubs/${id}`);
 
         // 성공적으로 삭제되면 원하는 동작을 수행하도록 추가적인 로직을 구현합니다.
         console.log(`ID ${id}에 해당하는 데이터가 성공적으로 삭제되었습니다.`);
-        alert("모임이 삭제 되었습니다.");
+        alert("모임이 삭제되었습니다.");
         router.push({
-          name:'HomePage'
-        })
+          name: "HomePage",
+        });
       } catch (error) {
-        console.error('데이터 삭제 중 오류 발생:', error);
+        console.error("데이터 삭제 중 오류 발생:", error);
       }
     };
 
