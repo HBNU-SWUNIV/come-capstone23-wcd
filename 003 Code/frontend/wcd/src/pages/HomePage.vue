@@ -1,7 +1,7 @@
 <template>
   <div class="HomePage">
     <!-- 로그인 상태일 때 -->
-    <div v-if="$store.state.isLogin">
+    <div>
       <label class="Recommend-Message">나의 모임</label>
       <div class="scrollable-container">
         <div
@@ -38,24 +38,6 @@
         </div>
       </div>
     </div>
-    <div class="NotLoginScreen" v-else>
-      <img
-        class="NotLoginImg"
-        src="https://cdn-icons-png.flaticon.com/512/11046/11046434.png"
-      />
-      <label class="NeedLogin">로그인이 필요한 서비스입니다.</label>
-      <div class="LoginLinkArea mt-4">
-        <router-link class="LoginRouterlink" :to="{ name: 'LoginPage' }"
-          >로그인</router-link
-        >
-        <router-link
-          class="LoginRouterlink"
-          style="margin-left: 80px"
-          :to="{ name: 'SignupPage' }"
-          >회원가입</router-link
-        >
-      </div>
-    </div>
   </div>
 </template>
 
@@ -65,19 +47,21 @@ import { ref, onMounted } from "vue";
 import router from "../router/index";
 
 export default {
+  beforeRouteEnter(to, from, next) {
+    const access_token = localStorage.getItem('access_token');
+
+    if(!access_token) {
+      next({ name: 'LoginPage' });
+    } else {
+      next();
+    }
+  },
+
   setup() {
     const clubs = ref([]);
 
     const getClubs = async () => {
       try {
-        // JWT 토큰 가져오기
-        const access_token = localStorage.getItem('access_token');
-
-        // JWT 토큰이 존재하는 경우에만 헤더 설정
-        if (access_token) {
-          axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-        }
-
         await axios.get("http://localhost:8000/club-service/clubs")
             .then((res) => {
               if(res.status === 200) {
@@ -137,11 +121,6 @@ export default {
 }
 .NoneClubs {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.NotLoginScreen {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -207,7 +186,7 @@ export default {
 
 .scrollable-content {
   width: calc(
-    33.33% - 10px
+      33.33% - 10px
   ); /* 한 줄에 3개씩 표시하기 위해 33.33%로 설정하고 간격을 주기 위해 10px 빼줌 */
   margin: 5px;
   padding: 10px;

@@ -50,14 +50,6 @@ export default {
       });
     };
 
-    // JWT 토큰 가져오기
-    const access_token = localStorage.getItem('access_token');
-
-    // JWT 토큰이 존재하는 경우에만 헤더 설정
-    if (access_token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-    }
-
     const fetchData = async () => {
       await axios.get(`http://localhost:8000/club-service/clubs/${currentClubId}`)
           .then((res) => {

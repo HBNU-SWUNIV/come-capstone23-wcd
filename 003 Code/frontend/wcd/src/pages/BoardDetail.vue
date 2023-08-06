@@ -2,13 +2,26 @@
   <div>
     <div class="TitleArea">
       <label class="BoardTitle">{{ board.title }}</label>
+      <button v-if="isAuthor" class="hamburger-button" @click="showMenu = !showMenu">
+        &#9776;
+      </button>
+      <div v-if="showMenu" class="menu">
+        <button class="menu-button" @click="editBoard">수정</button>
+        <button class="menu-button" @click="deleteBoard(board.id)">삭제</button>
+      </div>
     </div>
     <div class="InfoArea">
       <label class="BoardInfo">[ 작성자: {{ board.writerName }}]</label>
-      <label class="BoardInfo">{{ board.createdAt }}</label>
+      <label class="BoardInfo">{{ formatDateAndTime(board.createdAt) }}</label>
     </div>
-    <div class="ContentArea">
-      <label class="BoardContent">{{ board.content }}</label>
+    <div class="ContentArea" v-html="board.content">
+    </div>
+    <div class="CommentArea">
+      <div v-for="comment in comments.content" :key="comment.id">
+        <p class="CommentAuthor">{{comment.writerName}}</p>
+        <p class="CommentTime">{{formatDateAndTime(comment.createdAt)}}</p>
+        <p v-html="comment.content"></p>
+      </div>
     </div>
     <div class="BtnArea">
       <button
@@ -18,26 +31,27 @@
       >
         목록
       </button>
-      <button class="button" style="background-color: green">수정</button>
-      <button class="button" style="background-color: red" @click="deleteBoard(board.id)">
-        삭제
-      </button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { ref } from "vue";
+import {onMounted, ref, computed} from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router/index";
 
 export default {
   setup() {
     const board = ref({});
+    const comments = ref([])
     const route = useRoute();
     const currentClubId = route.params.clubId;
     const currentBoardId = route.params.boardId;
+    const showMenu = ref(false);
+    const currentUser = ref(/* 현재 사용자의 정보 */);
+
+    const isAuthor = computed(() => board.value.writerName === currentUser.value.name);
 
     const goBoardPage = () => {
       router.push({
@@ -48,38 +62,27 @@ export default {
       });
     };
 
-    // JWT 토큰 가져오기
-    const access_token = localStorage.getItem('access_token');
-
-    // JWT 토큰이 존재하는 경우에만 헤더 설정
-    if (access_token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-    }
+    const editBoard = () => {
+      // 게시글 수정 로직
+    };
 
     const fetchData = async () => {
       const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts/${currentBoardId}`);
       board.value = response.data;
-
-      // 날짜와 시간을 분 단위까지만 표시
       const date = new Date(board.value.createdAt);
-
-      // Get Year, Month and Date
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // JavaScript months are 0-based
+      const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}.${month}.${day}`;
-
-      // Get Hours and Minutes in 24-hour format
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       const formattedTime = `${hours}:${minutes}`;
-
       board.value.createdAt = `${formattedDate} ${formattedTime}`;
     };
 
     const deleteBoard = async () => {
       try {
-        const url = `http://localhost:8000/board-service/clubs/${currentClubId}/posts/${currentBoardId}`;
+        const url = `/board-service/clubs/${currentClubId}/posts/${currentBoardId}`;
         await axios.delete(url);
         alert("게시글이 삭제 되었습니다.");
         goBoardPage();
@@ -88,24 +91,52 @@ export default {
       }
     };
 
-    console.log("클럽: ", currentClubId, "게시판: ", currentBoardId)
+    const fetchComments = async () => {
+      const response = await axios.get(`/board-service/clubs/${currentClubId}/posts/${currentBoardId}/comments`);
+      comments.value = response.data;
+    };
+
+    const formatDateAndTime = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}.${month}.${day}`;
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}`;
+      return `${formattedDate} ${formattedTime}`;
+    };
+
+
+    onMounted(async () => {
+      await fetchData();
+      await fetchComments();
+    });
+
     fetchData();
 
     return {
       board,
+      comments,
+      formatDateAndTime,
       goBoardPage,
       deleteBoard,
+      showMenu,
+      currentUser,
+      isAuthor,
+      editBoard
     };
   },
 };
 </script>
 
 <style>
+
 .TitleArea {
-  height: 300px;
-  display: flex;
-  flex-direction: column;
+  height: 0%;
 }
+
 .BoardTitle {
   height: 100%;
   display: flex;
@@ -125,15 +156,12 @@ export default {
 }
 .ContentArea {
   height: 400px;
+  margin-left: 150px;  /* Adjust left margin */
+  margin-right: 150px; /* Adjust right margin */
 }
-.BoardContent {
-  height: 100%;
-  display: flex;
-  font-size: 40px;
-  margin-left: 150px;
-}
+
 .BtnArea {
-  height: 200px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -146,5 +174,33 @@ export default {
   margin: 10px;
   font-size: 20px;
   color: white;
+}
+
+.CommentArea {
+  height: 600px;
+  margin-left: 150px;
+  margin-right: 150px;
+}
+
+.CommentArea div {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.CommentArea div p {
+  font-size: 20px;
+  margin: 0;
+}
+
+.CommentAuthor {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.CommentTime {
+  font-size: 18px;
+  color: #777;
 }
 </style>

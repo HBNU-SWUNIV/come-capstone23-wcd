@@ -8,12 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^39.0.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "simple-peer": "^9.11.1",
     "vue": "^3.2.13",
     "vue-router": "^4.2.4",
     "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0",
     "websocket": "^1.0.34"
   },
   "devDependencies": {

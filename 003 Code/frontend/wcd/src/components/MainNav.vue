@@ -43,6 +43,7 @@
 import { ref } from "vue";
 import store from "../vuex/store";
 import router from '../router/index'
+import axios from "axios";
 
 export default {
   setup() {
@@ -57,12 +58,13 @@ export default {
       textColor.value = "white"; // 다시 원래 색으로 변경
     };
 
-    const logout = () => {
+    const logout = async () => {
       // localStorage.removeItem('isLogin');
       // store.state.isLogin = false;
       store.dispatch('logout')
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      await axios.post("http://localhost:8000/user-service/logout");
       router.push({
         name:'HomePage'
       })

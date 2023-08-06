@@ -86,7 +86,7 @@ const routes = [
         component: CreateNoticePage,
     },
     {
-        path: '/:id/board-create',
+        path: '/clubs/:clubId/board-create',
         name: 'CreateBoardPage',
         component: CreateBoardPage,
     },

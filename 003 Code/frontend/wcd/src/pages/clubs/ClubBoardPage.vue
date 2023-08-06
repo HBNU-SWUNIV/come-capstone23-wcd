@@ -44,7 +44,6 @@
         </div>
       </div>
     </div>
-    <!-- ... (rest of the template) ... -->
   </div>
 </template>
 
@@ -61,9 +60,12 @@ export default {
 
     const goCreateBoardPage = () => {
       router.push({
-        name: "CreateBoardPage",
-      });
-    };
+        name: 'CreateBoardPage',
+        params: {
+          clubId: currentClubId,
+        },
+      })
+    }
 
     // Function to format date as "YYYY-MM-DD HH:mm:ss" or "HH:mm:ss" for current day posts
     const formatDate = (timestamp) => {
@@ -99,22 +101,6 @@ export default {
     const perPage = 10; // 페이지 당 보여줄 항목 수
     const boards = ref([]);
     const currentPage = ref(1);
-
-    // JWT 토큰 가져오기
-    const access_token = localStorage.getItem('access_token');
-
-    // JWT 토큰이 존재하는 경우에만 헤더 설정
-    if (access_token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-    }
-
-    // JSON 서버에서 데이터 받아오기
-    // const fetchData = async () => {
-    //   const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts`);
-    //   const responseData = response.data;
-    //
-    //   boards.value = responseData.content; // 게시글 목록 설정
-    // };
 
     const fetchData = async () => {
       const response = await axios.get(`http://localhost:8000/board-service/clubs/${currentClubId}/posts`);

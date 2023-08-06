@@ -16,6 +16,7 @@
 // store/index.js
 
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
   state: {
@@ -46,6 +47,9 @@ const store = createStore({
       commit('SET_LOGIN_STATE', isLoggedIn);
     },
   },
+  plugins: [createPersistedState({
+    paths: ["store"]
+  })]
 });
 
 export default store;

@@ -69,8 +69,10 @@ export default{
                 // 모든 헤더 이름은 소문자
                 let accessToken = res.headers["access_token"]; // 응답헤더에서 토큰 받기
                 let refreshToken = res.headers['refresh_token']; // 응답헤더에서 토큰 받기
+                let userId = res.headers['user_id'];
                 localStorage.setItem('access_token', accessToken);
                 localStorage.setItem('refresh_token', refreshToken);
+                localStorage.setItem('user_id', userId);
                 store.dispatch('login')
                 router.push({
                   name: 'HomePage'
