@@ -2,6 +2,7 @@ package com.wcd.chattingservice.dto.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ public class ResponseChat {
     private Long id;
 
     @Schema(description = "채팅방 번호")
-    private Long chatRoomId; // 방 번호
+    private Long clubId; // 방 번호
 
     @Schema(description = "채팅 송신자 멤버번호")
     private Long senderId;
@@ -26,10 +27,10 @@ public class ResponseChat {
     @Schema(description = "채팅 보낸 시간")
     private LocalDateTime sendTime;
 
-    @QueryProjection
-    public ResponseChat(Long id, Long chatRoomId, Long senderId, String message, LocalDateTime sendTime) {
+    @Builder
+    public ResponseChat(Long id, Long clubId, Long senderId, String message, LocalDateTime sendTime) {
         this.id = id;
-        this.chatRoomId = chatRoomId;
+        this.clubId = clubId;
         this.senderId = senderId;
         this.message = message;
         this.sendTime = sendTime;

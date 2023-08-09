@@ -16,6 +16,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "채팅 API")
@@ -31,20 +32,22 @@ public class ChatController {
     @MessageMapping("/chat/send")
     public void sendMessage(@Payload ChatDto chat) {
         // 채팅 저장
-        chatService.saveMessage(chat);
+        ChatDto result = chatService.saveMessage(chat);
         // 해당 채팅 메시지를 WebSocket 토픽(/topic/채팅방ID)에 전송하여 클라이언트에게 브로드캐스팅한다.
-        messagingTemplate.convertAndSend("/topic/" + chat.getClubId(), chat);
+        messagingTemplate.convertAndSend("/topic/" + chat.getClubId(), result);
     }
 
     @Operation(summary = "채팅 조회", description = "채팅 조회 (페이지네이션)")
     @Parameters({
+            @Parameter(name = "clubId", description = "모임 아이디", example = "1"),
             @Parameter(name = "page", description = "페이지", example = "1"),
             @Parameter(name = "size", description = "크기", example = "10"),
     })
-    @GetMapping("/chat")
-    public ResponseEntity<Page<ResponseChat>> getChats(Pageable pageable) {
-        Page<ResponseChat> chatPage = chatService.getChats(pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(chatPage);
+    @GetMapping("/chat")
+    public ResponseEntity<Page<ResponseChat>> getChatsByClubId(@RequestParam Long clubId, Pageable pageable) {
+        Page<ResponseChat> responseChats = chatService.getChats(clubId, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseChats);
     }
 }
