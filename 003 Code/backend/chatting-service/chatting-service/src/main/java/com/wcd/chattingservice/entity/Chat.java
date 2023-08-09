@@ -14,9 +14,7 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id")
-    private ChatRoom chatRoom;
+    private Long clubId;
 
     private Long senderId;
 
@@ -25,8 +23,8 @@ public class Chat {
     private LocalDateTime sendTime;
 
     @Builder
-    public Chat(ChatRoom chatRoom, Long senderId, String message) {
-        this.chatRoom =chatRoom;
+    public Chat(Long clubId, Long senderId, String message) {
+        this.clubId = clubId;
         this.senderId = senderId;
         this.message = message;
         this.sendTime = LocalDateTime.now();
