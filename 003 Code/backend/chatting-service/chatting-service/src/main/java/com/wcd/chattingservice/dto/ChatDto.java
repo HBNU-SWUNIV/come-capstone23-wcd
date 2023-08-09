@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatDto {
 
-    private Long chatRoomId; // 방 번호
+    private Long clubId; // 클럽 번호
     private Long senderId;
     private String message;
     private LocalDateTime sendTime;

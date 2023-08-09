@@ -33,7 +33,7 @@ public class ChatController {
         // 채팅 저장
         chatService.saveMessage(chat);
         // 해당 채팅 메시지를 WebSocket 토픽(/topic/채팅방ID)에 전송하여 클라이언트에게 브로드캐스팅한다.
-        messagingTemplate.convertAndSend("/topic/" + chat.getChatRoomId(), chat);
+        messagingTemplate.convertAndSend("/topic/" + chat.getClubId(), chat);
     }
 
     @Operation(summary = "채팅 조회", description = "채팅 조회 (페이지네이션)")
