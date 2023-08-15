@@ -43,16 +43,10 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public ResponsePostDto createPost(Long clubId, Long writerId, RequestPostDto requestPostDto) {
+    public Long createPost(Long clubId, Long writerId, RequestPostDto requestPostDto) {
         try {
             Post newPost = requestPostDto.toEntity(clubId, writerId);
             Post savedPost = postRepository.save(newPost);
-
-            List writerIds = new ArrayList();
-            writerIds.add(writerId);
-            Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
-
-            ResponsePostDto responsePostDto = savedPost.toResponsePostDto(writerIdToNameMap.get(writerId));
 
 //            // 만약 PostDto에 VoteDto가 포함되어 있다면,
 //            if (requestPostDto.getRequestVoteDto() != null) {
@@ -73,7 +67,7 @@ public class PostServiceImpl implements PostService{
 //                responsePostDto.setResponseVoteDto(responseVoteDto);
 //            }
 
-            return responsePostDto;
+            return savedPost.getId();
         } catch (Exception e) {
             System.err.println("Error while creating post: " + e.getMessage());
             e.printStackTrace();

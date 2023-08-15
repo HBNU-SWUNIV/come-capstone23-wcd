@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PostService {
-    ResponsePostDto createPost(Long clubId, Long userId, RequestPostDto responsePostDto);
+    Long createPost(Long clubId, Long userId, RequestPostDto responsePostDto);
     ResponsePostDto updatePost(Long postId, Long userId, UpdateRequestPostDto updateRequestPostDto);
     void deletePost(Long userId, Long postId);
     ResponsePostDto getPostById(Long postId);

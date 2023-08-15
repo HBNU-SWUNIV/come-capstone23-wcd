@@ -24,11 +24,11 @@ public class ClubPostController {
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<ResponsePostDto> createNewPost(@PathVariable("club-id") Long clubId,
+    public ResponseEntity<Long> createNewPost(@PathVariable("club-id") Long clubId,
                                                          @RequestHeader("user-id") Long writerId,
                                                          @RequestBody RequestPostDto requestPostDto) {
-        ResponsePostDto responsePostDto = postService.createPost(clubId, writerId, requestPostDto);
-        return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
+        Long id = postService.createPost(clubId, writerId, requestPostDto);
+        return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
     @PatchMapping("/posts/{post-id}")
