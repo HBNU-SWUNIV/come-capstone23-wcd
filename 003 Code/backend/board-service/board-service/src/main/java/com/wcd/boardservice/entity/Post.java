@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -46,6 +48,9 @@ public class Post extends BaseEntity{
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Vote vote;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comment;
 
     @Builder
     public Post(String category, Long clubId, Long writerId, String title, String content, Vote vote) {
