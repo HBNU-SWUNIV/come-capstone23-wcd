@@ -3,6 +3,7 @@ package com.wcd.boardservice.entity;
 import com.wcd.boardservice.dto.post.ResponsePostDto;
 import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.UpdateRequestPostDto;
+import com.wcd.boardservice.utils.HtmlSanitizerUtil;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -59,7 +60,7 @@ public class Post extends BaseEntity{
     public void update(UpdateRequestPostDto updateRequestPostDto) {
         this.category = updateRequestPostDto.getCategory();
         this.title = updateRequestPostDto.getTitle();
-        this.content = updateRequestPostDto.getContent();
+        this.content = HtmlSanitizerUtil.sanitize(updateRequestPostDto.getContent());
         this.vote = null;
     }
 

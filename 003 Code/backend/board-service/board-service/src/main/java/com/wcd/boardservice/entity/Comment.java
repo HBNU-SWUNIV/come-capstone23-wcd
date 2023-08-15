@@ -3,6 +3,7 @@ package com.wcd.boardservice.entity;
 
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
 import com.wcd.boardservice.dto.comment.UpdateRequestCommentDto;
+import com.wcd.boardservice.utils.HtmlSanitizerUtil;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -57,7 +58,7 @@ public class Comment extends BaseEntity{
     }
 
     public void update(UpdateRequestCommentDto updateRequestCommentDto) {
-        this.content = updateRequestCommentDto.getContent();
+        this.content = HtmlSanitizerUtil.sanitize(updateRequestCommentDto.getContent());
     }
 
     public ResponseCommentDto toResponseCommentDto(String writerName) {

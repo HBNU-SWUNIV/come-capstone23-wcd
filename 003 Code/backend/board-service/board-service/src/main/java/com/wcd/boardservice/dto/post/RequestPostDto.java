@@ -2,6 +2,7 @@ package com.wcd.boardservice.dto.post;
 
 import com.wcd.boardservice.dto.vote.RequestVoteDto;
 import com.wcd.boardservice.entity.Post;
+import com.wcd.boardservice.utils.HtmlSanitizerUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class RequestPostDto {
                 .clubId(clubId)
                 .writerId(writerId)
                 .title(this.title)
-                .content(this.content)
+                .content(HtmlSanitizerUtil.sanitize(this.content))
                 .vote(null)
                 .build();
     }

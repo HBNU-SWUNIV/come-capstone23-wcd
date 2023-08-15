@@ -2,6 +2,7 @@ package com.wcd.boardservice.dto.comment;
 
 import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
+import com.wcd.boardservice.utils.HtmlSanitizerUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class RequestCommentDto {
                 .clubId(clubId)
                 .post(post)
                 .writerId(writerId)
-                .content(this.content)
+                .content(HtmlSanitizerUtil.sanitize(this.content))
                 .commentStep(this.commentStep)
                 .commentGroup(this.commentGroup)
                 .commentOrder(this.commentOrder)
