@@ -27,12 +27,12 @@ public class AuthController {
 
     @Operation(summary = "회원가입", description = "회원가입 API")
     @PostMapping("/signup")
-    public ResponseEntity<Long> signUp(@Valid @ModelAttribute RequestSignUp requestSignUp) {
+    public ResponseEntity<Long> signUp(@RequestBody RequestSignUp requestSignUp) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.signUp(requestSignUp));
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃 API")
-    @PostMapping("/user/logout")
+    @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody TokenDto tokenDto) {
         authService.logout(tokenDto);
 
