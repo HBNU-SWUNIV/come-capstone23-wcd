@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class RequestSignUp {
 
-    @Schema(description = "프로필 이미지")
-    private MultipartFile profileImage;
+//    @Schema(description = "프로필 이미지")
+//    private MultipartFile profileImage;
 
     @Schema(description = "로그인 아이디", example = "id1234", minLength = 3)
     @NotNull(message = "Id cannot be null")
@@ -47,7 +47,7 @@ public class RequestSignUp {
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
 
-    public Users toEntity(String encryptedPwd, String profileImageUrl) {
+    public Users toEntity(String encryptedPwd) {
         Users user = Users.builder()
                 .loginId(loginId)
                 .encryptedPwd(encryptedPwd)
@@ -55,7 +55,7 @@ public class RequestSignUp {
                 .phoneNumber(phoneNumber)
                 .birthday(birthday)
                 .gender(gender)
-                .profileImage(profileImageUrl)
+//                .profileImage(profileImageUrl)
                 .build();
 
         return user;

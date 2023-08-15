@@ -76,15 +76,15 @@ public class AuthServiceImpl implements AuthService{
     @Transactional
     @Override
     public Long signUp(RequestSignUp requestSignUp) {
-        String profileImageUrl = null;
+//        String profileImageUrl = null;
+//
+//        try {
+//            profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return userRepository.save(requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()), profileImageUrl)).getId();
+        return userRepository.save(requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()))).getId();
     }
 
     @Override
