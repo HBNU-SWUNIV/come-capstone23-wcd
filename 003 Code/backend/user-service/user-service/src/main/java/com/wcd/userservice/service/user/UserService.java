@@ -12,9 +12,5 @@ public interface UserService {
     Long updateUserById(Long userId, RequestUpdateUser requestUpdateUser);
     void deleteUser(Long userId);
     ResponseUsernames getUserNamesByIds(RequestUsernames requestUsernames);
-<<<<<<< HEAD
-
-=======
->>>>>>> b738a79786a9b7ffc7e20ab9212949cefe1144b5
     String getUserNameById(Long userId);
 }

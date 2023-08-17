@@ -1,16 +1,11 @@
 package com.wcd.clubservice.service.member;
 
-<<<<<<< HEAD
 import com.wcd.clubservice.client.AlarmServiceClient;
 import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
-=======
 import com.wcd.clubservice.client.UserServiceClient;
 import com.wcd.clubservice.dto.RequestUserNamesDto;
 import com.wcd.clubservice.dto.ResponseUserNamesDto;
->>>>>>> b738a79786a9b7ffc7e20ab9212949cefe1144b5
-import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMember;
-import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
 import com.wcd.clubservice.dto.feignclient.RequestJoinClub;
 import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.ClubMember;
@@ -20,7 +15,6 @@ import com.wcd.clubservice.repository.club.ClubRepository;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,22 +31,7 @@ import java.util.stream.Collectors;
 public class ClubMemberServiceImpl implements ClubMemberService {
     private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
-<<<<<<< HEAD
     private final AlarmServiceClient alarmServiceClient;
-
-    @Transactional
-    @Override
-    public Long createClubMember(RequestJoinClubMember requestJoinClubMember) {
-        Club club = clubRepository.findById(requestJoinClubMember.getClubId())
-                .orElseThrow(() -> new NoSuchElementException("Club not found with id" + requestJoinClubMember.getClubId()));
-
-        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
-                                            .clubId(club.getId())
-                                            .userId(requestJoinClubMember.getUserId())
-                                            .build());
-        
-        return clubMemberRepository.save(requestJoinClubMember.joinClubMember(club)).getId();
-=======
     private final UserServiceClient userServiceClient;
 
     @Transactional
@@ -77,8 +56,12 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             .isApproval(isApproval)
             .build();
 
+        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
+                .clubId(clubId)
+                .userId(userId)
+                .build());
+
         return clubMemberRepository.save(clubMember).getId();
->>>>>>> b738a79786a9b7ffc7e20ab9212949cefe1144b5
     }
 
     @Override
@@ -128,9 +111,6 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         }
     }
 
-<<<<<<< HEAD
-
-=======
     // clubMembers에 작성자 명을 더한 리스트를 반환하는 메서드
     private List<ResponseClubMember> getMemberListWithWriterNames (List<ClubMember> clubMembers) {
         // Collect userIds from post lists.
@@ -165,5 +145,4 @@ public class ClubMemberServiceImpl implements ClubMemberService {
 
         return writerIdToNameMap;
     }
->>>>>>> b738a79786a9b7ffc7e20ab9212949cefe1144b5
 }

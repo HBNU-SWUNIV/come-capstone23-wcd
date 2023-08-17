@@ -1,16 +1,10 @@
 package com.wcd.clubservice.controller;
 
-<<<<<<< HEAD
 import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
-=======
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMember;
->>>>>>> b738a79786a9b7ffc7e20ab9212949cefe1144b5
-import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
-import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.service.member.ClubMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
