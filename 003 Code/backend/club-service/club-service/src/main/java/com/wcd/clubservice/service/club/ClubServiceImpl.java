@@ -83,6 +83,15 @@ public class ClubServiceImpl implements ClubService {
         return responseClub;
     }
 
+    // 모임 이름 조회 (club-id)
+    @Override
+    public String getClubNameById(Long clubId) {
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+
+        return club.getClubName();
+    }
+
     // 모임 정보 수정
     @Transactional
     @Override

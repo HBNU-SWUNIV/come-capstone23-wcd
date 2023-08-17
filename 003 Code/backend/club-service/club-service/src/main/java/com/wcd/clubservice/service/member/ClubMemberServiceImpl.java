@@ -1,11 +1,12 @@
 package com.wcd.clubservice.service.member;
 
+import com.wcd.clubservice.client.AlarmServiceClient;
+import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
 import com.wcd.clubservice.client.UserServiceClient;
 import com.wcd.clubservice.dto.RequestUserNamesDto;
 import com.wcd.clubservice.dto.ResponseUserNamesDto;
-import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMember;
-import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
+import com.wcd.clubservice.dto.feignclient.RequestJoinClub;
 import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.ClubMember;
 import com.wcd.clubservice.enums.ApprovalMethod;
@@ -14,7 +15,6 @@ import com.wcd.clubservice.repository.club.ClubRepository;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class ClubMemberServiceImpl implements ClubMemberService {
     private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
+    private final AlarmServiceClient alarmServiceClient;
     private final UserServiceClient userServiceClient;
 
     @Transactional
@@ -55,6 +56,11 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             .isApproval(isApproval)
             .build();
 
+        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
+                .clubId(clubId)
+                .userId(userId)
+                .build());
+
         return clubMemberRepository.save(clubMember).getId();
     }
 
@@ -63,6 +69,13 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         List<ClubMember> clubMembers = clubMemberRepository.findByClubId(clubId);
         List<ResponseClubMember> responseClubMembers = getMemberListWithWriterNames(clubMembers);
         return responseClubMembers;
+    }
+
+    @Override
+    public ResponseClubMemberIdsByClubId getClubMemberIds(Long clubId) {
+        List<ClubMember> clubMemberEntityList = clubMemberRepository.findByClubId(clubId);
+
+        return ResponseClubMemberIdsByClubId.builder().clubMemberEntityList(clubMemberEntityList).build();
     }
 
     @Transactional

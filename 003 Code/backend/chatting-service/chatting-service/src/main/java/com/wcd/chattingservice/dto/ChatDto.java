@@ -1,7 +1,7 @@
 package com.wcd.chattingservice.dto;
 
 import com.wcd.chattingservice.entity.Chat;
-import com.wcd.chattingservice.entity.ChatRoom;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,14 +12,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatDto {
 
-    private Long chatRoomId; // 방 번호
+    private Long clubId; // 클럽 번호
     private Long senderId;
     private String message;
     private LocalDateTime sendTime;
 
-    public Chat toEntity(ChatRoom chatRoom) {
+    @Builder
+    public ChatDto(Chat chat) {
+        this.clubId = chat.getClubId();
+        this.senderId = chat.getSenderId();
+        this.message = chat.getMessage();
+        this.sendTime = chat.getSendTime();
+    }
+
+    public Chat toEntity() {
         return Chat.builder()
-                .chatRoom(chatRoom)
+                .clubId(clubId)
                 .senderId(senderId)
                 .message(message)
                 .build();
