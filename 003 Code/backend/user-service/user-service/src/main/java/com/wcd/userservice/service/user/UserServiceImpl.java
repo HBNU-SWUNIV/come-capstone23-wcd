@@ -71,4 +71,12 @@ public class UserServiceImpl implements UserService{
 
         return ResponseUsernames.builder().userList(users).build();
     }
+
+    @Override
+    public String getUserNameById(Long userId) {
+        Users users = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        return users.getName();
+    }
 }

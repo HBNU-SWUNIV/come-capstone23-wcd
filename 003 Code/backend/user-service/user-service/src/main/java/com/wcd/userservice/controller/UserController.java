@@ -56,4 +56,10 @@ public class UserController {
     public ResponseEntity<ResponseUsernames> getUserNamesByIds(@RequestBody RequestUsernames requestUsernames) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserNamesByIds(requestUsernames));
     }
+
+    @Operation(summary = "회원 이름 단건 조회", description = "해당 user-id의 userName 조회")
+    @GetMapping("/user/{user-id}/userName")
+    public ResponseEntity<String> getUsernameById(@PathVariable("user-id") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserNameById(userId));
+    }
 }

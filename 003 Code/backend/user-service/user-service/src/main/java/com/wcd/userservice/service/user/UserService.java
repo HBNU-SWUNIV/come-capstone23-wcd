@@ -13,4 +13,6 @@ public interface UserService {
     void deleteUser(Long userId);
 
     ResponseUsernames getUserNamesByIds(RequestUsernames requestUsernames);
+
+    String getUserNameById(Long userId);
 }
