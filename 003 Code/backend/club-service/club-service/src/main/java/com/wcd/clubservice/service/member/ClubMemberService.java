@@ -1,5 +1,6 @@
 package com.wcd.clubservice.service.member;
 
+import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
 import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
 
@@ -13,4 +14,6 @@ public interface ClubMemberService {
     void deleteMember(Long userId);
 
     boolean isUserMemberOfClub(Long clubId, Long userId);
+
+    ResponseClubMemberIdsByClubId getClubMemberIds(Long clubId);
 }

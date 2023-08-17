@@ -21,4 +21,6 @@ public interface ClubService {
     void deleteClub(Long clubId);
 
     ResponseClubsByUserId getClubByUserId(Long userId);
+
+    String getClubNameById(Long clubId);
 }

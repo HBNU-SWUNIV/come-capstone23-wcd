@@ -1,7 +1,10 @@
 package com.wcd.clubservice.service.member;
 
+import com.wcd.clubservice.client.AlarmServiceClient;
+import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
 import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
+import com.wcd.clubservice.dto.feignclient.RequestJoinClub;
 import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.ClubMember;
 import com.wcd.clubservice.repository.club.ClubRepository;
@@ -21,12 +24,19 @@ import java.util.NoSuchElementException;
 public class ClubMemberServiceImpl implements ClubMemberService {
     private final ClubRepository clubRepository;
     private final ClubMemberRepository clubMemberRepository;
+    private final AlarmServiceClient alarmServiceClient;
 
     @Transactional
     @Override
     public Long createClubMember(RequestJoinClubMember requestJoinClubMember) {
         Club club = clubRepository.findById(requestJoinClubMember.getClubId())
                 .orElseThrow(() -> new NoSuchElementException("Club not found with id" + requestJoinClubMember.getClubId()));
+
+        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
+                                            .clubId(club.getId())
+                                            .userId(requestJoinClubMember.getUserId())
+                                            .build());
+        
         return clubMemberRepository.save(requestJoinClubMember.joinClubMember(club)).getId();
     }
 
@@ -35,6 +45,13 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         List<ClubMember> clubMemberEntityList = clubMemberRepository.findByClubId(clubId);
 
         return ResponseClubMembersByClubId.builder().clubMemberEntityList(clubMemberEntityList).build();
+    }
+
+    @Override
+    public ResponseClubMemberIdsByClubId getClubMemberIds(Long clubId) {
+        List<ClubMember> clubMemberEntityList = clubMemberRepository.findByClubId(clubId);
+
+        return ResponseClubMemberIdsByClubId.builder().clubMemberEntityList(clubMemberEntityList).build();
     }
 
     @Transactional
@@ -62,4 +79,6 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             return false;
         }
     }
+
+
 }

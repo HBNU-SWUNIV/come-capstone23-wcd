@@ -1,5 +1,6 @@
 package com.wcd.clubservice.controller;
 
+import com.wcd.clubservice.dto.club.response.ResponseClubMemberIdsByClubId;
 import com.wcd.clubservice.dto.clubMember.response.ResponseClubMembersByClubId;
 import com.wcd.clubservice.dto.clubMember.request.RequestJoinClubMember;
 import com.wcd.clubservice.service.member.ClubMemberService;
@@ -7,7 +8,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +29,12 @@ public class ClubMemberController {
     @GetMapping("/member/club/{club-id}")
     public ResponseEntity<ResponseClubMembersByClubId> getClubMembers(@PathVariable("club-id") Long clubId) {
         return ResponseEntity.status(HttpStatus.OK).body(clubMemberService.getClubMembers(clubId));
+    }
+
+    @Operation(summary = "모임 멤버 아이디 조회", description = "club-id에 해당하는 모임 멤버 아이디 조회")
+    @GetMapping("/member/id/club/{club-id}")
+    public ResponseEntity<ResponseClubMemberIdsByClubId> getClubMemberIds(@PathVariable("club-id") Long clubId) {
+        return ResponseEntity.status(HttpStatus.OK).body(clubMemberService.getClubMemberIds(clubId));
     }
 
     @Operation(summary = "모임 멤버 삭제", description = "club-id, user-id에 해당하는 모임 멤버 삭제")

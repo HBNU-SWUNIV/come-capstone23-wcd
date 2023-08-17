@@ -66,6 +66,12 @@ public class ClubController {
         return ResponseEntity.status(HttpStatus.OK).body(clubService.getClubById(clubId));
     }
 
+    @Operation(summary = "모임 이름 조회", description = "club-id에 해당하는 모임 이름 조회")
+    @GetMapping("/club/{club-id}/clubName")
+    public ResponseEntity<String> getClubNameById(@PathVariable("club-id") Long clubId) {
+        return ResponseEntity.status(HttpStatus.OK).body(clubService.getClubNameById(clubId));
+    }
+
     @Operation(summary = "모임 수정", description = "club-id에 해당하는 모임 수정")
     @PutMapping("/club/{club-id}")
     public ResponseEntity<Long> updateClub(@PathVariable("club-id") Long clubId, @Valid @ModelAttribute RequestUpdateClub requestUpdateClub) {
