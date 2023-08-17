@@ -21,6 +21,9 @@ public class ResponseClubByClubId {
     @Schema(description = "모임장 유저번호")
     private Long hostId;
 
+    @Schema(description = "모임장 유저번호")
+    private Long hostName;
+
     @Schema(description = "모임 이름")
     private String clubName;
 

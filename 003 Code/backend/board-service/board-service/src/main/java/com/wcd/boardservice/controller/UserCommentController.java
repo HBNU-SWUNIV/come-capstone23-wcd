@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users/{user-id}/comments")
+@RequestMapping("/users/{user-id}")
 public class UserCommentController {
 
     Environment env;
@@ -24,7 +24,7 @@ public class UserCommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/comments")
     public ResponseEntity<Page<ResponseCommentDto>> getAllUserComments(@PathVariable("user-id") Long userId, Pageable pageable) {
         Page<ResponseCommentDto> responseCommentDtos = commentService.getALlUserComment(userId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(responseCommentDtos);

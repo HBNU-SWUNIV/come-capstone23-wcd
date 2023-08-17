@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users/{user-id}/posts")
+@RequestMapping("/users/{user-id}")
 public class UserPostController {
     Environment env;
     PostService postService;
@@ -23,9 +23,9 @@ public class UserPostController {
         this.postService = postService;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Page<ResponsePostListDto>> getAllUserPosts(@PathVariable("user-id") Long userId, Pageable pageable) {
-        Page<ResponsePostListDto> postListDtos = postService.getAllUserPost(userId, pageable);
+    @GetMapping("/posts")
+    public ResponseEntity<Page<ResponsePostListDto>> getUserAllPosts(@PathVariable("user-id") Long userId, Pageable pageable) {
+        Page<ResponsePostListDto> postListDtos = postService.getAllPostByUser(userId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(postListDtos);
     }
 }

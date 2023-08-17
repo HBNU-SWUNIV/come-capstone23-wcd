@@ -1,5 +1,6 @@
 package com.wcd.clubservice.entity;
 
+import com.wcd.clubservice.dto.clubMember.response.ResponseClubMember;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.GregorianCalendar;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,7 +25,7 @@ public class ClubMember implements Serializable {
     @JoinColumn(name = "club_id")
     private Club club;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long userId;
 
     private boolean isOnline;
@@ -48,10 +50,9 @@ public class ClubMember implements Serializable {
         this.joinDate = joinDate;
     }
 
-    public void changeClub(Club club) {
-        this.club = club;
+    public void changeGrade(Grade grade) {
+        this.grade = grade;
     }
-
 
     @Override
     public String toString() {
@@ -64,5 +65,17 @@ public class ClubMember implements Serializable {
                 ", isApproval=" + isApproval +
                 ", joinDate=" + joinDate +
                 '}';
+    }
+
+    public ResponseClubMember toResponseClubMember(String userName) {
+        return ResponseClubMember.builder()
+                .clubId(this.club.getId())
+                .userId(this.userId)
+                .userName(userName)
+                .isOnline(this.isOnline)
+                .grade(this.grade)
+                .isApproval(this.isApproval)
+                .joinDate(this.joinDate)
+                .build();
     }
 }

@@ -5,6 +5,7 @@ import com.wcd.clubservice.entity.ClubMember;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,0 +1,216 @@
+<template>
+  <div class="BoardPage">
+    <div class="SearchArea">
+      <div class="d-flex flex-row justify-content-center">
+        <form class="mt-4" style="margin-left: 200px">
+          <select class="BoardFilter form-select">
+            <option selected>필터</option>
+            <option value="title" class="mt-3">제목</option>
+            <option value="writer" class="mt-3">작성자</option>
+            <option value="date" class="mt-3">날짜</option>
+          </select>
+
+          <input type="text" class="BoardSearchInput search-input" v-model="searchText"/>
+
+          <button class="BoardSearchBtn" type="submit">
+            검색
+          </button>
+        </form>
+        <button class="WriteBtn" @click="goCreateBoardPage">글 작성</button>
+      </div>
+    </div>
+    <div class="BoardBar">
+      <label class="BoardNav" style="margin-left: 150px">NO.</label>
+      <label class="BoardNav" style="margin-left: 425px">제목</label>
+      <label class="BoardNav" style="margin-left: 425px">작성자</label>
+      <label class="BoardNav" style="margin-left: 200px">날짜</label>
+    </div>
+
+    <div class="BoardContentsArea">
+      <div
+        class="d-flex flex-row mt-4"
+        v-for="(board, index) in displayedBoards"
+        :key="board.id"
+      >
+        <div
+          class="Contents"
+          style="width: 100px; text-align: center; margin-left: 115px"
+        >
+          <label> {{ index + 1 }}</label>
+        </div>
+        <div
+          class="Contents"
+          style="width: 650px; text-align: left; margin-left: 100px"
+        >
+          <label> {{ board.title }}</label>
+        </div>
+        <div
+          class="Contents"
+          style="width: 200px; text-align: center; margin-left: 30px"
+        >
+          <label>내가 누구게</label>
+        </div>
+        <div
+          class="Contents"
+          style="width: 250px; text-align: center; margin-left: 20px"
+        >
+          <label>2020-01-01</label>
+        </div>
+      </div>
+    </div>
+    <div class="PageNavArea" v-if="totalPages > 1">
+      <div
+        class="PageBox"
+        @click="prevPage"
+        v-show="currentPage !== 1"
+        style="cursor: pointer"
+      >
+        이전
+      </div>
+      <div
+        class="PageBox"
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        @click="gotoPage(pageNumber)"
+        :class="{ active: currentPage === pageNumber }"
+        style="cursor: pointer"
+      >
+        {{ pageNumber }}
+      </div>
+      <div
+        class="PageBox"
+        @click="nextPage"
+        v-show="currentPage !== totalPages"
+        style="cursor: pointer"
+      >
+        다음
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from "../router/index";
+import { ref, computed } from "vue";
+import axios from "axios";
+
+export default {
+  setup() {
+    const goCreateBoardPage = () => {
+      router.push({
+        name: "CreateBoardPage",
+      });
+    };
+
+    const perPage = 10; // 페이지 당 보여줄 항목 수
+    const boards = ref([]);
+    const currentPage = ref(1);
+
+    // JSON 서버에서 데이터 받아오기
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:3000/boards");
+      const boardsData = response.data.map((item) => {
+        const parsedItem = JSON.parse(Object.keys(item)[0]);
+        parsedItem.id = item.id;
+        return parsedItem;
+      });
+      boards.value = boardsData.sort((a, b) => b.id - a.id); // id를 내림차순으로 정렬
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기로 데이터 받아오기
+
+    const displayedBoards = computed(() => {
+      const start = (currentPage.value - 1) * perPage;
+      const end = start + perPage;
+      return boards.value.slice(start, end);
+    });
+
+    const totalPages = computed(() => {
+      return Math.ceil(boards.value.length / perPage);
+    });
+
+    const prevPage = () => {
+      currentPage.value--;
+    };
+
+    const nextPage = () => {
+      currentPage.value++;
+    };
+
+    const gotoPage = (pageNumber) => {
+      currentPage.value = pageNumber;
+    };
+
+    return {
+      goCreateBoardPage,
+      displayedBoards,
+      totalPages,
+      currentPage,
+      prevPage,
+      nextPage,
+      gotoPage,
+    };
+  },
+};
+</script>
+
+<style>
+.SearchArea {
+  height: 140px;
+  width: 100%;
+}
+.BoardBar {
+  height: 40px;
+  width: 100%;
+  background-color: #383838;
+}
+.BoardNav {
+  font-size: 20px;
+  margin-top: 0.4rem;
+}
+.BoardContentsArea {
+  height: 600px;
+  width: 100%;
+  font-size: 20px;
+}
+.PageNavArea {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  font-size: 25px;
+}
+.PageBox {
+  width: 80px;
+  text-align: center;
+}
+.BoardFilter {
+  width: 95px;
+  height: 40px;
+  text-align: center;
+  background-color: #383838;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  margin-top: 30px;
+}
+.BoardSearchBtn {
+  width: 95px;
+  height: 40px;
+  text-align: center;
+  background-color: #383838;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  margin-top: 30px;
+}
+.BoardSearchInput {
+  width: 640px;
+  height: 40px;
+  border-radius: 0.25rem;
+  margin-top: 30px;
+}
+.active {
+  color: #34da19; /* 원하는 활성 상태의 버튼 배경색 지정 */
+}
+</style>

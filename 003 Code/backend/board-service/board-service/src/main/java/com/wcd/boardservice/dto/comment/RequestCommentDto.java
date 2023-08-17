@@ -1,5 +1,6 @@
 package com.wcd.boardservice.dto.comment;
 
+import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +12,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestCommentDto {
-    private Long postId;
-    private Long writerId;
     private String content;
-    private int step;
-    private int group;
-    private int order;
+    private int commentStep;
+    private int commentGroup;
+    private int commentOrder;
+
+    public Comment toEntity(Long clubId, Post post, Long writerId) {
+        return Comment.builder()
+                .clubId(clubId)
+                .post(post)
+                .writerId(writerId)
+                .content(this.content)
+                .commentStep(this.commentStep)
+                .commentGroup(this.commentGroup)
+                .commentOrder(this.commentOrder)
+                .build();
+    }
 }

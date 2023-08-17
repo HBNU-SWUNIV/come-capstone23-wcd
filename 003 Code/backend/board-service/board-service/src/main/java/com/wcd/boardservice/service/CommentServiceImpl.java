@@ -1,41 +1,48 @@
 package com.wcd.boardservice.service;
 
-import com.wcd.boardservice.dto.comment.CommentDto;
+import com.wcd.boardservice.client.UserServiceClient;
 import com.wcd.boardservice.dto.comment.RequestCommentDto;
 import com.wcd.boardservice.dto.comment.ResponseCommentDto;
-import com.wcd.boardservice.dto.post.ResponsePostListDto;
+import com.wcd.boardservice.dto.comment.UpdateRequestCommentDto;
+import com.wcd.boardservice.dto.user.RequestUserNamesDto;
+import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
 import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
 import com.wcd.boardservice.repository.CommentRepository;
 import com.wcd.boardservice.repository.PostRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-    @Autowired
     CommentRepository commentRepository;
-    @Autowired
     PostRepository postRepository;
-    @Autowired
-    ModelMapper modelMapper;
+    UserServiceClient userServiceClient;
 
+    @Autowired
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserServiceClient userServiceClient) {
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+        this.userServiceClient = userServiceClient;
+    }
 
     @Override
-    public ResponseCommentDto createComment(RequestCommentDto requestCommentDto) {
+    public ResponseCommentDto createComment(Long clubId, Long postId, Long writerId, RequestCommentDto requestCommentDto) {
         try {
-            Comment newComment = modelMapper.map(requestCommentDto, Comment.class);
-            newComment.setPost(postRepository.findById(requestCommentDto.getPostId()).orElseThrow());
+            Post post = postRepository.findById(postId).orElseThrow();
+            Comment newComment = requestCommentDto.toEntity(clubId, post, writerId);
+
             Comment savedComment = commentRepository.save(newComment);
-            ResponseCommentDto responseCommentDto = modelMapper.map(savedComment, ResponseCommentDto.class);
-            responseCommentDto.setPostId(savedComment.getId());
+
+            ResponseCommentDto responseCommentDto = savedComment.toResponseCommentDto(userServiceClient.getUserNameById(writerId));
+
             return responseCommentDto;
         } catch (Exception e) {
             System.err.println("Error while creating post: " + e.getMessage());
@@ -45,18 +52,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseCommentDto updateComment(Long commentId, Long userId, RequestCommentDto requestCommentDto) {
+    public ResponseCommentDto updateComment(Long commentId, Long writerId, UpdateRequestCommentDto updateRequestCommentDto) {
         try {
             Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
 
-            if (!comment.getWriterId().equals(userId)) {
+            if (!comment.getWriterId().equals(writerId)) {
                 throw new Exception();
             }
 
-            comment = modelMapper.map(requestCommentDto, Comment.class);
-            Comment updatedComment = commentRepository.save(comment);
-            ResponseCommentDto responseCommentDto = modelMapper.map(updatedComment, ResponseCommentDto.class);
-            responseCommentDto.setPostId(updatedComment.getId());
+            comment.update(updateRequestCommentDto);
+
+            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(userServiceClient.getUserNameById(writerId));
 
             return responseCommentDto;
         } catch (NoSuchElementException e) {
@@ -67,10 +73,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long commentId, Long userId) {
+    public void deleteComment(Long commentId, Long writerId) {
         try {
             Comment deleteComment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
-            if (!deleteComment.getWriterId().equals(userId)) {
+            if (!deleteComment.getWriterId().equals(writerId)) {
                 throw new Exception();
             }
             commentRepository.delete(deleteComment);
@@ -85,7 +91,8 @@ public class CommentServiceImpl implements CommentService {
     public ResponseCommentDto getCommentById(Long commentId) {
         try {
             Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
-            ResponseCommentDto responseCommentDto = modelMapper.map(comment, ResponseCommentDto.class);
+
+            ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(userServiceClient.getUserNameById(comment.getWriterId()));
 
             return responseCommentDto;
         } catch (NoSuchElementException e) {
@@ -97,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getAllComment(Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findAll(pageable);
-            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
             return responseCommentDtos;
         } catch (Exception e) {
             return null;
@@ -105,10 +112,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<ResponseCommentDto> getAllPostComment(Long postId, Pageable pageable) {
+    public Page<ResponseCommentDto> getAllCommentsInPost(Long postId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findBypostId(postId, pageable);
-            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
+            return responseCommentDtos;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Page<ResponseCommentDto> getAllCommentsByUserInClub(Long clubId, Long writerId, Pageable pageable) {
+        try {
+            Page<Comment> commentLists = commentRepository.findByClubIdAndWriterId(clubId, writerId, pageable);
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
+
             return responseCommentDtos;
         } catch (Exception e) {
             return null;
@@ -119,7 +138,7 @@ public class CommentServiceImpl implements CommentService {
     public Page<ResponseCommentDto> getALlUserComment(Long userId, Pageable pageable) {
         try {
             Page<Comment> commentLists = commentRepository.findBywriterId(userId, pageable);
-            Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> modelMapper.map(comment, ResponseCommentDto.class));
+            Page<ResponseCommentDto> responseCommentDtos = geCommentListWithWriterNames(commentLists);
 
             return responseCommentDtos;
         } catch (Exception e) {
@@ -140,4 +159,39 @@ public class CommentServiceImpl implements CommentService {
 //            return null;
 //        }
 //    }
+
+    // commentLists에 작성자 명을 더한 리스트를 반환하는 메서드
+    private Page<ResponseCommentDto> geCommentListWithWriterNames(Page<Comment> commentLists) {
+        // Collect userIds from post lists.
+        List<Long> writerIds = commentLists.stream()
+                .map(Comment::getWriterId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        // Call userServiceClient to get user names.
+        Map<Long, String> writerIdToNameMap = getUserNames(writerIds);
+
+        // Convert each post to ResponsePostListDto and replace userId with userName.
+        Page<ResponseCommentDto> responseCommentDtos = commentLists.map(comment -> {
+            ResponseCommentDto dto = comment.toResponseCommentDto(writerIdToNameMap.get(comment.getWriterId()));
+            return dto;
+        });
+
+        return responseCommentDtos;
+    }
+
+    // userIds에 해당하는 UserName을 가져오는 메서드
+    private Map<Long, String> getUserNames(List userIds) {
+        RequestUserNamesDto requestUserNamesDto = new RequestUserNamesDto(userIds);
+        ResponseUserNamesDto responseUserNamesDto = new ResponseUserNamesDto();
+        responseUserNamesDto.setUserNames(userServiceClient.getUserNames(requestUserNamesDto).getUserNames());
+
+        Map<Long, String> writerIdToNameMap = responseUserNamesDto.getUserNames().entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> Long.parseLong(entry.getKey()),
+                        Map.Entry::getValue
+                ));
+
+        return writerIdToNameMap;
+    }
 }

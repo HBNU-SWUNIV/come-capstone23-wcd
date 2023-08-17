@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.querydsl.core.annotations.QueryProjection;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,8 @@ public class ResponseClub {
 
     @Schema(description = "모임장 유저번호")
     private Long hostId;
+
+    private String hostName;
 
     @Schema(description = "모임 이름")
     private String clubName;
@@ -58,4 +61,18 @@ public class ResponseClub {
         this.createdAt = createdAt;
     }
 
+    @Builder
+    public ResponseClub(Long id, Long hostId, String hostName, String clubName, String category, String description, String mainImageUrl, ApprovalMethod approvalMethod, int maximumPeople, boolean recruitment, LocalDateTime createdAt) {
+        this.id = id;
+        this.hostId = hostId;
+        this.hostName = hostName;
+        this.clubName = clubName;
+        this.category = category;
+        this.description = description;
+        this.mainImageUrl = mainImageUrl;
+        this.approvalMethod = approvalMethod;
+        this.maximumPeople = maximumPeople;
+        this.recruitment = recruitment;
+        this.createdAt = createdAt;
+    }
 }
