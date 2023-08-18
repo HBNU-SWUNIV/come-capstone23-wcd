@@ -30,12 +30,27 @@ spring:
             baseMessage: Spring Cloud Gateway Global Filter
             preLogger: true
             postLogger: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - 'http://localhost:3000'
+              - 'http://localhost:8080'
+            allow-credentials: true
+            allowedHeaders: '*'
+            exposedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - PATCH
+              - DELETE
+              - OPTIONS
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/login
-            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -43,7 +58,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/signup
-            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -51,7 +65,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/regenerateToken
-            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -59,7 +72,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/logout
-            - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -67,7 +79,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/actuator/**
-            - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -75,7 +86,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/user/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -84,7 +94,6 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/evaluation/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -93,7 +102,6 @@ spring:
           uri: lb://CLUB-SERVICE
           predicates:
             - Path=/club-service/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/club-service/(?<segment>.*), /$\{segment}
@@ -102,7 +110,6 @@ spring:
           uri: lb://CHATTING-SERVICE
           predicates:
             - Path=/chatting-service/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
@@ -110,7 +117,6 @@ spring:
           uri: lb://BOARD-SERVICE
           predicates:
             - Path=/board-service/clubs/{club-id}/**
-            - Method=GET,POST,PUT, PATCH, DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/board-service/(?<segment>.*), /$\{segment}
@@ -120,7 +126,6 @@ spring:
           uri: lb://BOARD-SERVICE
           predicates:
             - Path=/board-service/users/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/board-service/(?<segment>.*), /$\{segment}
@@ -129,7 +134,6 @@ spring:
           uri: lb://SCHEDULE-SERVICE
           predicates:
             - Path=/schedule-service/**
-            - Method=GET,POST,PUT,DELETE
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
