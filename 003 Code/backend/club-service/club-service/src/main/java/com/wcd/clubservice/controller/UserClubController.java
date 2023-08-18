@@ -6,6 +6,7 @@ import com.wcd.clubservice.service.member.ClubMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserClubController {
-    ClubService clubService;
-    ClubMemberService clubMemberService;
+    private final ClubService clubService;
+    private final ClubMemberService clubMemberService;
 
     @Operation(summary = "유저의 모임 조회", description = "user-id에 해당하는 유저의 모임 조회")
     @GetMapping("/{user-id}/clubs")
