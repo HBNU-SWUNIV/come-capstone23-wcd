@@ -1,0 +1,3 @@
+<template>
+  notice
+</template>

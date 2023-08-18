@@ -1,10 +1,11 @@
 <template>
   <SideNavDrawer/>
-  <MainContent/>
+  <slot/>
 </template>
 
 <script>
-import SideNavDrawer from "@/components/SideNavDrawer";
+
+import SideNavDrawer from "../components/SideNavDrawer";
 
 export default {
   components: {
