@@ -122,7 +122,6 @@ public class ClubServiceImpl implements ClubService {
         clubRepository.delete(club);
     }
 
-
     // clubMembers에 작성자 명을 더한 리스트를 반환하는 메서드
     private List<ResponseClub> getMemberListWithWriterNames (List<Club> clubs) {
         // Collect userIds from post lists.
