@@ -1,7 +1,6 @@
 <template>
   <LeftNavDrawer/>
   <MainAppBar/>
-<!--  <MainContent/>-->
   <router-view/>
   <RightNavDrawer/>
   <FooterBar/>

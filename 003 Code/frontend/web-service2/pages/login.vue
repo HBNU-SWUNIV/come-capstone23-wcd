@@ -62,7 +62,7 @@ export default {
         );
 
         if (res.status === 200) {
-          const {access_token, refresh_token, user_id} = res.headers;
+          const {access_token, refresh_token, user_id} = res.data;
           store.setAccessToken(access_token);
           store.setRefreshToken(refresh_token);
           store.setUserId(user_id);
