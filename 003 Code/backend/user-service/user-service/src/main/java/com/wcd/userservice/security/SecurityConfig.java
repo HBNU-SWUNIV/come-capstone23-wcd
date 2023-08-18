@@ -1,5 +1,6 @@
 package com.wcd.userservice.security;
 
+import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.security.oauth.CustomOAuth2UserService;
 import com.wcd.userservice.security.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
@@ -28,6 +29,7 @@ public class SecurityConfig {
     private final Environment env;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 //    private final CustomOAuth2UserService customOAuth2UserService;
 //    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 //    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
@@ -86,6 +88,6 @@ public class SecurityConfig {
     }
 
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        return new AuthenticationFilter(authenticationManager, myUserDetailsService, env, redisTemplate, jwtTokenProvider);
+        return new AuthenticationFilter(authenticationManager, myUserDetailsService, env, redisTemplate, jwtTokenProvider, userRepository);
     }
 }

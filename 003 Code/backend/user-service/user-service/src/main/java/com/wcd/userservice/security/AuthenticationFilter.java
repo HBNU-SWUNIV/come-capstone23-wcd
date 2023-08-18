@@ -1,14 +1,17 @@
 package com.wcd.userservice.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.security.jwt.dto.TokenDto;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
+import com.wcd.userservice.security.jwt.dto.TokenWithUserIdDto;
 import com.wcd.userservice.service.MyUserDetailsService;
 import com.wcd.userservice.dto.user.request.RequestLogin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,16 +31,22 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private MyUserDetailsService myUserDetailsService;
     private Environment env;
-
     private RedisTemplate<String, String> redisTemplate;
     private JwtTokenProvider jwtTokenProvider;
+    private UserRepository userRepository;
 
-    public AuthenticationFilter(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, Environment env, RedisTemplate<String, String> redisTemplate, JwtTokenProvider jwtTokenProvider) {
+    public AuthenticationFilter(AuthenticationManager authenticationManager,
+                                MyUserDetailsService myUserDetailsService,
+                                Environment env,
+                                RedisTemplate<String, String> redisTemplate,
+                                JwtTokenProvider jwtTokenProvider,
+                                UserRepository userRepository) {
         super.setAuthenticationManager(authenticationManager);
         this.myUserDetailsService = myUserDetailsService;
         this.env = env;
         this.redisTemplate = redisTemplate;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -81,6 +90,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 refresh_token
         );
 
+        TokenWithUserIdDto tokenWithUserIdDto = new TokenWithUserIdDto(
+                jwtTokenProvider.generateAccessToken(authResult),
+                refresh_token,
+                userRepository.findByLoginId(authResult.getName()).getId().toString()
+        );
+
         redisTemplate.opsForValue().set(
                 // Redis 데이터베이스에 저장할 키(key)
                 authResult.getName(),
@@ -97,5 +112,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader("refresh_token", tokenDto.getRefresh_token());
         // login_id를 반환시켜주는 이유는 우리가 가지고 있는 token과 login_id가 동일한지 확인하기 위함
         response.addHeader("login_id", authResult.getName());
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.setContentType(MediaType.APPLICATION_JSON);
+        response.getWriter().write(objectMapper.writeValueAsString(tokenWithUserIdDto));
     }
 }

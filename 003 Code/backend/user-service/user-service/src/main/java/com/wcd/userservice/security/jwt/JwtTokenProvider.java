@@ -29,13 +29,13 @@ public class JwtTokenProvider {
     private final UserRepository userRepository;
 
     public String generateAccessToken(Authentication authentication) {
-        Users user = userRepository.findByLoginId(authentication.getName());
         // HMAC SHA-512 알고리즘으로 생성된 Secret Key 생성
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
-
+        Users user = userRepository.findByLoginId(authentication.getName());
         String access_token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
-                .setSubject(user.getId().toString())
+                .setSubject(authentication.getName())
+                .claim("userId", user.getId())
                 // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
                 .setExpiration(new Date(System.currentTimeMillis()
                         + Long.parseLong(env.getProperty("access_token.expiration_time"))))
@@ -48,12 +48,11 @@ public class JwtTokenProvider {
     }
 
     public String generateRefreshToken(Authentication authentication) {
-        Users user = userRepository.findByLoginId(authentication.getName());
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("refresh_token.secret").getBytes(StandardCharsets.UTF_8));
 
         String refresh_token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
-                .setSubject(user.getId().toString())
+                .setSubject(authentication.getName())
                 // JWT 토큰의 만료 시간 설정(현재 시간 + token.expiration_time 값)
                 .setExpiration(new Date(System.currentTimeMillis()
                         + Long.parseLong(env.getProperty("refresh_token.expiration_time"))))
