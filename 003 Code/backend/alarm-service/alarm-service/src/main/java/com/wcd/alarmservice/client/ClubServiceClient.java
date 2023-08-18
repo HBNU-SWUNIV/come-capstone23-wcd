@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "club-service")
 public interface ClubServiceClient {
 
-    @GetMapping("/member/id/club/{club-id}")
+    @GetMapping("/clubs/{club-id}/members/id")
     ResponseClubMemberIdsByClubId getClubMemberIds(@PathVariable("club-id") Long clubId);
 
-    @GetMapping("/club/{club-id}/clubName")
+    @GetMapping("/clubs/{club-id}/clubName")
     String getClubNameById(@PathVariable("club-id") Long clubId);
 }

@@ -34,7 +34,7 @@ public class ClubMemberController {
     }
 
     @Operation(summary = "모임 멤버 아이디 조회", description = "club-id에 해당하는 모임 멤버 아이디 조회")
-    @GetMapping("/members/id/club/{club-id}")
+    @GetMapping("/members/id")
     public ResponseEntity<ResponseClubMemberIdsByClubId> getClubMemberIds(@PathVariable("club-id") Long clubId) {
         return ResponseEntity.status(HttpStatus.OK).body(clubMemberService.getClubMemberIds(clubId));
     }
