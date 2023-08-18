@@ -73,7 +73,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             // 1번
             Jws<Claims> jws =  Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(jwt);
-            String subject = jws.getBody().getSubject();
+            Claims claims = jws.getBody();
 
 //            // 2번
 //            // JWT 토큰을 파싱하기 위한 빌더 객체 생성 및 토큰에 사용될 서명 키 설정
@@ -87,7 +87,9 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 //                    // JWT의 subject 값을 가져옴
 //                    .getSubject();
 
-            return chain.filter(exchange.mutate().request(r -> r.headers(headers -> headers.add("user-id", subject))).build());
+            return chain.filter(
+                    exchange.mutate()
+                    .request(r -> r.headers(headers -> headers.add("user-id", claims.get("userId").toString()))).build());
 //            return chain.filter(exchange);
         }));
     }
