@@ -52,7 +52,9 @@ public class ClubServiceImpl implements ClubService {
         String mainImageUrl = null;
 
         try {
-            mainImageUrl = fileStore.storeFile(requestClub.getMultipartFile());
+            if(requestClub.getMultipartFile() != null && !requestClub.getMultipartFile().isEmpty()) {
+                mainImageUrl = fileStore.storeFile(requestClub.getMultipartFile());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
