@@ -1,7 +1,7 @@
 <template>
   <LeftNavDrawer/>
   <MainAppBar/>
-  <router-view/>
+  ㄴㅁㄴㅇㅁㄴ
   <RightNavDrawer/>
   <FooterBar/>
 </template>
@@ -17,7 +17,6 @@ export default {
   components: {
     LeftNavDrawer,
     MainAppBar,
-    MainContent,
     RightNavDrawer,
     FooterBar
   },
