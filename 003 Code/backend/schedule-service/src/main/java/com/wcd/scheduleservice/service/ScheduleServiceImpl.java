@@ -4,8 +4,8 @@ import com.wcd.scheduleservice.dto.RequestScheduleDto;
 import com.wcd.scheduleservice.dto.ResponseScheduleDto;
 import com.wcd.scheduleservice.entity.Schedule;
 import com.wcd.scheduleservice.repository.ScheduleRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,25 +14,24 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
-    @Autowired
-    ScheduleRepository scheduleRepository;
-    @Autowired
-    ModelMapper modelMapper;
+    private final ScheduleRepository scheduleRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public ResponseScheduleDto createSchedule(RequestScheduleDto requestScheduleDto) {
-        Schedule newSchedule = modelMapper.map(requestScheduleDto, Schedule.class);
+    public ResponseScheduleDto createSchedule(Long clubId, RequestScheduleDto requestScheduleDto) {
+        Schedule newSchedule = requestScheduleDto.toEntity(clubId);
         Schedule savedSchedule = scheduleRepository.save(newSchedule);
-        ResponseScheduleDto responseScheduleDto = modelMapper.map(savedSchedule, ResponseScheduleDto.class);
+        ResponseScheduleDto responseScheduleDto = savedSchedule.toResponseScheduleDto();
         return responseScheduleDto;
     }
 
     @Override
-    public ResponseScheduleDto updateSchedule(Long scheduleId, RequestScheduleDto requestScheduleDto) {
+    public ResponseScheduleDto updateSchedule(Long clubId, Long scheduleId, RequestScheduleDto requestScheduleDto) {
         try {
             Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new Exception());
-            schedule = modelMapper.map(requestScheduleDto, Schedule.class);
+            schedule = requestScheduleDto.toEntity(clubId);
 
             return null;
         } catch (Exception e) {
@@ -69,8 +68,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             LocalDate endDay = month.withDayOfMonth(month.lengthOfMonth());
             LocalDateTime startTime = startDay.atStartOfDay();
             LocalDateTime endTime = endDay.atTime(LocalTime.MAX);
-            List<Schedule> schedules = scheduleRepository.findByClubIdEqualsAndStartTimeOrEndTimeBetween(clubId, startTime, endTime);
-            List<ResponseScheduleDto> scheduleDtos = (List<ResponseScheduleDto>)schedules.stream().map((schedule) -> modelMapper.map(schedule, ResponseScheduleDto.class));
+            List<Schedule> schedules = scheduleRepository.findByClubIdEqualsAndStartOrEndBetween(clubId, startTime, endTime);
+            List<ResponseScheduleDto> scheduleDtos = schedules.stream().map((schedule) -> schedule.toResponseScheduleDto()).toList();
             return scheduleDtos;
         } catch (Exception e) {
             return null;
