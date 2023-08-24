@@ -1,4 +1,5 @@
 <template>
+  <client-only>
   <div class="form-container">
     <div class="input-row">
       <label for="title" class="input-label">Title:</label>
@@ -14,17 +15,18 @@
       </select>
     </div>
 
-    <CKEditorComponent v-model="content" class="editor"/>
+      <CKEditorComponent v-model="content" class="editor"/>
 
-    <button @click="sendToServer" class="submit-button">제출</button>
+    <button @¬click="sendToServer" class="submit-button">제출</button>
   </div>
+  </client-only>
 </template>
 
 <script>
 import axios from 'axios'
 import CKEditorComponent from "@/components/CKeditorComponent"
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import {ref} from 'vue'
+import {useRoute} from 'vue-router'
 
 export default {
   components: {

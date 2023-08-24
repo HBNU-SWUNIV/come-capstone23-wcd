@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.1",
+    "@ckeditor/ckeditor5-upload": "^39.0.1",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",

@@ -7,7 +7,7 @@
       <v-card>
         <!-- 제목부분 스타일 조정 -->
         <v-card-title>
-          {{ eventTitle }}    <FullCalendar ref="fullCalendar" :options="calendarOptions" :custom-buttons="customButtons" :header="header"/>
+          {{ eventTitle }}
         </v-card-title>
         <v-divider></v-divider>
 
@@ -133,7 +133,6 @@ export default {
     const newEventEndDate = ref("");
     const newEventEndTime = ref("");
     const newEventAllDay = ref(false);
-    const calendarApi = ref(null);
 
     function eventClick(info) {
       eventTitle.value = info.event.title;
@@ -215,9 +214,9 @@ export default {
         })
 
         // if the response status is 200 or 201 (successful), then proceed
-        // if (response && (response.status === 200 || response.status === 201)) {
+        if (response && (response.status === 200 || response.status === 201)) {
         await fetchData();
-        // }
+        }
       } catch (error) {
         console.error(error)
       }
@@ -226,16 +225,24 @@ export default {
     }
 
     const fetchData = async () => {
-      const response = await axios.get(`/schedule-service/clubs/${currentClubId.value}/calendars`, {
-        params: {
-          yymm: yymm.value
+      try {
+        const response = await axios.get(`/schedule-service/clubs/${currentClubId.value}/calendars`, {
+          params: {
+            yymm: yymm.value
+          }
+        });
+
+        // response가 있고, 그 내부에 data가 있는 경우에만 이후 로직 수행
+        if (response && response.data) {
+          const responseData = response.data;
+          for (let i in responseData) {
+            events.value.push(responseData[i]);
+          }
+        } else {
+          console.error('서버 응답이 없습니다.');
         }
-      });
-
-      const responseData = response.data;
-
-      for (let i in responseData) {
-        events.value.push(responseData[i]);
+      } catch (error) {
+        console.error('데이터를 가져오는 중에 오류가 발생했습니다.', error);
       }
     };
 
