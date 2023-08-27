@@ -1,0 +1,26 @@
+server:
+  port: 8887
+
+spring:
+  application:
+    name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/HBNU-SWUNIV/come-capstone23-wcd/
+          search-paths: spring-cloud-config
+          basedir: ./repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh

@@ -1,0 +1,40 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: club-service
+  h2:
+    console:
+      enables: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+
+  config:
+    import:
+      - classpath:/bootstrap.yml
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+file:
+  dir: /users/seongjun/image/
+#  url: http://211.115.222.246:1000/image/
+  url: file:///users/seongjun/image/
+
+logging:
+  level:
+    com.wcd.clubservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
