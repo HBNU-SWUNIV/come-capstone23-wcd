@@ -8,4 +8,4 @@ spring:
 eureka:
   client:
     register-with-eureka: false
-    fetch-registry: false 
+    fetch-registry: false

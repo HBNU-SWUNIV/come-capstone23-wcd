@@ -11,137 +11,137 @@ eureka:
 spring:
   application:
     name: apigateway-service
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-  redis:
-    host: 127.0.0.1
-    port: 6379
-  cloud:
-    config:
-      import:
-        - classpath:/bootstrap.yml
-    gateway:
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: Spring Cloud Gateway Global Filter
-            preLogger: true
-            postLogger: true
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins:
-              - 'http://localhost:3000'
-              - 'http://localhost:8080'
-            allow-credentials: true
-            allowedHeaders: '*'
-            exposedHeaders: '*'
-            allowedMethods:
-              - PUT
-              - GET
-              - POST
-              - PATCH
-              - DELETE
-              - OPTIONS
-      routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/login
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/signup
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/regenerateToken
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/logout
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/actuator/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/user/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/evaluation/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: club-service
-          uri: lb://CLUB-SERVICE
-          predicates:
-            - Path=/club-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/club-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: chatting-service
-          uri: lb://CHATTING-SERVICE
-          predicates:
-            - Path=/chatting-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
-        - id: board-service
-          uri: lb://BOARD-SERVICE
-          predicates:
-            - Path=/board-service/clubs/{club-id}/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
-        - id: board-service
-          uri: lb://BOARD-SERVICE
-          predicates:
-            - Path=/board-service/users/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: schedule-service
-          uri: lb://SCHEDULE-SERVICE
-          predicates:
-            - Path=/schedule-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, httpexchanges, busrefresh
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#  cloud:
+#    config:
+#      import:
+#        - classpath:/bootstrap.yml
+#    gateway:
+#      default-filters:
+#        - name: GlobalFilter
+#          args:
+#            baseMessage: Spring Cloud Gateway Global Filter
+#            preLogger: true
+#            postLogger: true
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins:
+#              - 'http://localhost:3000'
+#              - 'http://localhost:8080'
+#            allow-credentials: true
+#            allowedHeaders: '*'
+#            exposedHeaders: '*'
+#            allowedMethods:
+#              - PUT
+#              - GET
+#              - POST
+#              - PATCH
+#              - DELETE
+#              - OPTIONS
+#      routes:
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/login
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/signup
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/regenerateToken
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/logout
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/actuator/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/user/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/evaluation/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#        - id: club-service
+#          uri: lb://CLUB-SERVICE
+#          predicates:
+#            - Path=/club-service/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/club-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#        - id: chatting-service
+#          uri: lb://CHATTING-SERVICE
+#          predicates:
+#            - Path=/chatting-service/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
+#        - id: board-service
+#          uri: lb://BOARD-SERVICE
+#          predicates:
+#            - Path=/board-service/clubs/{club-id}/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#            - ClubMemberAuthorizationFilter
+#        - id: board-service
+#          uri: lb://BOARD-SERVICE
+#          predicates:
+#            - Path=/board-service/users/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#        - id: schedule-service
+#          uri: lb://SCHEDULE-SERVICE
+#          predicates:
+#            - Path=/schedule-service/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
+#
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, health, beans, httpexchanges, busrefresh
