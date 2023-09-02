@@ -4,13 +4,29 @@ spring:
     url: jdbc:h2:mem:test
     username: sa
     password: 
+  h2:
+  console:
+    enables: true
+    settings:
+      web-allow-others: true
+    path: /h2-console
   jpa:
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         ddl-auto: create-drop
-      
+
+logging:
+  level:
+    com.example.board-service: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh, httpexchanges, info, configprops, env
+
   rabbitmq:
     host: 127.0.0.1
     port: 5672

@@ -4,12 +4,7 @@ server:
 spring:
   application:
     name: board-service
-  h2:
-    console:
-      enables: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
+
 
 eureka:
   instance:
@@ -19,16 +14,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, busrefresh, httpexchanges, info, configprops, env
-
-  logging:
-    level:
-      com.example.board-service: DEBUG
 
 # Swagger springdoc-ui Configuration
 springdoc:
