@@ -9,7 +9,7 @@ spring:
     properties:
       hibernate:
         dialect: "{cipher}AQA9G+89tJBSbPFlGciphEBcNa5MpD66RAxy7lIBtEWDoSqIOY1IdXy8N+WTEcVItgg4Xk3UT5qRVnXngwn1e2BuezX4r3XXdVpZbz4TM77gwZ5cYPSTxqNImp18IhLUtko9WUexs0Nobcqu2ImYl8vW1OCLcblGSlaY8CSc/Z8C2OGQMhBFlV2vcX/45yZwWKRNyrN2GQyp+34X2S+cFgBxaZAqFpZYPaSCTpkfACyClgj7kXPHnDVwgl5ObBSYwYtaTDbsVbPq/xscjxwO7SauFllayzTQyVKuzby+Jmave7/srSblCcofB/K7MhnXqACdatzjkB6fK/ugKT+OQEJH7ejIsnfnZTMaktK9HdVP0GdqEcPaIbzO0cBO5mGz/rbRZikkBQdYwxh4ZUl+B/cMjXedSUEg5rAAkh8dKvgPvg=="
-        ddl-auto: create
+        ddl-auto: update
   h2:
     console:
       enabled: true
