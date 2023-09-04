@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -41,7 +40,7 @@ public class RequestSignUp {
 
     @Schema(description = "생일", example = "2000-01-01")
     @NotNull(message = "BirthDay cannot be null")
-    private LocalDate birthday;
+    private LocalDate birthDay;
 
     @Schema(description = "성별", example = "남")
     @NotNull(message = "Gender cannot be null")
@@ -53,7 +52,7 @@ public class RequestSignUp {
                 .encryptedPwd(encryptedPwd)
                 .name(name)
                 .phoneNumber(phoneNumber)
-                .birthday(birthday)
+                .birthDay(birthDay)
                 .gender(gender)
 //                .profileImage(profileImageUrl)
                 .build();

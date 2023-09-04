@@ -43,7 +43,7 @@ public class ResponseUserById {
         this.loginId = user.getLoginId();
         this.name = user.getName();
         this.phoneNumber = user.getPhoneNumber();
-        this.birthday = user.getBirthday();
+        this.birthday = user.getBirthDay();
         this.gender = user.getGender();
         this.profileImage = user.getProfileImage();
     }
