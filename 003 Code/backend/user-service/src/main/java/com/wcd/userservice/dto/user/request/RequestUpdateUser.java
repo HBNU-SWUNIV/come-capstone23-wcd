@@ -28,7 +28,7 @@ public class RequestUpdateUser {
 
     @Schema(description = "생일", example = "2000-01-01")
     @NotNull(message = "BirthDay cannot be null")
-    private LocalDate birthDay;
+    private LocalDate birthday;
 
     @Schema(description = "성별", example = "남")
     @NotNull(message = "Gender cannot be null")

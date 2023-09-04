@@ -31,7 +31,7 @@ public class Users {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private LocalDate birthDay;
+    private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -40,12 +40,12 @@ public class Users {
     private String profileImage;
 
     @Builder
-    public Users(String loginId, String encryptedPwd, String name, String phoneNumber, LocalDate birthDay, Gender gender, String profileImage) {
+    public Users(String loginId, String encryptedPwd, String name, String phoneNumber, LocalDate birthday, Gender gender, String profileImage) {
         this.loginId = loginId;
         this.encryptedPwd = encryptedPwd;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.birthDay = birthDay;
+        this.birthday = birthday;
         this.gender = gender;
         this.profileImage = profileImage;
     }
@@ -59,8 +59,8 @@ public class Users {
             this.phoneNumber = requestUpdateUser.getPhoneNumber();
         }
 
-        if (requestUpdateUser.getBirthDay() != null) {
-            this.birthDay = requestUpdateUser.getBirthDay();
+        if (requestUpdateUser.getBirthday() != null) {
+            this.birthday = requestUpdateUser.getBirthday();
         }
 
         if (requestUpdateUser.getGender() != null) {
