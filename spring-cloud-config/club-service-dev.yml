@@ -10,9 +10,30 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         ddl-auto: create-drop
+  h2:
+    console:
+      enables: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
       
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: "{cipher}AQDU0lC/bvJY2gDG8x8gv2n8UQRLHMfT8aCr/Obq+I+/R10NHJk4cmbR/S41EZMeQrUEXvQyhz9VnJLRMwjHJ5boIY3To5qM2pLicvvKZADeEsVyZeT93YJg7Z1RFjdFZtoDHO1d8VOWCupj7slUKFbEmdODBvIoKuIq7cFuMiaVJ5XL4fYt334u3/2FHvLlj8++Fj8FczTb6uKL/07pxJT0u0vh9vsoCAw+Ww75uqqlLXpXyiTh2F9RotZjL1psQxQYaqzlf3gFp/xYhHbkml+UXtHfFCxtBsOIHLt7Mm5mzdYnaUG2c7cKlgvSs2EYXsEwQoIDfoPbmQtgBGI48SVEv1Hl8iIKh8g2H6vfToB+nyl3qfbw0TR01eUbKaR+QrI="
+
+file:
+  dir: /users/seongjun/image/
+#  url: http://211.115.222.246:1000/image/
+  url: file:///users/seongjun/image/
+
+logging:
+  level:
+    com.wcd.clubservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh
