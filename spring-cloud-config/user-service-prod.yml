@@ -6,10 +6,11 @@ spring:
     password: "{cipher}AQDpfV8W/W2m05X6qMf2N3zyWwV2imgKCuBrePMOJ6WBQmRVC4BzyVjnecB0CiZvrB0aDwPKGfRpmKbkPDl2qXWrX0HD0SnCO3E+R3ZDv4o4pxJAH3XGDkDbUDAoRieo66KLqkCkrjbgbNiaDvrRvj6ZXFqSJwP58oxHs4xS+l+Dv0dSQr2jg16NdZc1cd3UhVjSARcMuYTt1K83tBsGJHwPL2Vf3KhiHgCZoVJVesFvQheOTSy/r1GaYiy0G6hL8xnstBzjzSby3IT60sa2kiDTlPJF91UucxN3vT/a13QVgJMMziXVD+kPkwcMIVVTCesDSvmOquCzXYmZG8pkJm/5yYg7r8S679nbm5h5iMG+2f3EKGmz5oqSsjuXFGUdW+Q="
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         dialect: "{cipher}AQA9G+89tJBSbPFlGciphEBcNa5MpD66RAxy7lIBtEWDoSqIOY1IdXy8N+WTEcVItgg4Xk3UT5qRVnXngwn1e2BuezX4r3XXdVpZbz4TM77gwZ5cYPSTxqNImp18IhLUtko9WUexs0Nobcqu2ImYl8vW1OCLcblGSlaY8CSc/Z8C2OGQMhBFlV2vcX/45yZwWKRNyrN2GQyp+34X2S+cFgBxaZAqFpZYPaSCTpkfACyClgj7kXPHnDVwgl5ObBSYwYtaTDbsVbPq/xscjxwO7SauFllayzTQyVKuzby+Jmave7/srSblCcofB/K7MhnXqACdatzjkB6fK/ugKT+OQEJH7ejIsnfnZTMaktK9HdVP0GdqEcPaIbzO0cBO5mGz/rbRZikkBQdYwxh4ZUl+B/cMjXedSUEg5rAAkh8dKvgPvg=="
-        ddl-auto: update
   h2:
     console:
       enabled: true

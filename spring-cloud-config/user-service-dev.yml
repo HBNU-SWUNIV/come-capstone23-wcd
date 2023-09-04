@@ -6,10 +6,11 @@ spring:
     password: 
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        ddl-auto: create-drop
   h2:
     console:
       enabled: true
