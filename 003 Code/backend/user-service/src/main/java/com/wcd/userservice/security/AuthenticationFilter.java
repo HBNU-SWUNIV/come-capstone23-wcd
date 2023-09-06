@@ -106,14 +106,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 // 기간의 단위를 마이크로 초로 지정
                 TimeUnit.MICROSECONDS
         );
-
-        // 응답헤더에 token과 userId 추가
-        response.addHeader("access_token", tokenDto.getAccess_token());
-        response.addHeader("refresh_token", tokenDto.getRefresh_token());
-        // login_id를 반환시켜주는 이유는 우리가 가지고 있는 token과 login_id가 동일한지 확인하기 위함
-        response.addHeader("login_id", authResult.getName());
-
-
+        
         ObjectMapper objectMapper = new ObjectMapper();
         response.setContentType(MediaType.APPLICATION_JSON);
         response.getWriter().write(objectMapper.writeValueAsString(tokenWithUserIdDto));
