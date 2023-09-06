@@ -25,13 +25,4 @@ public class RequestUpdateUser {
     @Schema(description = "휴대전화 번호", example = "01012345678")
     @NotNull(message = "PhoneNumber cannot be null")
     private String phoneNumber;
-
-    @Schema(description = "생일", example = "2000-01-01")
-    @Past(message = "Birth date must be in the past")
-    @NotNull(message = "BirthDay cannot be null")
-    private LocalDate birthday;
-
-    @Schema(description = "성별", example = "남")
-    @NotNull(message = "Gender cannot be null")
-    private Gender gender;
 }

@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService{
     public Long signUp(RequestSignUp requestSignUp) {
 
         // Check if user with the provided loginId already exists
-        if (userRepository.existsByLoginId(requestSignUp.getLoginId())) {
+        if (userRepository.existsByEmail(requestSignUp.getEmail())) {
             throw new IllegalArgumentException("A user with this loginId already exists.");
         } else if (userRepository.existsByPhoneNumber(requestSignUp.getPhoneNumber())) {
             throw new IllegalArgumentException("A user with this phone number already exists.");

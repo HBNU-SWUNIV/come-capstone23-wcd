@@ -67,7 +67,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                         UsernamePasswordAuthenticationToken 형태로 변환
                      */
                     new UsernamePasswordAuthenticationToken(
-                            requestLogin.getLoginId(),
+                            requestLogin.getEmail(),
                             requestLogin.getPassword(),
                             // 권한과 관련된 값
                             new ArrayList<>()
@@ -93,7 +93,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         TokenWithUserIdDto tokenWithUserIdDto = new TokenWithUserIdDto(
                 jwtTokenProvider.generateAccessToken(authResult),
                 refresh_token,
-                userRepository.findByLoginId(authResult.getName()).getId().toString()
+                userRepository.findByEmail(authResult.getName()).getId().toString()
         );
 
         redisTemplate.opsForValue().set(

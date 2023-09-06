@@ -3,6 +3,8 @@ package com.wcd.userservice.entity;
 import com.wcd.userservice.dto.user.request.RequestUpdateUser;
 import com.wcd.userservice.enums.Gender;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
@@ -19,7 +21,7 @@ public class Users {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String loginId;
+    private String email;
 
     @Column(nullable = false)
     private String encryptedPwd;
@@ -40,8 +42,8 @@ public class Users {
     private String profileImage;
 
     @Builder
-    public Users(String loginId, String encryptedPwd, String name, String phoneNumber, LocalDate birthday, Gender gender, String profileImage) {
-        this.loginId = loginId;
+    public Users(String email, String encryptedPwd, String name, String phoneNumber, LocalDate birthday, Gender gender, String profileImage) {
+        this.email = email;
         this.encryptedPwd = encryptedPwd;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -57,14 +59,6 @@ public class Users {
 
         if (StringUtils.hasText(requestUpdateUser.getPhoneNumber())) {
             this.phoneNumber = requestUpdateUser.getPhoneNumber();
-        }
-
-        if (requestUpdateUser.getBirthday() != null) {
-            this.birthday = requestUpdateUser.getBirthday();
-        }
-
-        if (requestUpdateUser.getGender() != null) {
-            this.gender = requestUpdateUser.getGender();
         }
 
         if (StringUtils.hasText(profileImageUrl)) {

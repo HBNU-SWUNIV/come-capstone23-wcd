@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
 
@@ -19,10 +20,11 @@ public class RequestSignUp {
 //    @Schema(description = "프로필 이미지")
 //    private MultipartFile profileImage;
 
-    @Schema(description = "로그인 아이디", example = "id1234", minLength = 5, maxLength = 20)
-    @NotNull(message = "Id cannot be null")
-    @Size(min = 5, max = 20, message = "login_id not be less than two characters")
-    private String loginId;
+    @Schema(description = "이메일", example = "example@example.org")
+    @NotNull(message = "Email cannot be null")
+    @Pattern(regexp = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$",
+            message = "Email format is not correct")
+    private String email;
 
     @Schema(description = "패스워드", example = "pwd1234!", minLength = 8, maxLength = 20)
     @NotNull(message = "Password cannot be null")
@@ -51,7 +53,7 @@ public class RequestSignUp {
 
     public Users toEntity(String encryptedPwd) {
         Users user = Users.builder()
-                .loginId(loginId)
+                .email(email)
                 .encryptedPwd(encryptedPwd)
                 .name(name)
                 .phoneNumber(phoneNumber)

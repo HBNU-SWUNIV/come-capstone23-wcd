@@ -31,7 +31,7 @@ public class JwtTokenProvider {
     public String generateAccessToken(Authentication authentication) {
         // HMAC SHA-512 알고리즘으로 생성된 Secret Key 생성
         Key secretKey = Keys.hmacShaKeyFor(env.getProperty("access_token.secret").getBytes(StandardCharsets.UTF_8));
-        Users user = userRepository.findByLoginId(authentication.getName());
+        Users user = userRepository.findByEmail(authentication.getName());
         String access_token = Jwts.builder()
                 // JWT 토큰의 subject를 설정
                 .setSubject(authentication.getName())

@@ -22,7 +22,7 @@ class UserRepositoryTest {
     void createMember() {
         // given
         Users users = Users.builder()
-                .loginId("test1234")
+                .email("exapmle@exapmle.org")
                 .encryptedPwd("encryptedPwd")
                 .name("kim")
                 .phoneNumber("010-1234-1234")
@@ -43,7 +43,7 @@ class UserRepositoryTest {
     void findByLoginId() {
         // given
         Users users = Users.builder()
-                .loginId("test1234")
+                .email("exapmle@exapmle.org")
                 .encryptedPwd("encryptedPwd")
                 .name("kim")
                 .phoneNumber("010-1234-1234")
@@ -54,7 +54,7 @@ class UserRepositoryTest {
         userRepository.save(users);
 
         // when
-        Users result = userRepository.findByLoginId("test1234");
+        Users result = userRepository.findByEmail("exapmle@example.org");
 
         // then
         Assertions.assertThat(result.getName()).isEqualTo(users.getName());

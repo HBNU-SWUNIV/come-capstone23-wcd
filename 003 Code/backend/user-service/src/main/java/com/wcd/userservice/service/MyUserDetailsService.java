@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users userEntity = userRepository.findByLoginId(username);
+        Users userEntity = userRepository.findByEmail(username);
 
         // 해당하는 사용자가 없다면
         if(userEntity == null)
@@ -30,7 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
 
         // User: Spring Security에서 제공해주는 User 모델
-        return new org.springframework.security.core.userdetails.User(userEntity.getLoginId(), userEntity.getEncryptedPwd(),
+        return new org.springframework.security.core.userdetails.User(userEntity.getEmail(), userEntity.getEncryptedPwd(),
                 true, true, true, true, new ArrayList<>());
     }
 }

@@ -13,10 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 public class RequestLogin {
 
-    @Schema(description = "로그인 아이디", example = "id1234", minLength = 5, maxLength = 20)
-    @NotNull(message = "login_id cannot be null")
-    @Size(min = 5, max = 20, message = "login_id not be less than 2 characters")
-    private String loginId;
+    @Schema(description = "이메일", example = "example@example.org", minLength = 5, maxLength = 20)
+    @NotNull(message = "Email cannot be null")
+    @Pattern(regexp = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$",
+            message = "Email format is not correct")
+    private String email;
 
     @Schema(description = "패스워드", example = "pwd1234", minLength = 8)
     @NotNull(message = "Password cannot be null")

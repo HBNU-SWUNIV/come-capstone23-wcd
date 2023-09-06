@@ -40,7 +40,7 @@ public class ResponseUserById {
     @Builder
     public ResponseUserById(Users user) {
         this.id = user.getId();
-        this.loginId = user.getLoginId();
+        this.loginId = user.getEmail();
         this.name = user.getName();
         this.phoneNumber = user.getPhoneNumber();
         this.birthday = user.getBirthday();
