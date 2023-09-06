@@ -27,7 +27,7 @@ public class AuthController {
 
     @Operation(summary = "회원가입", description = "회원가입 API")
     @PostMapping("/signup")
-    public ResponseEntity<Long> signUp(@RequestBody RequestSignUp requestSignUp) {
+    public ResponseEntity<Long> signUp(@Valid @RequestBody RequestSignUp requestSignUp) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.signUp(requestSignUp));
     }
 
