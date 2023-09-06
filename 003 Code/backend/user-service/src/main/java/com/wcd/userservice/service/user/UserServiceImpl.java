@@ -43,11 +43,13 @@ public class UserServiceImpl implements UserService{
 
         String profileImageUrl = null;
 
-        try {
-            fileStore.deleteFile(user.getProfileImage());
-            profileImageUrl = fileStore.storeFile(requestUpdateUser.getProfileImage());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(requestUpdateUser.getProfileImage() != null && !requestUpdateUser.getProfileImage().isEmpty()) {
+            try {
+                fileStore.deleteFile(user.getProfileImage());
+                profileImageUrl = fileStore.storeFile(requestUpdateUser.getProfileImage());
+            } catch (IOException e) {
+                log.error("Failed to update profile image for user with ID: {}", userId, e);
+            }
         }
 
         user.updateUser(requestUpdateUser, profileImageUrl);
