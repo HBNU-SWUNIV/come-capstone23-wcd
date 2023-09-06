@@ -4,10 +4,10 @@ import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.enums.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -19,27 +19,29 @@ public class RequestSignUp {
 //    @Schema(description = "프로필 이미지")
 //    private MultipartFile profileImage;
 
-    @Schema(description = "로그인 아이디", example = "id1234", minLength = 3)
+    @Schema(description = "로그인 아이디", example = "id1234", minLength = 5, maxLength = 20)
     @NotNull(message = "Id cannot be null")
-    @Size(min = 2, message = "login_id not be less than two characters")
+    @Size(min = 5, max = 20, message = "login_id not be less than two characters")
     private String loginId;
 
-    @Schema(description = "패스워드", example = "pwd1234", minLength = 3)
+    @Schema(description = "패스워드", example = "pwd1234!", minLength = 8, maxLength = 20)
     @NotNull(message = "Password cannot be null")
-    @Size(min = 2, message = "Password not be less than tn o characters")
+    @Size(min = 8, max = 20, message = "Password must be between 8 to 20 characters long.")
+    @Pattern(regexp = "^(?:(?=.*[a-zA-Z])(?=.*[\\W_])|(?=.*[a-zA-Z])(?=.*\\d)|(?=.*\\d)(?=.*[\\W_])).{8,}$",
+            message = "Password must be at least 8 characters long and combine at least two of the following: letters, numbers, and special symbols.")
     private String password;
 
-    @Schema(description = "이름", example = "홍길동", minLength = 3)
+    @Schema(description = "이름", example = "홍길동", minLength = 2)
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, message = "Name not be less than two characters")
     private String name;
 
-    @Schema(description = "휴대전화 번호", example = "010-1234-5678")
+    @Schema(description = "휴대전화 번호", example = "01012345678")
     @NotNull(message = "PhoneNumber cannot be null")
-    @Pattern(regexp = "\\d{3}-\\d{3,4}-\\d{4}", message = "Invalid phone number")
     private String phoneNumber;
 
     @Schema(description = "생일", example = "2000-01-01")
+    @Past(message = "Birth date must be in the past")
     @NotNull(message = "BirthDay cannot be null")
     private LocalDate birthday;
 

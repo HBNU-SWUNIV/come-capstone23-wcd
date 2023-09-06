@@ -3,6 +3,7 @@ package com.wcd.userservice.dto.user.request;
 import com.wcd.userservice.enums.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -16,17 +17,17 @@ import java.time.LocalDate;
 public class RequestUpdateUser {
     MultipartFile profileImage;
 
-    @Schema(description = "이름", example = "홍길동", minLength = 3)
+    @Schema(description = "이름", example = "홍길동", minLength = 2)
     @NotNull(message = "Name cannot be null")
     @Size(min = 2, message = "Name not be less than w characters")
     private String name;
 
-    @Schema(description = "휴대전화 번호", example = "010-1234-5678")
+    @Schema(description = "휴대전화 번호", example = "01012345678")
     @NotNull(message = "PhoneNumber cannot be null")
-    @Pattern(regexp = "\\d{3}-\\d{3,4}-\\d{4}", message = "Invalid phone number")
     private String phoneNumber;
 
     @Schema(description = "생일", example = "2000-01-01")
+    @Past(message = "Birth date must be in the past")
     @NotNull(message = "BirthDay cannot be null")
     private LocalDate birthday;
 

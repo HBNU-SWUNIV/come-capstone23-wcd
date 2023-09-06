@@ -1,5 +1,6 @@
 package com.wcd.userservice.service.auth;
 
+import com.wcd.userservice.entity.Users;
 import com.wcd.userservice.file.FileStore;
 import com.wcd.userservice.dto.user.request.RequestSignUp;
 import com.wcd.userservice.exception.CustomException;
@@ -76,16 +77,28 @@ public class AuthServiceImpl implements AuthService{
     @Transactional
     @Override
     public Long signUp(RequestSignUp requestSignUp) {
-//        String profileImageUrl = null;
-//
-//        try {
-//            profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
-        return userRepository.save(requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()))).getId();
+        // Check if user with the provided loginId already exists
+        if (userRepository.existsByLoginId(requestSignUp.getLoginId())) {
+            throw new IllegalArgumentException("A user with this loginId already exists.");
+        } else if (userRepository.existsByPhoneNumber(requestSignUp.getPhoneNumber())) {
+            throw new IllegalArgumentException("A user with this phone number already exists.");
+        }
+
+        // If you are planning to handle profile images, you should handle the potential IOException meaningfully.
+        // String profileImageUrl;
+
+        // try {
+        //     profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
+        // } catch (IOException e) {
+        //     throw new RuntimeException("Error storing profile image", e);
+        // }
+
+        Users user = requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()));
+        // If using profile images: user.setProfileImageUrl(profileImageUrl);
+        return userRepository.save(user).getId();
     }
+
 
     @Override
     public void logout(TokenDto tokenDto) {
