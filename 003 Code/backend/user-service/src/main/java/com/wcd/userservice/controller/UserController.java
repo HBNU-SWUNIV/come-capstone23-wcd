@@ -8,6 +8,7 @@ import com.wcd.userservice.dto.user.response.ResponseUserById;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.PATCH;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -22,16 +23,6 @@ public class UserController {
     private final Environment env;
     private final UserService userService;
 
-    @GetMapping("/health_check")
-    public String status() {
-        return env.getProperty("file.dir");
-    }
-
-    @GetMapping("/health_check2")
-    public String status2() {
-        return env.getProperty("refresh_token.secret");
-    }
-
     @Operation(summary = "회원 정보 조회", description = "해당 user-id의 회원 정보 조회")
     @GetMapping("/user/{user-id}")
     public ResponseEntity<ResponseUserById> getUserById(@PathVariable("user-id") Long userId) {
@@ -39,7 +30,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원 정보 수정", description = "해당 user-id의 회원 정보 수정")
-    @PutMapping("/user/{user-id}")
+    @PatchMapping("/user/{user-id}")
     public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
     }
