@@ -85,17 +85,8 @@ public class AuthServiceImpl implements AuthService{
             throw new IllegalArgumentException("A user with this phone number already exists.");
         }
 
-        // If you are planning to handle profile images, you should handle the potential IOException meaningfully.
-        // String profileImageUrl;
-
-        // try {
-        //     profileImageUrl = fileStore.storeFile(requestSignUp.getProfileImage());
-        // } catch (IOException e) {
-        //     throw new RuntimeException("Error storing profile image", e);
-        // }
-
         Users user = requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()));
-        // If using profile images: user.setProfileImageUrl(profileImageUrl);
+
         return userRepository.save(user).getId();
     }
 
