@@ -148,7 +148,6 @@ public class AuthServiceImpl implements AuthService{
             MimeMessage message = javaMailSender.createMimeMessage();
 
             message.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), env.getProperty("spring.mail.personal")));
-            email = "vomw99@naver.com";
             message.setRecipients(RecipientType.TO, email);
             message.setSubject("이메일 인증");
             String body = "<h3>요청하신 인증 번호입니다.</h3>"
