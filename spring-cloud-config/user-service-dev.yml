@@ -25,6 +25,18 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  mail:
+    host: "{cipher}AQBpNm/OzAE+KR0SNy2RVy1UCZP3OQacaIVeRhiZIRbbKhtPUtHcCfyzt3FqxagdAD9Myst58j1y2+buioOM7xyW7hDI7BjhKrT+37WksQUQFtyAgjsfR5Yb9u+ibDqJDEXp8HSgcKUd5GfbsjEP7uIw+qHn+hQTmDW+LHJZ+RZdHTWm0aPHODKo50tfaoBhQ1mi6GW9rtmBq2qY7wDKEfJHBVO4M9FKJju5LjYBYZ4obKZvP4BRZGJXX4H94VWasx0qRPazo6+6Lb51aimzPnN1rI2nyLg6A7Ytze01Lj2jhLuok4R7SZquDNV3zBARHmMQe2OlXP/T3ANP+amEcX9poxwHtKAkPW4u7jeq7JTTsOPmisOqUyyflhwVIgBLIV8="
+    port: 465
+    username: "{cipher}AQAxsI7TcOJcBNZKj9Vcck+S0wtRsCFP1H/JF7DVx4n9S6tYWO1ltpj8Rri3RN68kDiiFVF7EQxE6I1mQFEUBlGgJZiSqO4xyFw7DJuIDTStf3mqqu0UytodCZchLDpdWXVcQqe3gLWd8kVmWJ5e2RgFCs4gOIZ8QyFvHq9Dzjvf1RXpQa1FaRflKt+VGwJ+gQ3/u7oGdtL/eIPwXshy1AjknZNIv/B0UiLKVsSMk0MsnUKnBsG2OEXyRgf7zyzwqPpEcpLxTAWJN8ca5aaq3c58c6iTKJhCk8eIBNzooiFIJXrqwSFVNdySlJZHFvawi9p7hLnYh5P2Maw/DG7TYPyg/vHujSHwhfM1tBq6ZcAjmlI/TQxR28JgMre6Dh+VXvieQe4PrHEKKMMCiOiffobY"
+    password: "{cipher}AQBtqw1Xu79vehB7diUR8NAuhjNPp+bgyLT8s1wK3bhEdz9d+dVqrjnIAFcAianW6HjB1j2tfEgBU7qSriHRkMbXsd04xBeC2/0JwoAkphMOyXEx0Ef6zYobZfODUqFEVMN5Sd/IHNw+/5PieYM0Zw7LnccMTMh33doUp7v6Bd1ybsWI0UyKzfCKJ7c/DHzPFvCRkfice+AcPdH1adjRdA+7IVlO9ekYH2pY5dv15LVKz+kp/7Hg5PlzdLB+14wU6va1Zogpty3SPNMZ1Q5BWE0EITWmRBwn/uDO23HKxNHwHW5STzMMNIlmlxn1o903A0sq8mlS1o4sT1fW/dE4dcty1Fif+/AYXdeoarQO0UMyeF4rClyw6hqOJx60NhIRvZnFLP90DX5eceSnqPwDGww5"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
 
 file:
   dir: /image/
