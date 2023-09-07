@@ -43,14 +43,14 @@ public class AuthController {
     }
 
     @Operation
-    @PostMapping("/code/send")
+    @PostMapping("/mail/send")
     public ResponseEntity<Void> sendAuthenticationEmail(@RequestBody String email) {
         authService.sendAuthenticationEmail(email);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation
-    @PostMapping("/code/check")
+    @PostMapping("/mail/check")
     public ResponseEntity<Void> verifyAuthenticationCode(@RequestBody EmailCheckRequest emailCheckRequest) {
         boolean isValid = authService.verifyAuthenticationCode(emailCheckRequest.getEmail(), emailCheckRequest.getCode());
         if(isValid) {
