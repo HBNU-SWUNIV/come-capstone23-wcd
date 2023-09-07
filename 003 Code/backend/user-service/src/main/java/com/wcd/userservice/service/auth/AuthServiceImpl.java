@@ -8,17 +8,24 @@ import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
 import com.wcd.userservice.security.jwt.dto.TokenDto;
+import jakarta.mail.internet.AddressException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -33,6 +40,8 @@ public class AuthServiceImpl implements AuthService{
     private final JwtTokenProvider jwtTokenProvider;
 
     private final RedisTemplate<String, String> redisTemplate;
+
+    private final JavaMailSender javaMailSender;
 
     private final FileStore fileStore;
 
@@ -110,5 +119,42 @@ public class AuthServiceImpl implements AuthService{
         // 해당 Access Token 유효시간을 가져와 BlackList에 저장
         Long expiration = jwtTokenProvider.getAccessTokenExpiration(tokenDto.getAccess_token());
         redisTemplate.opsForValue().set(tokenDto.getAccess_token(), "logout", expiration * 1000, TimeUnit.MICROSECONDS);
+    }
+
+    @Override
+    public void sendAuthenticationEmail(String email){
+        String  code = String.valueOf((Math.random() * 90000) + 100000);
+        redisTemplate.opsForValue().set(email, code, 3, TimeUnit.MINUTES);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        try {
+            message.setFrom(env.getProperty("spring.mail.username"));
+            message.setRecipients(MimeMessage.RecipientType.TO, email);
+            message.setSubject("이메일 인증");
+            String body = "<h3>요청하신 인증 번호입니다.</h3>"
+                    + "<h1>" + code + "</h1>"
+                    + "<h3>감사합니다.</h3>";
+            message.setText(body, "UTF-8", "html");
+
+            javaMailSender.send(message);
+
+        } catch (MessagingException e) {
+            log.error("Error sending authentication email to {}", email, e);
+        }
+    }
+
+    @Override
+    public boolean verifyAuthenticationCode(String email, String inputCode) {
+        String code = redisTemplate.opsForValue().get(email);
+
+        if (code == null || code.isEmpty()) {
+            return false;
+        } else if (code.equals(inputCode)) {
+            redisTemplate.delete(email);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

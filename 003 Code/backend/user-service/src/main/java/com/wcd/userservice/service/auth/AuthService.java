@@ -10,4 +10,8 @@ public interface AuthService {
     TokenDto regenerateToken(RegenerateTokenDto refreshTokenDto);
 
     void logout(TokenDto tokenDto);
+
+    void sendAuthenticationEmail(String email);
+
+    boolean verifyAuthenticationCode(String email, String code);
 }
