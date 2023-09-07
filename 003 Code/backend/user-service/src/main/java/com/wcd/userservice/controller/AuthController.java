@@ -1,5 +1,6 @@
 package com.wcd.userservice.controller;
 
+import com.wcd.userservice.dto.AuthenticationEmailRequest;
 import com.wcd.userservice.dto.EmailCheckRequest;
 import com.wcd.userservice.dto.user.request.RequestSignUp;
 import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
@@ -44,8 +45,8 @@ public class AuthController {
 
     @Operation
     @PostMapping("/mail/send")
-    public ResponseEntity<Void> sendAuthenticationEmail(@RequestBody String email) {
-        authService.sendAuthenticationEmail(email);
+    public ResponseEntity<Void> sendAuthenticationEmail(@RequestBody AuthenticationEmailRequest authenticationEmailRequest) {
+        authService.sendAuthenticationEmail(authenticationEmailRequest.getEmail());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

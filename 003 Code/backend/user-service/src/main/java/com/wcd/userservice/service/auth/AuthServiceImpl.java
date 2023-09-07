@@ -139,7 +139,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     private void storeCodeInRedis(String email, String code) {
-        String key = "emailCode" + email;
+        String key = "emailCode:" + email;
         redisTemplate.opsForValue().set(key, code, 3, TimeUnit.MINUTES);
     }
 
@@ -168,12 +168,13 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public boolean verifyAuthenticationCode(String email, String inputCode) {
-        String code = redisTemplate.opsForValue().get("emailCode" + email);
+        String key = "emailCode:" + email;
+        String code = redisTemplate.opsForValue().get(key);
 
         if (code == null || code.isEmpty()) {
             return false;
         } else if (code.equals(inputCode)) {
-            redisTemplate.delete("emailCode" + email);
+            redisTemplate.delete(key);
             return true;
         } else {
             return false;
