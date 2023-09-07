@@ -9,11 +9,9 @@ import com.wcd.userservice.service.auth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.POST;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "유저 인증관련 API")
@@ -40,7 +38,7 @@ public class AuthController {
     public ResponseEntity<Void> logout(@RequestBody TokenDto tokenDto) {
         authService.logout(tokenDto);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @Operation
@@ -53,11 +51,8 @@ public class AuthController {
     @Operation
     @PostMapping("/mail/check")
     public ResponseEntity<Void> verifyAuthenticationCode(@RequestBody EmailCheckRequest emailCheckRequest) {
-        boolean isValid = authService.verifyAuthenticationCode(emailCheckRequest.getEmail(), emailCheckRequest.getCode());
-        if(isValid) {
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        authService.verifyAuthenticationCode(emailCheckRequest.getEmail(), emailCheckRequest.getCode());
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

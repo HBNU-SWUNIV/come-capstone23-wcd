@@ -1,16 +1,16 @@
 package com.wcd.userservice.service.auth;
 
 import com.wcd.userservice.entity.Users;
+import com.wcd.userservice.exception.*;
 import com.wcd.userservice.file.FileStore;
 import com.wcd.userservice.dto.user.request.RequestSignUp;
-import com.wcd.userservice.exception.CustomException;
 import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
 import com.wcd.userservice.security.jwt.dto.TokenDto;
-import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage.RecipientType;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -24,10 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -89,11 +86,11 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public Long signUp(RequestSignUp requestSignUp) {
 
-        // Check if user with the provided loginId already exists
+        // Check if user with the provided email already exists
         if (userRepository.existsByEmail(requestSignUp.getEmail())) {
-            throw new IllegalArgumentException("A user with this loginId already exists.");
+            throw new EmailAlreadyExistsException();
         } else if (userRepository.existsByPhoneNumber(requestSignUp.getPhoneNumber())) {
-            throw new IllegalArgumentException("A user with this phone number already exists.");
+            throw new PhoneNumberAlreadyExistsException();
         }
 
         Users user = requestSignUp.toEntity(passwordEncoder.encode(requestSignUp.getPassword()));
@@ -126,7 +123,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public void sendAuthenticationEmail(String email){
         if(userRepository.existsByEmail(email)) {
-            throw new CustomException("이메일 주소가 이미 사용중입니다.", HttpStatus.CONFLICT);
+            throw new EmailAlreadyExistsException();
         }
 
         String code = generateAuthenticationCode();
@@ -139,8 +136,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     private void storeCodeInRedis(String email, String code) {
-        String key = "emailCode:" + email;
-        redisTemplate.opsForValue().set(key, code, 3, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("emailCode:" + email, code, 5, TimeUnit.MINUTES);
     }
 
     private void sendEmail(String email, String code) throws CustomException {
@@ -158,25 +154,21 @@ public class AuthServiceImpl implements AuthService{
             javaMailSender.send(message);
 
         } catch (MessagingException e) {
-            log.error("Error sending authentication email to {}", email, e);
-            throw new CustomException("이메일 전송 중 문제가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new EmailSendingException("There was a problem sending your email.");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean verifyAuthenticationCode(String email, String inputCode) {
+    public void verifyAuthenticationCode(String email, String inputCode) {
         String key = "emailCode:" + email;
         String code = redisTemplate.opsForValue().get(key);
 
-        if (code == null || code.isEmpty()) {
-            return false;
-        } else if (code.equals(inputCode)) {
-            redisTemplate.delete(key);
-            return true;
-        } else {
-            return false;
+        if (code == null || code.isEmpty() || !code.equals(inputCode)) {
+            throw new AuthenticationCodeIncorrectException();
         }
+
+        redisTemplate.delete(key);
     }
 }

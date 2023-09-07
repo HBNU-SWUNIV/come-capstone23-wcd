@@ -13,5 +13,5 @@ public interface AuthService {
 
     void sendAuthenticationEmail(String email);
 
-    boolean verifyAuthenticationCode(String email, String code);
+    void verifyAuthenticationCode(String email, String code);
 }
