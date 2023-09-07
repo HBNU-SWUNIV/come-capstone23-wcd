@@ -9,6 +9,8 @@ import com.wcd.userservice.security.jwt.JwtTokenProvider;
 import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
 import com.wcd.userservice.security.jwt.dto.TokenDto;
 import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage.RecipientType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -133,7 +135,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     private String generateAuthenticationCode() {
-        return String.valueOf((Math.random() * 90000) + 100000);
+        return String.valueOf((int)((Math.random() * 90000) + 100000));
     }
 
     private void storeCodeInRedis(String email, String code) {
@@ -145,8 +147,9 @@ public class AuthServiceImpl implements AuthService{
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
 
-            message.setFrom(env.getProperty("spring.mail.username"));
-            message.setRecipients(MimeMessage.RecipientType.TO, email);
+            message.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), env.getProperty("spring.mail.personal")));
+            email = "vomw99@naver.com";
+            message.setRecipients(RecipientType.TO, email);
             message.setSubject("이메일 인증");
             String body = "<h3>요청하신 인증 번호입니다.</h3>"
                     + "<h1>" + code + "</h1>"
@@ -158,6 +161,8 @@ public class AuthServiceImpl implements AuthService{
         } catch (MessagingException e) {
             log.error("Error sending authentication email to {}", email, e);
             throw new CustomException("이메일 전송 중 문제가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 
