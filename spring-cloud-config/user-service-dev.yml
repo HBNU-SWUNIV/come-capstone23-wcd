@@ -40,6 +40,7 @@ spring:
           transport:
             protocol: smtp
           ssl:
+            enable: true
             trust: smtp.gmail.com
             protocols: TLSv1.2
         debug: true
