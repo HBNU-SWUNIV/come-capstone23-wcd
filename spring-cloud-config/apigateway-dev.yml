@@ -135,6 +135,9 @@ spring:
             - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
+logging:
+  level: 
+    com.wcd.userservice: DEBUG
 
 management:
   endpoints:
