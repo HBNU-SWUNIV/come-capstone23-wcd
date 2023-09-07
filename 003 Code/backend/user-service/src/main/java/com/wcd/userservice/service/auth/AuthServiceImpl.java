@@ -60,7 +60,7 @@ public class AuthServiceImpl implements AuthService{
         Authentication authentication = jwtTokenProvider.getAuthenticationByRefreshToken(refresh_token);
 
         // Redis에 저장된 Refresh Token 값 가져오기
-        String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
+        String refreshToken = redisTemplate.opsForValue().get("refreshToken:" + authentication.getName());
         if(!refreshToken.equals(refresh_token)) {
             throw new CustomException("Refresh Token doesn't match.", HttpStatus.BAD_REQUEST);
         }
@@ -74,7 +74,7 @@ public class AuthServiceImpl implements AuthService{
         );
 
         redisTemplate.opsForValue().set(
-                authentication.getName(),
+                "refreshToken:" + authentication.getName(),
                 new_refresh_token,
                 Long.parseLong(env.getProperty("refresh_token.expiration_time")),
                 TimeUnit.MICROSECONDS
@@ -123,12 +123,28 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public void sendAuthenticationEmail(String email){
-        String  code = String.valueOf((Math.random() * 90000) + 100000);
-        redisTemplate.opsForValue().set(email, code, 3, TimeUnit.MINUTES);
+        if(userRepository.existsByEmail(email)) {
+            throw new CustomException("이메일 주소가 이미 사용중입니다.", HttpStatus.CONFLICT);
+        }
 
-        MimeMessage message = javaMailSender.createMimeMessage();
+        String code = generateAuthenticationCode();
+        storeCodeInRedis(email, code);
+        sendEmail(email, code);
+    }
 
+    private String generateAuthenticationCode() {
+        return String.valueOf((Math.random() * 90000) + 100000);
+    }
+
+    private void storeCodeInRedis(String email, String code) {
+        String key = "emailCode" + email;
+        redisTemplate.opsForValue().set(key, code, 3, TimeUnit.MINUTES);
+    }
+
+    private void sendEmail(String email, String code) throws CustomException {
         try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+
             message.setFrom(env.getProperty("spring.mail.username"));
             message.setRecipients(MimeMessage.RecipientType.TO, email);
             message.setSubject("이메일 인증");
@@ -141,17 +157,18 @@ public class AuthServiceImpl implements AuthService{
 
         } catch (MessagingException e) {
             log.error("Error sending authentication email to {}", email, e);
+            throw new CustomException("이메일 전송 중 문제가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
     public boolean verifyAuthenticationCode(String email, String inputCode) {
-        String code = redisTemplate.opsForValue().get(email);
+        String code = redisTemplate.opsForValue().get("emailCode" + email);
 
         if (code == null || code.isEmpty()) {
             return false;
         } else if (code.equals(inputCode)) {
-            redisTemplate.delete(email);
+            redisTemplate.delete("emailCode" + email);
             return true;
         } else {
             return false;

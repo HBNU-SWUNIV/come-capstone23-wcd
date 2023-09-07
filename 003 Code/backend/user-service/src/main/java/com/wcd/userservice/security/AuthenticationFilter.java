@@ -98,7 +98,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         redisTemplate.opsForValue().set(
                 // Redis 데이터베이스에 저장할 키(key)
-                authResult.getName(),
+                "refreshToken:" + authResult.getName(),
                 // value
                 refresh_token,
                 // Redis에 저장될 기간
