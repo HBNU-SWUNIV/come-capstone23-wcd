@@ -30,11 +30,6 @@ public class ClubController {
     private final Environment env;
     private final ClubService clubService;
 
-    @GetMapping("health_check")
-    public String status() {
-        return String.format("It's Working in Club Service on PORT %s", env.getProperty("local.server.port"));
-    }
-
     @Operation(summary = "모임 조회", description = "모임 조회 (검색, 카테고리별 필터링 가능, 페이지네이션)")
     @Parameters({
             @Parameter(name = "search", description = "검색", example = "독서 모임"),
