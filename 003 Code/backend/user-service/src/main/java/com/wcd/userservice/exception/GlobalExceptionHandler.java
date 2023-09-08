@@ -1,6 +1,7 @@
 package com.wcd.userservice.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,7 +24,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailSendingException.class)
-    public ResponseEntity<String> handleEmailSendingExceoption(EmailSendingException ex) {
+    public ResponseEntity<String> handleEmailSendingException(EmailSendingException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
 }
