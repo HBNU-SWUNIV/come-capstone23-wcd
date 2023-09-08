@@ -6,10 +6,9 @@ import com.wcd.clubservice.dto.ResponseUserNamesDto;
 import com.wcd.clubservice.dto.club.ClubSearchCondition;
 import com.wcd.clubservice.dto.club.request.RequestClub;
 import com.wcd.clubservice.dto.club.response.ResponseClub;
-import com.wcd.clubservice.dto.club.response.ResponseClubByClubId;
-import com.wcd.clubservice.dto.club.response.ResponseClubsByUserId;
 import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.enums.Grade;
+import com.wcd.clubservice.exception.ClubNameAlreadyExistsException;
 import com.wcd.clubservice.file.FileStore;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import com.wcd.clubservice.repository.club.ClubRepository;
@@ -50,6 +49,10 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public Long createClub(Long hostId, RequestClub requestClub) {
         String mainImageUrl = null;
+
+        if(clubRepository.existsByCLubName(requestClub.getClubName())) {
+            throw new ClubNameAlreadyExistsException();
+        }
 
         try {
             if(requestClub.getMultipartFile() != null && !requestClub.getMultipartFile().isEmpty()) {
