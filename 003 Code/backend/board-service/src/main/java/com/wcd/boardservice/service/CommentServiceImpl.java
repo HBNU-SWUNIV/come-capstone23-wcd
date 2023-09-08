@@ -8,7 +8,9 @@ import com.wcd.boardservice.dto.user.RequestUserNamesDto;
 import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
 import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
+import com.wcd.boardservice.exception.CommentNotFoundException;
 import com.wcd.boardservice.exception.PostNotFoundException;
+import com.wcd.boardservice.exception.UnauthorizedCommentEditException;
 import com.wcd.boardservice.repository.CommentRepository;
 import com.wcd.boardservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +58,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseCommentDto updateComment(Long commentId, Long writerId, UpdateRequestCommentDto updateRequestCommentDto) {
         try {
-            Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new CommentNotFoundException("Comment not found with id" + commentId));
 
             if (!comment.getWriterId().equals(writerId)) {
-                throw new Exception();
+                throw new UnauthorizedCommentEditException("User " + writerId + " is not authorized to edit comment " + commentId);
             }
 
             comment.update(updateRequestCommentDto);
@@ -77,9 +80,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long commentId, Long writerId) {
         try {
-            Comment deleteComment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
+            Comment deleteComment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new CommentNotFoundException("Comment not found with id" + commentId));
             if (!deleteComment.getWriterId().equals(writerId)) {
-                throw new Exception();
+                throw new UnauthorizedCommentEditException("User " + writerId + " is not authorized to edit comment " + commentId);
             }
             commentRepository.delete(deleteComment);
         } catch (NoSuchElementException e) {
@@ -92,7 +96,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseCommentDto getCommentById(Long commentId) {
         try {
-            Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException());
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new CommentNotFoundException("Comment not found with id" + commentId));
 
             ResponseCommentDto responseCommentDto = comment.toResponseCommentDto(userServiceClient.getUserNameById(comment.getWriterId()));
 

@@ -10,4 +10,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handlePostNotFoundException(PostNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(UnauthorizedCommentEditException.class)
+    public ResponseEntity<String> handleUnauthorizedCommentEditException(UnauthorizedCommentEditException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
 }
