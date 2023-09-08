@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -50,7 +51,7 @@ public class Post extends BaseEntity{
     private Vote vote;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Comment> comment;
+    private List<Comment> comment = new ArrayList<>();
 
     @Builder
     public Post(String category, Long clubId, Long writerId, String title, String content, Vote vote) {
