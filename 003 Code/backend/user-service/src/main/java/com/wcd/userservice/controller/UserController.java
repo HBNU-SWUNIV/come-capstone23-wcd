@@ -1,5 +1,6 @@
 package com.wcd.userservice.controller;
 
+import com.wcd.userservice.dto.user.request.RequestUpdateUserPassword;
 import com.wcd.userservice.dto.user.request.RequestUsernames;
 import com.wcd.userservice.dto.user.response.ResponseUsernames;
 import com.wcd.userservice.service.user.UserService;
@@ -8,6 +9,7 @@ import com.wcd.userservice.dto.user.response.ResponseUserById;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.PATCH;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -33,6 +35,11 @@ public class UserController {
     @PatchMapping("/user/{user-id}")
     public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
+    }
+
+    @PatchMapping("/user/{user-id}/password")
+    public ResponseEntity<Long> updateUserPassword(@RequestHeader("user-id") Long userId, RequestUpdateUserPassword requestUpdateUserPassword) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserPassword(userId, requestUpdateUserPassword));
     }
 
     @Operation(summary = "회원 삭제", description = "해당 user-id의 회원 삭제")

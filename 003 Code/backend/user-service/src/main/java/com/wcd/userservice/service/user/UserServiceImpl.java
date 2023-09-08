@@ -1,5 +1,6 @@
 package com.wcd.userservice.service.user;
 
+import com.wcd.userservice.dto.user.request.RequestUpdateUserPassword;
 import com.wcd.userservice.dto.user.request.RequestUsernames;
 import com.wcd.userservice.dto.user.response.ResponseUsernames;
 import com.wcd.userservice.exception.UserNotFoundException;
@@ -11,6 +12,8 @@ import com.wcd.userservice.repository.UserRepository;
 import com.wcd.userservice.dto.user.request.RequestUpdateUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.jcajce.provider.digest.SHA256;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final ClubServiceClient clubServiceClient;
+    private final PasswordEncoder passwordEncoder;
     private final FileStore fileStore;
 
 
@@ -55,6 +59,17 @@ public class UserServiceImpl implements UserService{
         user.updateUser(requestUpdateUser, profileImageUrl);
 
         return userId;
+    }
+
+    @Override
+    public Long updateUserPassword(Long userId, RequestUpdateUserPassword requestUpdateUserPassword) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        String newEncryptPassword = passwordEncoder.encode(requestUpdateUserPassword.getNewPassword());
+        user.updatePassword(newEncryptPassword);
+
+        return user.getId();
     }
 
     @Transactional

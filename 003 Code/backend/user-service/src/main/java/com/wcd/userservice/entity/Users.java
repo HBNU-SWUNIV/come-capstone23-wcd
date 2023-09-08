@@ -52,6 +52,10 @@ public class Users {
         this.profileImage = profileImage;
     }
 
+    public void updatePassword(String newPassword) {
+        this.encryptedPwd = newPassword;
+    }
+
     public void updateUser(RequestUpdateUser requestUpdateUser, String profileImageUrl) {
         if (StringUtils.hasText(requestUpdateUser.getName())) {
             this.name = requestUpdateUser.getName();
