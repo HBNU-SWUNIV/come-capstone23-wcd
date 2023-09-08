@@ -10,7 +10,6 @@ import com.wcd.userservice.security.jwt.dto.RegenerateTokenDto;
 import com.wcd.userservice.security.jwt.dto.TokenDto;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage.RecipientType;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
