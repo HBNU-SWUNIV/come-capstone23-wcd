@@ -21,4 +21,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUserAlreadyJoinedClubException(UserAlreadyJoinedClubException ex) {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
+
+    @ExceptionHandler(ClubMemberNotFoundException.class)
+    public ResponseEntity<String> handleClubMemberNotFoundException(ClubMemberNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
 }

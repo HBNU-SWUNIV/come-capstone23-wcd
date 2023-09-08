@@ -11,6 +11,7 @@ import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.ClubMember;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
+import com.wcd.clubservice.exception.ClubMemberNotFoundException;
 import com.wcd.clubservice.exception.ClubNotFoundException;
 import com.wcd.clubservice.exception.UserAlreadyJoinedClubException;
 import com.wcd.clubservice.repository.club.ClubRepository;
@@ -86,14 +87,15 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     @Override
     public void deleteClubMember(Long userId, Long clubId) {
         ClubMember clubMember = clubMemberRepository.findByUserIdAndClubId(userId, clubId)
-                .orElseThrow(() -> new NoSuchElementException("ClubMember not found with userId and clubId" + userId + "and" + clubId));
+                .orElseThrow(() -> new ClubMemberNotFoundException("ClubMember not found with userId and clubId" + userId + "and" + clubId));
 
         clubMemberRepository.delete(clubMember);
     }
 
     @Override
     public Long setClubMemberGrade(Long clubId, Long userId, Grade grade) {
-        ClubMember clubMember = clubMemberRepository.findByUserIdAndClubId(userId, clubId).orElseThrow();
+        ClubMember clubMember = clubMemberRepository.findByUserIdAndClubId(userId, clubId)
+                .orElseThrow(() -> new ClubMemberNotFoundException("ClubMember not found with userId and clubId" + userId + "and" + clubId));
         clubMember.changeGrade(grade);
         return clubMember.getUserId();
     }
