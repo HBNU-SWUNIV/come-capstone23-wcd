@@ -52,6 +52,10 @@ public class Users {
         this.profileImage = profileImage;
     }
 
+    public void updateEmail(String newEmail) {
+        this.email = newEmail;
+    }
+
     public void updatePassword(String newPassword) {
         this.encryptedPwd = newPassword;
     }

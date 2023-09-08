@@ -1,5 +1,6 @@
 package com.wcd.userservice.service.user;
 
+import com.wcd.userservice.dto.user.request.RequestUpdateUserEmail;
 import com.wcd.userservice.dto.user.request.RequestUpdateUserPassword;
 import com.wcd.userservice.dto.user.request.RequestUsernames;
 import com.wcd.userservice.dto.user.response.ResponseUsernames;
@@ -59,6 +60,17 @@ public class UserServiceImpl implements UserService{
         user.updateUser(requestUpdateUser, profileImageUrl);
 
         return userId;
+    }
+
+    @Override
+    public Long updateUserEmail(Long userId, RequestUpdateUserEmail requestUpdateEmail) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        String newEmail = passwordEncoder.encode(requestUpdateEmail.getNewEmail());
+        user.updateEmail(newEmail);
+
+        return user.getId();
     }
 
     @Override

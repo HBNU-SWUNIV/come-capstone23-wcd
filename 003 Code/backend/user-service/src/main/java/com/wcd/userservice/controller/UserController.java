@@ -1,5 +1,6 @@
 package com.wcd.userservice.controller;
 
+import com.wcd.userservice.dto.user.request.RequestUpdateUserEmail;
 import com.wcd.userservice.dto.user.request.RequestUpdateUserPassword;
 import com.wcd.userservice.dto.user.request.RequestUsernames;
 import com.wcd.userservice.dto.user.response.ResponseUsernames;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "유저관련 API")
@@ -35,6 +37,11 @@ public class UserController {
     @PatchMapping("/user/{user-id}")
     public ResponseEntity<Long> updateUser(@PathVariable("user-id") Long userId, @Valid @ModelAttribute RequestUpdateUser requestUpdateUser) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserById(userId, requestUpdateUser));
+    }
+
+    @PatchMapping("/user/{user-id}/email")
+    public ResponseEntity<Long> updateUserEMail(@RequestHeader("user-id") Long userId, RequestUpdateUserEmail requestUpdateEmail) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserEmail(userId, requestUpdateEmail));
     }
 
     @PatchMapping("/user/{user-id}/password")
