@@ -11,4 +11,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleEmailAlreadyExists(ClubNameAlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
+
+    @ExceptionHandler(ClubNotFoundException.class)
+    public ResponseEntity<String> handleClubNotFoundException(ClubNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(UserAlreadyJoinedClubException.class)
+    public ResponseEntity<String> handleUserAlreadyJoinedClubException(UserAlreadyJoinedClubException ex) {
+        return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
+    }
 }

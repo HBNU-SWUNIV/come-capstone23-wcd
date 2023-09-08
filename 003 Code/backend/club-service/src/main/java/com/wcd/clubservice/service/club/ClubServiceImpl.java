@@ -9,6 +9,7 @@ import com.wcd.clubservice.dto.club.response.ResponseClub;
 import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.enums.Grade;
 import com.wcd.clubservice.exception.ClubNameAlreadyExistsException;
+import com.wcd.clubservice.exception.ClubNotFoundException;
 import com.wcd.clubservice.file.FileStore;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import com.wcd.clubservice.repository.club.ClubRepository;
@@ -50,7 +51,7 @@ public class ClubServiceImpl implements ClubService {
     public Long createClub(Long hostId, RequestClub requestClub) {
         String mainImageUrl = null;
 
-        if(clubRepository.existsByCLubName(requestClub.getClubName())) {
+        if(clubRepository.existsByClubName(requestClub.getClubName())) {
             throw new ClubNameAlreadyExistsException();
         }
 
@@ -83,7 +84,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public ResponseClub getClubByClubId(Long clubId) {
         Club club = clubRepository.findById(clubId)
-                        .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+                        .orElseThrow(() -> new ClubNotFoundException("Club not found with id" + clubId));
         ResponseClub responseClub = club.toResponseClub(userServiceClient.getUserNameById(club.getHostId()));
         return responseClub;
     }
@@ -92,7 +93,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public String getClubNameById(Long clubId) {
         Club club = clubRepository.findById(clubId)
-                .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+                .orElseThrow(() -> new ClubNotFoundException("Club not found with id" + clubId));
 
         return club.getClubName();
     }
@@ -102,7 +103,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public Long updateClubById(Long clubId, RequestUpdateClub requestUpdateClub) {
         Club club = clubRepository.findById(clubId)
-                .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+                .orElseThrow(() -> new ClubNotFoundException("Club not found with id" + clubId));
 
         String mainImageUrl = null;
 
@@ -122,7 +123,7 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public void deleteClub(Long clubId) {
         Club club = clubRepository.findById(clubId)
-                        .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+                .orElseThrow(() -> new ClubNotFoundException("Club not found with id" + clubId));
 
         clubRepository.delete(club);
     }

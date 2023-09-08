@@ -11,6 +11,8 @@ import com.wcd.clubservice.entity.Club;
 import com.wcd.clubservice.entity.ClubMember;
 import com.wcd.clubservice.enums.ApprovalMethod;
 import com.wcd.clubservice.enums.Grade;
+import com.wcd.clubservice.exception.ClubNotFoundException;
+import com.wcd.clubservice.exception.UserAlreadyJoinedClubException;
 import com.wcd.clubservice.repository.club.ClubRepository;
 import com.wcd.clubservice.repository.member.ClubMemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +40,16 @@ public class ClubMemberServiceImpl implements ClubMemberService {
     @Override
     public Long createClubMember(Long clubId, Long userId) {
         Club club = clubRepository.findById(clubId)
-                .orElseThrow(() -> new NoSuchElementException("Club not found with id" + clubId));
+                .orElseThrow(() -> new ClubNotFoundException("Club not found with id" + clubId));
 
-        Boolean isApproval;
+        if(clubMemberRepository.existsByClubIdAndUserId(clubId, userId)) {
+            throw new UserAlreadyJoinedClubException("User " + userId + " has already joined club " + clubId);
+        }
+
+        Boolean isApproval = false;
 
         if(club.getApprovalMethod().equals(ApprovalMethod.FREE)) {
             isApproval = true;
-        } else {
-            isApproval = false;
         }
 
         ClubMember clubMember = ClubMember.builder()
