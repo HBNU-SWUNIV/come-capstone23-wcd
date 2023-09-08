@@ -9,6 +9,7 @@ import com.wcd.userservice.service.auth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃 API")
-    @PostMapping("/logout")
+    @PostMapping("/user/logout")
     public ResponseEntity<Void> logout(@RequestBody TokenDto tokenDto) {
         authService.logout(tokenDto);
 
