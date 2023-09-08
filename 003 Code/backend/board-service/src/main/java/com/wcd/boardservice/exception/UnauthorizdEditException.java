@@ -2,10 +2,10 @@ package com.wcd.boardservice.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class UnauthorizedCommentEditException extends RuntimeException {
+public class UnauthorizdEditException extends RuntimeException {
     private final HttpStatus httpStatus;
 
-    public UnauthorizedCommentEditException(String message) {
+    public UnauthorizdEditException(String message) {
         super(message);
         this.httpStatus = HttpStatus.FORBIDDEN;
     }

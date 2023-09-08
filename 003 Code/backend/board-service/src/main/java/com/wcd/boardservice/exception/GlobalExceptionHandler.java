@@ -16,8 +16,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
 
-    @ExceptionHandler(UnauthorizedCommentEditException.class)
-    public ResponseEntity<String> handleUnauthorizedCommentEditException(UnauthorizedCommentEditException ex) {
+    @ExceptionHandler(UnauthorizdEditException.class)
+    public ResponseEntity<String> handleUnauthorizedCommentEditException(UnauthorizdEditException ex) {
         return new ResponseEntity<>(ex.getMessage(), ex.getHttpStatus());
     }
 }

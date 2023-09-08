@@ -10,7 +10,7 @@ import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
 import com.wcd.boardservice.exception.CommentNotFoundException;
 import com.wcd.boardservice.exception.PostNotFoundException;
-import com.wcd.boardservice.exception.UnauthorizedCommentEditException;
+import com.wcd.boardservice.exception.UnauthorizdEditException;
 import com.wcd.boardservice.repository.CommentRepository;
 import com.wcd.boardservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
                     .orElseThrow(() -> new CommentNotFoundException("Comment not found with id" + commentId));
 
             if (!comment.getWriterId().equals(writerId)) {
-                throw new UnauthorizedCommentEditException("User " + writerId + " is not authorized to edit comment " + commentId);
+                throw new UnauthorizdEditException("User " + writerId + " is not authorized to edit comment " + commentId);
             }
 
             comment.update(updateRequestCommentDto);
@@ -83,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
             Comment deleteComment = commentRepository.findById(commentId)
                     .orElseThrow(() -> new CommentNotFoundException("Comment not found with id" + commentId));
             if (!deleteComment.getWriterId().equals(writerId)) {
-                throw new UnauthorizedCommentEditException("User " + writerId + " is not authorized to edit comment " + commentId);
+                throw new UnauthorizdEditException("User " + writerId + " is not authorized to edit comment " + commentId);
             }
             commentRepository.delete(deleteComment);
         } catch (NoSuchElementException e) {
