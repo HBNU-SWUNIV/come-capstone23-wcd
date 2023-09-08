@@ -30,7 +30,6 @@ public class Club implements Serializable {
     @Column(nullable = false)
     private String category;
 
-    @Lob
     private String description;
 
     private String mainImageUrl;
