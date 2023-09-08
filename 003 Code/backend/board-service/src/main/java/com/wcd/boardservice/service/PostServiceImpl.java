@@ -8,6 +8,7 @@ import com.wcd.boardservice.dto.post.ResponsePostListDto;
 import com.wcd.boardservice.dto.post.RequestPostDto;
 import com.wcd.boardservice.dto.post.ResponsePostDto;
 import com.wcd.boardservice.entity.Post;
+import com.wcd.boardservice.exception.UnAuthorizedEditException;
 import com.wcd.boardservice.repository.PostRepository;
 import com.wcd.boardservice.repository.VoteItemRepository;
 import com.wcd.boardservice.repository.VoteRepository;
@@ -81,7 +82,7 @@ public class PostServiceImpl implements PostService{
             Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
 
             if (!post.getWriterId().equals(writerId)) {
-                throw new Exception();
+                throw new UnAuthorizedEditException("User " + writerId + " is not authorized to edit post " + postId);
             }
 
             post.update(updateRequestPostDto);
@@ -104,7 +105,7 @@ public class PostServiceImpl implements PostService{
         try {
             Post deletePost = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
             if (!deletePost.getWriterId().equals(writerId)) {
-                throw new Exception();
+                throw new UnAuthorizedEditException("User " + writerId + " is not authorized to edit post " + postId);
             }
             postRepository.delete(deletePost);
         } catch (NoSuchElementException e) {
