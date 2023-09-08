@@ -8,6 +8,7 @@ import com.wcd.boardservice.dto.user.RequestUserNamesDto;
 import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
 import com.wcd.boardservice.entity.Comment;
 import com.wcd.boardservice.entity.Post;
+import com.wcd.boardservice.exception.PostNotFoundException;
 import com.wcd.boardservice.repository.CommentRepository;
 import com.wcd.boardservice.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseCommentDto createComment(Long clubId, Long postId, Long writerId, RequestCommentDto requestCommentDto) {
         try {
-            Post post = postRepository.findById(postId).orElseThrow();
+            Post post = postRepository.findById(postId)
+                    .orElseThrow(() -> new PostNotFoundException("Post not found with id" + postId));
             Comment newComment = requestCommentDto.toEntity(clubId, post, writerId);
 
             Comment savedComment = commentRepository.save(newComment);
