@@ -46,15 +46,17 @@ public class ClubPostController {
     }
 
     @GetMapping("/posts/{post-id}")
-    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("post-id") Long postId) {
+    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId,
+                                                   @PathVariable("post-id") Long postId) {
         ResponsePostDto responsePostDto = postService.getPostById(postId);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<Page<ResponsePostListDto>> getPostList(RequestSearchCondition requestSearchCondition,
-                                                                 Pageable pageable) {
-        Page<ResponsePostListDto> responsePostListDtos = postService.getPostList(requestSearchCondition, pageable);
+    public ResponseEntity<Page<ResponsePostListDto>> getAllPost(@PathVariable("club-id") Long clubId,
+                                                                RequestSearchCondition condition,
+                                                                Pageable pageable) {
+        Page<ResponsePostListDto> responsePostListDtos = postService.getClubPostList(clubId, condition, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }

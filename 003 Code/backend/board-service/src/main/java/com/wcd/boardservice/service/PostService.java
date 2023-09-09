@@ -9,7 +9,8 @@ public interface PostService {
     ResponsePostDto updatePost(Long postId, Long userId, UpdateRequestPostDto updateRequestPostDto);
     void deletePost(Long userId, Long postId);
     ResponsePostDto getPostById(Long postId);
-    Page<ResponsePostListDto> getPostList(RequestSearchCondition requestSearchCondition, Pageable pageable);
+    Page<ResponsePostListDto> getUserPostList(Long userId, Pageable pageable);
+    Page<ResponsePostListDto> getClubPostList(Long clubId, RequestSearchCondition requestSearchCondition, Pageable pageable);
 //    VoteDto castVote(Long voteId, Long[] itemIds, Long userId);
 //    VoteDto reCastVote(Long voteId, Long[] itemIds, Long userId);
 //    VoteDto unCastVote(Long voteId, Long userId);

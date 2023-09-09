@@ -157,13 +157,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<ResponsePostListDto> getPostList(RequestSearchCondition condition, Pageable pageable) {
+    public Page<ResponsePostListDto> getUserPostList(Long userId, Pageable pageable) {
+        Map<PostSpecs.SearchKey, Object> map = new HashMap<>();
+        map.put(PostSpecs.SearchKey.WRITER_ID, userId);
+        Page<Post> postLists = postRepository.findAll(PostSpecs.searchWith(map), pageable);
+
+        Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);
+
+        return responsePostListDtos;
+    }
+
+    @Override
+    public Page<ResponsePostListDto> getClubPostList(Long clubId, RequestSearchCondition condition, Pageable pageable) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
                     .setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_SNAKE_CASE);
+
             Map<PostSpecs.SearchKey, Object> map = objectMapper
                     .convertValue(condition, new TypeReference<Map<PostSpecs.SearchKey, Object>>() {});
+            map.put(PostSpecs.SearchKey.CLUB_ID, clubId);
+            if(condition.getWriter() != null) {
+                map.put(PostSpecs.SearchKey.WRITER_ID, userServiceClient.getUserIdByName(condition.getWriter()));
+            }
             Page<Post> postLists = postRepository.findAll(PostSpecs.searchWith(map), pageable);
 
             Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);

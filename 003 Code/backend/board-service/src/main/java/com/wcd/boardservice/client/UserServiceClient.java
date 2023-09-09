@@ -13,11 +13,13 @@ import java.util.Map;
 
 @FeignClient(name="user-service")
 public interface UserServiceClient {
-
     @PostMapping("/user/userNames")
     ResponseUserNamesDto getUserNames(RequestUserNamesDto requestUserNamesDto);
 
     @GetMapping("/user/{user-id}/userName")
     String getUserNameById(@PathVariable("user-id") Long userId);
+
+    @GetMapping("/user/{user-name}")
+    Long getUserIdByName(@PathVariable("user-name") String userName);
 }
 

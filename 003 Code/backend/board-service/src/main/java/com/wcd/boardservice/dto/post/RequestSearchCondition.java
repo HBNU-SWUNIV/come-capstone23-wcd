@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Getter
 @Setter
 public class RequestSearchCondition {
-    Long clubId;
     String category;
-    Long writerId;
+    String writer;
     String title;
     String content;
 }
