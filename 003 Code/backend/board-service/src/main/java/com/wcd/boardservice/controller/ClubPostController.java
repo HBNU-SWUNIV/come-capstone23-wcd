@@ -1,9 +1,6 @@
 package com.wcd.boardservice.controller;
 
-import com.wcd.boardservice.dto.post.ResponsePostListDto;
-import com.wcd.boardservice.dto.post.RequestPostDto;
-import com.wcd.boardservice.dto.post.ResponsePostDto;
-import com.wcd.boardservice.dto.post.UpdateRequestPostDto;
+import com.wcd.boardservice.dto.post.*;
 import com.wcd.boardservice.service.PostService;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -25,8 +22,8 @@ public class ClubPostController {
 
     @PostMapping("/posts")
     public ResponseEntity<Long> createNewPost(@PathVariable("club-id") Long clubId,
-                                                         @RequestHeader("user-id") Long writerId,
-                                                         @RequestBody RequestPostDto requestPostDto) {
+                                              @RequestHeader("user-id") Long writerId,
+                                              @RequestBody RequestPostDto requestPostDto) {
         Long id = postService.createPost(clubId, writerId, requestPostDto);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
@@ -49,16 +46,15 @@ public class ClubPostController {
     }
 
     @GetMapping("/posts/{post-id}")
-    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("club-id") Long clubId,
-                                                   @PathVariable("post-id") Long postId) {
+    public ResponseEntity<ResponsePostDto> getPost(@PathVariable("post-id") Long postId) {
         ResponsePostDto responsePostDto = postService.getPostById(postId);
         return ResponseEntity.status(HttpStatus.OK).body(responsePostDto);
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<Page<ResponsePostListDto>> getAllPostsInClub(@PathVariable("club-id") Long clubId,
-                                                                       Pageable pageable) {
-        Page<ResponsePostListDto> responsePostListDtos = postService.getAllPostInClub(clubId, pageable);
+    public ResponseEntity<Page<ResponsePostListDto>> getPostList(RequestSearchCondition requestSearchCondition,
+                                                                 Pageable pageable) {
+        Page<ResponsePostListDto> responsePostListDtos = postService.getPostList(requestSearchCondition, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePostListDtos);
     }

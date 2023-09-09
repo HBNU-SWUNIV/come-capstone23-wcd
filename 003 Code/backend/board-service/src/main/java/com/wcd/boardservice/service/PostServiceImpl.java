@@ -1,17 +1,20 @@
 package com.wcd.boardservice.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.wcd.boardservice.client.UserServiceClient;
-import com.wcd.boardservice.dto.post.UpdateRequestPostDto;
+import com.wcd.boardservice.dto.post.*;
 import com.wcd.boardservice.dto.user.RequestUserNamesDto;
 import com.wcd.boardservice.dto.user.ResponseUserNamesDto;
-import com.wcd.boardservice.dto.post.ResponsePostListDto;
-import com.wcd.boardservice.dto.post.RequestPostDto;
-import com.wcd.boardservice.dto.post.ResponsePostDto;
 import com.wcd.boardservice.entity.Post;
 import com.wcd.boardservice.exception.UnAuthorizedEditException;
 import com.wcd.boardservice.repository.PostRepository;
 import com.wcd.boardservice.repository.VoteItemRepository;
 import com.wcd.boardservice.repository.VoteRepository;
+import com.wcd.boardservice.specs.PostSpecs;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     VoteRepository voteRepository;
     VoteItemRepository voteItemRepository;
@@ -154,49 +157,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Page<ResponsePostListDto> getAllPost(Pageable pageable) {
+    public Page<ResponsePostListDto> getPostList(RequestSearchCondition condition, Pageable pageable) {
         try {
-            Page<Post> postLists= postRepository.findAll(pageable);
-
-            Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);
-
-            return responsePostListDtos;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public Page<ResponsePostListDto> getAllPostInClub(Long clubId, Pageable pageable) {
-        try {
-            Page<Post> postLists = postRepository.findByclubId(clubId, pageable);
-
-            Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);
-
-            return responsePostListDtos;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-
-    @Override
-    public Page<ResponsePostListDto> getAllPostByUser(Long userId, Pageable pageable) {
-        try {
-            Page<Post> postLists = postRepository.findBywriterId(userId, pageable);
-
-            Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);
-
-            return responsePostListDtos;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public Page<ResponsePostListDto> getAllPostByUserInClub(Long clubId, Long userId, Pageable pageable) {
-        try {
-            Page<Post> postLists = postRepository.findByClubIdAndWriterId(clubId, userId, pageable);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                    .setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_SNAKE_CASE);
+            Map<PostSpecs.SearchKey, Object> map = objectMapper
+                    .convertValue(condition, new TypeReference<Map<PostSpecs.SearchKey, Object>>() {});
+            Page<Post> postLists = postRepository.findAll(PostSpecs.searchWith(map), pageable);
 
             Page<ResponsePostListDto> responsePostListDtos = getPostListWithWriterNames(postLists);
 
@@ -207,7 +175,7 @@ public class PostServiceImpl implements PostService{
     }
 
     // postLists에 작성자 명을 더한 리스트를 반환하는 메서드
-    private Page<ResponsePostListDto> getPostListWithWriterNames (Page<Post> postLists) {
+    private Page<ResponsePostListDto> getPostListWithWriterNames(Page<Post> postLists) {
         // Collect userIds from post lists.
         List<Long> writerIds = postLists.stream()
                 .map(Post::getWriterId)
