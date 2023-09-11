@@ -1,0 +1,22 @@
+  h2:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password: 
+  console:
+    enables: true
+    settings:
+      web-allow-others: true
+    path: /h2-console
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: create-drop
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: "{cipher}AQBAp8wk3XZDuSdXHs/j//HGyNvzHNrbSK7dG6khACfypYBWu438p9GC7m5acSdQq4yivtUNkZkcaGGzaxL6f2OD/WKLxU0cVnLrzM1M8UPvCevjicOzjJdmId7cxkg6yLCWj1ma/HVBg5rYu/Rqb70z/j9N00GIrv7Vpepg5AP12KA6c9pK26aOHiXsi/Hl8xZLy3WcYCU71YhHVsWdZGfKjPUHwC0T3YIXgvmuqeXKD1SdFppKhEBdMloabDey2GB+inmYVhBdZIntwJhKz88sFb2OyewarOzhvd0GDh8C0k28jT0gSqTZUjXEWoDqsEixXDVIYf7iMa65DhuNyW9KHV+s1dw4lFWdQcTXYgzdKzTFmR3uMASut0wzteINakw="

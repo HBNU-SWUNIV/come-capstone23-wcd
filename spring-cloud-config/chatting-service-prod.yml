@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://10.1.1.24:3309/chatting-service
+    username: root
+    password: "{cipher}AQBatMFoS7Gk8zeH/yDqh17exaCOb6vF9lk7H7/rhtCx05bdUBdbukeO1yk9ATSRg8qZciCY1aR/pDSVayqQmF1qrmXLFC4odwTlI/EGIvn1EiBefLbxrk+5WobAnC1bEKmxpYXBm4u7X/y7L/NE5SpKEAhL09py8tZv3IDIbsCK3NFACoUqb+G02nYSNnsI5shivkcElSW1TrIEiiTgQqioA/Drj8rXaWzgoDZ8SoRVZgeH4APNKooW3FMjkLvLEApFnFkR9IRPhUy77zQB/gwkd/3Xb+9igY2jAR1J1qO0u3Oe+yxtgvTTLBpk8tLsIFM0cpwG+vq+6w+x1NGLdhxrK+39BUMbod/WqWfN6TBRXi90B1Q8phI2BHOOeQaI+k4="
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+  rabbitmq:
+    host: 10.1.1.34
+    port: 5672
+    username: guest
+    password: "{cipher}AQBAp8wk3XZDuSdXHs/j//HGyNvzHNrbSK7dG6khACfypYBWu438p9GC7m5acSdQq4yivtUNkZkcaGGzaxL6f2OD/WKLxU0cVnLrzM1M8UPvCevjicOzjJdmId7cxkg6yLCWj1ma/HVBg5rYu/Rqb70z/j9N00GIrv7Vpepg5AP12KA6c9pK26aOHiXsi/Hl8xZLy3WcYCU71YhHVsWdZGfKjPUHwC0T3YIXgvmuqeXKD1SdFppKhEBdMloabDey2GB+inmYVhBdZIntwJhKz88sFb2OyewarOzhvd0GDh8C0k28jT0gSqTZUjXEWoDqsEixXDVIYf7iMa65DhuNyW9KHV+s1dw4lFWdQcTXYgzdKzTFmR3uMASut0wzteINakw="
