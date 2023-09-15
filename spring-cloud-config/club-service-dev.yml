@@ -26,9 +26,8 @@ spring:
     password: "{cipher}AQDU0lC/bvJY2gDG8x8gv2n8UQRLHMfT8aCr/Obq+I+/R10NHJk4cmbR/S41EZMeQrUEXvQyhz9VnJLRMwjHJ5boIY3To5qM2pLicvvKZADeEsVyZeT93YJg7Z1RFjdFZtoDHO1d8VOWCupj7slUKFbEmdODBvIoKuIq7cFuMiaVJ5XL4fYt334u3/2FHvLlj8++Fj8FczTb6uKL/07pxJT0u0vh9vsoCAw+Ww75uqqlLXpXyiTh2F9RotZjL1psQxQYaqzlf3gFp/xYhHbkml+UXtHfFCxtBsOIHLt7Mm5mzdYnaUG2c7cKlgvSs2EYXsEwQoIDfoPbmQtgBGI48SVEv1Hl8iIKh8g2H6vfToB+nyl3qfbw0TR01eUbKaR+QrI="
 
 file:
-  dir: /users/seongjun/image/
-#  url: http://211.115.222.246:1000/image/
-  url: file:///users/seongjun/image/
+  dir: /root/image/
+  url: "{cipher}AQCpnsWYrwNXsBMB6quLogXmCCHZ5+l85rkpvvC5GdtcfYKZqYJn/g67mKPtdK8zd7RBSZmpXBPdHZJ0F9LfkTFGu8WGpfuE0zeu8pZMlugqfo7XjAog4dTf2tSq+4QG1FzLKOtJTW1fMbLFfVtwURVhPy0JhEeEGQmH/zLXkv4t/dZp69Uvgdv5LtyOlSgQvip/dvjzzTaeUWPnO+8yxtFnfvmDn9ZUh9J97TWTrScb8otzg/8qrMMBVzvQUGvVkTKLeUt7qfjYDs1KY40THudO4dkMpp6YKdg+SJwjxyv2YyqpFG8YDFcrw1ELwhB7iQSvTA149tNVFqhDHBqkzs4bZ4lwJXSjvBvMwx7cRU7ITGlZ3Zhzg73NraP+qm4k+2aFDodBdWotJOPj3LbwdNiP"
 
 logging:
   level:
