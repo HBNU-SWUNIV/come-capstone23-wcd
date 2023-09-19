@@ -2,6 +2,7 @@ package com.wcd.chattingservice.controller;
 
 import com.wcd.chattingservice.dto.ChatDto;
 import com.wcd.chattingservice.dto.response.ResponseChat;
+import com.wcd.chattingservice.dto.response.SendChat;
 import com.wcd.chattingservice.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +33,7 @@ public class ChatController {
     @MessageMapping("/chat/send")
     public void sendMessage(@Payload ChatDto chat) {
         // 채팅 저장
-        ChatDto result = chatService.saveMessage(chat);
+        SendChat result = chatService.saveMessage(chat);
         // 해당 채팅 메시지를 WebSocket 토픽(/topic/채팅방ID)에 전송하여 클라이언트에게 브로드캐스팅한다.
         messagingTemplate.convertAndSend("/topic/" + chat.getClubId(), result);
     }
@@ -43,7 +44,6 @@ public class ChatController {
             @Parameter(name = "page", description = "페이지", example = "1"),
             @Parameter(name = "size", description = "크기", example = "10"),
     })
-
     @GetMapping("/chat")
     public ResponseEntity<Page<ResponseChat>> getChatsByClubId(@RequestParam Long clubId, Pageable pageable) {
         Page<ResponseChat> responseChats = chatService.getChats(clubId, pageable);
