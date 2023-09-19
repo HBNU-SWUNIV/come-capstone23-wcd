@@ -1,8 +1,10 @@
 package com.wcd.chattingservice.service;
 
+import com.wcd.chattingservice.client.UserServiceClient;
 import com.wcd.chattingservice.dto.ChatDto;
 import com.wcd.chattingservice.dto.response.ResponseChat;
 
+import com.wcd.chattingservice.dto.response.SendChat;
 import com.wcd.chattingservice.entity.Chat;
 import com.wcd.chattingservice.mapper.Mapper;
 import com.wcd.chattingservice.repository.ChatRepository;
@@ -20,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChatService {
     private final ChatRepository chatRepository;
     private final Mapper mapper;
+    private final UserServiceClient userServiceClient;
 
     @Transactional
-    public ChatDto saveMessage(ChatDto chat) {
-        return ChatDto.builder().chat(chatRepository.save(chat.toEntity())).build();
+    public SendChat saveMessage(ChatDto chat) {
+        String sender = userServiceClient.getUsernameById(chat.getSenderId());
+        return SendChat.builder().chat(chatRepository.save(chat.toEntity())).sender(sender).build();
     }
 
     public Page<ResponseChat> getChats(Long clubId, Pageable pageable) {
