@@ -9,8 +9,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
-  rabbitmq:
-    host: 10.1.1.5
-    port: 5672
-    username: guest
-    password: "{cipher}AQA5DUta/Mla91e8irJdYFg5rOr1ldXshbql6WhJ+H1LDYvUqwJmmPhU8nzrtiluafrJZF+El/Glbxkgfo6yrmo2MsZkYlCY4g3hCQh1DMHO36dPIvbJaz6KIAxtsBG4wqTEXfH/zux/xWVo+LZvRy1akGui6P3tDb2xaqlqZ5dJLk2IA/M7Ji4fCqPmB0lr+QM0KIhqnSD+nKMb3fep5z7nztARgjGNaiTYY8RLbBvpUo7r76rQt61FopeIW0beq/IRWA568t3e9Z31oJB6tJfqzkA3Ob1In8T861jO6HK92XJPijMfajpi3Udafby97u0VMeCjyV94dPZ+9shu7mPt/ldRQnv5uWoQmIWDr8qEDPzteHI3ZMyqO+qc0lGrcCI="
