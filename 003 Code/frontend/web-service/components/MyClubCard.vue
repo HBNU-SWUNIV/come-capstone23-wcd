@@ -1,19 +1,20 @@
 <template>
   <v-card style="width:50%">
-    <v-card-title>{{ title }}</v-card-title>
+    <v-card-title>{{ title }}<v-spacer/> <v-btn to="/myclub">더보기</v-btn></v-card-title>
     <v-list>
       <v-list-item
-        v-for="(club, i) in clubs"
+        v-for="(myclub, i) in displayedClubs"
         :key="i"
-        :to="club.to"
+        :to="`/clubs/${myclub.id}`"
         router
         exact
       >
         <v-list-item-action>
-          <v-icon>{{ club.icon }}</v-icon>
+          <img :src="getImageDataUri(myclub.multipartFile)" style="height:45px; width:45px;"/>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ club.title }}</v-list-item-title>
+          <v-list-item-title>{{ myclub.clubName }}</v-list-item-title>
+          <p style="margin:0;">{{ myclub.description }}</p>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -25,35 +26,43 @@ export default {
   name: "MyClubCard",
   data() {
     return {
-      clubs: [
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "Club 1",
-          to: "/club/1",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "Club 2",
-          to: "/club/2",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "Club 3",
-          to: "/club/3",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "Club 4",
-          to: "/club/4",
-        },
-        {
-          icon: "mdi-panorama-variant-outline",
-          title: "Club 5",
-          to: "/club/5",
-        },
-      ],
-      title: "My Club",
+      myclubs: [],
+      title: "나의 모임",
     };
+  },
+  methods:{
+    async getMyClubs() {
+      try {
+        const access_token = this.$store.state.access_token;
+        const user_id = sessionStorage.getItem("user_id");
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        };
+        await this.$axios
+          .get(`/club-service/users/${user_id}/clubs`, config)
+          .then((res) => {
+            console.log(res.data);
+            this.myclubs = res.data;
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getImageDataUri(imageData) {
+      return `data:image/jpg;base64,${imageData}`;
+    },
+  },
+  computed: {
+    displayedClubs() {
+      // 최대 5개 클럽만 표시
+      return this.myclubs.slice(0, 5);
+    },
+  },
+  created() {
+    this.getMyClubs();
   },
 };
 </script>

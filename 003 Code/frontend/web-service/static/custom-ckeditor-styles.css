@@ -1,0 +1,5 @@
+/* custom-ckeditor-styles.css */
+.ck-editor__editable {
+    color: black !important;
+  }
+  

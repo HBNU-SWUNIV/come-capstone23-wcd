@@ -5,7 +5,6 @@
       <v-list-item
         v-for="(category, i) in categories"
         :key="i"
-        :to="category.to"
         router
         exact
         style="
@@ -42,45 +41,37 @@ export default {
         {
           icon: "mdi-music-box",
           title: "음악",
-          to: "/music",
         },
         {
           icon: "mdi-chef-hat",
           title: "요리",
-          to: "/cook",
         },
         {
           icon: "mdi-soccer",
           title: "운동",
-          to: "/sports",
         },
         {
           icon: "mdi-video-vintage",
           title: "영화",
-          to: "/movie",
         },
         {
           icon: "mdi-book-open-page-variant",
           title: "독서",
-          to: "/book",
         },
         {
           icon: "mdi-airplane",
           title: "여행",
-          to: "/travel",
         },
         {
           icon: "mdi-translate-variant",
           title: "언어교환",
-          to: "/language",
         },
         {
           icon: "mdi-palette",
           title: "예술",
-          to: "/art",
         },
       ],
-      title: "Club Categories",
+      title: "카테고리",
     };
   },
 };

@@ -21,10 +21,13 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/static/custom-ckeditor-styles.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios.js', mode: 'client' },
+    { src: '~/plugins/ckeditor.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,6 +42,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    'nuxt-vuex-localstorage'
   ],
 
   axios: {
@@ -50,6 +54,7 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
+      light: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -59,6 +64,15 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
+        },
+        light: { // 라이트 모드 색상 설정
+          primary: colors.blue.lighten2,
+          accent: colors.grey.lighten3,
+          secondary: colors.amber.lighten3,
+          info: colors.teal.darken1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent2,
+          success: colors.green.accent2
         }
       }
     }
@@ -67,5 +81,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-  
+
+  router: {
+    middleware: ['auth'], 
+  },
+
+  ssr: false,
 }

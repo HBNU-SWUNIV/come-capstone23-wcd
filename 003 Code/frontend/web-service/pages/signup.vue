@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 600px; margin-bottom: 140px">
+  <div style="width: 600px; margin-top: 40px">
     <v-container>
-      <v-card style="background-color: rgba(0, 0, 0, 0.5)">
+      <v-card style="background-color: rgba(0, 0, 0, 0.9)">
         <v-card-title class="d-flex justify-center">
           <h1 style="padding: 20px">SIGN UP</h1>
         </v-card-title>
@@ -49,6 +49,9 @@
             </div>
             <p v-show="emailValid" style="color: rgb(138, 255, 138)">
               인증이 완료되었습니다.
+            </p>
+            <p v-show="alreadyEmail" style="color: rgb(255, 110, 110)">
+              이미 가입된 이메일입니다.
             </p>
 
             <div
@@ -161,7 +164,7 @@
               placeholder="성별"
               @input="validateGender"
             ></v-select>
-
+            <v-btn to="/login" style="width:100%;">이미 회원이신가요?</v-btn>
             <v-btn
               :disabled="
                 !(
@@ -212,8 +215,8 @@ export default {
         (v) =>
           this.emailRegex.test(v) || "이메일은 영문+숫자만 입력 가능합니다.",
         (v) =>
-          (v && v.length >= 5 && v.length < 20) ||
-          "이메일은 5글자 이상, 20글자 미만이어야 합니다.",
+          (v && v.length >= 5 && v.length < 40) ||
+          "이메일은 5글자 이상, 40글자 미만이어야 합니다.",
       ],
       password: "",
       pwCheck: "",
@@ -265,6 +268,7 @@ export default {
       selectedYear: null, // 선택한 년도
       selectedMonth: null, // 선택한 월
       selectedDay: null, // 선택한 일
+      alreadyEmail: false,
     };
   },
   mounted() {
@@ -356,6 +360,8 @@ export default {
       }
     },
     validateEmail() {
+      this.alreadyEmail = false;
+      
       if (this.email === "") {
         this.isEmailValid = false;
         return;
@@ -364,7 +370,7 @@ export default {
       if (
         this.emailRegex.test(this.email) &&
         this.email.length >= 5 &&
-        this.email.length < 20
+        this.email.length < 40
       ) {
         this.isEmailValid = true;
       } else {
@@ -458,7 +464,23 @@ export default {
             alert("인증코드가 전송되었습니다.");
           });
       } catch (err) {
-        console.log(err);
+        if (err.response && err.response.status === 409) {
+          // 에러 응답이 409인 경우
+          console.log("이미 가입된 이메일입니다.");
+
+          // 에러 발생 시 초기화
+          this.validBox = false;
+          this.timerVisible = false;
+          this.showResendButton = false;
+          this.stopTimer();
+          this.isEmailValid = false;
+          this.emailValid = false; // 인증 상태를 다시 false로 설정
+          this.codeIncorrect = false; // 인증코드 일치 여부 초기화
+          this.verificationCode = ""; // 입력한 인증 코드 초기화
+          this.alreadyEmail = true;
+        } else {
+          console.log(err);
+        }
       }
     },
     openValidBox() {
@@ -538,7 +560,6 @@ export default {
             }
           });
       } catch (err) {
-        this.codeIncorrect = true;
         console.log(err);
       }
     },

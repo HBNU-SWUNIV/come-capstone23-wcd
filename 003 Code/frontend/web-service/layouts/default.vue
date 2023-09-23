@@ -9,8 +9,11 @@
         fixed
         app
       >
-        <v-list style="height:100%;">
-          <div style="height:10%;">
+        <v-list style="height: 100%">
+          <div
+            ref="homeHeight"
+            style="margin-bottom: 10px; height: fit-content"
+          >
             <v-list-item
               v-for="(home, i) in homes"
               :key="i"
@@ -29,11 +32,11 @@
             </v-list-item>
           </div>
 
-          <div class="drawer-content" style="height:65%;">
+          <div class="drawer-content" ref="clubHeight">
             <v-list-item
-              v-for="(club, i) in clubs"
+              v-for="(myclub, i) in myclubs"
               :key="i"
-              :to="club.to"
+              :to="`/clubs/${myclub.id}`"
               router
               exact
             >
@@ -44,22 +47,26 @@
                     class="d-block mx-auto"
                     style="height: 45px"
                   >
-                    <img class="image" :src="club.image" />
+                    <img
+                      class="image"
+                      :src="getImageDataUri(myclub.multipartFile)"
+                    />
                   </v-list-item-action>
                 </template>
-                <span>{{ club.clubName }}</span>
-                <!-- 툴팁 내용 설정 -->
+                <span>{{ myclub.clubName }}</span>
               </v-tooltip>
             </v-list-item>
           </div>
 
           <div
+            ref="itemHeight"
             style="
               position: absolute;
               bottom: 0;
               width: 100%;
-              height:25%;
               text-align: center;
+              margin-bottom: 30px;
+              margin margin-top: 10px;
             "
           >
             <v-list-item
@@ -85,7 +92,6 @@
       </v-navigation-drawer>
       <v-app-bar :clipped-left="clipped" fixed app>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <v-spacer />
         <div class="input-container">
           <v-icon class="icon">mdi-magnify</v-icon>
           <input
@@ -96,7 +102,10 @@
           />
         </div>
         <v-spacer />
-        <v-btn icon to="/myprofile">
+        <v-btn style="color: rgb(255, 125, 125)" @click="Logout"
+          >로그아웃</v-btn
+        >
+        <v-btn icon>
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -107,7 +116,8 @@
         <v-container
           style="
             max-width: 100%;
-            padding: 30px;
+            height: 100%;
+            padding: 0;
             display: flex;
             justify-content: center;
           "
@@ -154,9 +164,7 @@
 </template>
 
 <script>
-import LoginPage from "../pages/login.vue";
 export default {
-  components: { LoginPage },
   name: "DefaultLayout",
   data() {
     return {
@@ -174,73 +182,8 @@ export default {
           to: "/",
         },
       ],
-      notifications: [
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club1",
-          contents: "새로운 모임원이 가입했습니다.",
-          time: "2023-02-01",
-          to: "/club/1",
-        },
-        {
-          image:
-            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
-          clubName: "Club2",
-          contents: "새로운 공지가 등록되었습니다.",
-          time: "2023-02-01",
-          to: "/club/2",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club3",
-          contents: "contents example",
-          time: "2023-02-01",
-          to: "/club/3",
-        },
-      ],
-      clubs: [
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 1",
-          to: "/club/1",
-        },
-        {
-          image:
-            "https://cdn.pixabay.com/photo/2023/05/05/21/00/cute-7973191_1280.jpg",
-          clubName: "Club 2",
-          to: "/club/2",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 3",
-          to: "/club/3",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 5",
-          to: "/club/5",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 5",
-          to: "/club/5",
-        },
-        {
-          image: "https://cdn.imweb.me/upload/94dc5a2f83cd5.jpg",
-          clubName: "Club 4",
-          to: "/club/4",
-        },
-      ],
+      notifications: [],
+      myclubs: [],
       items: [
         {
           icon: "mdi-plus",
@@ -259,6 +202,93 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    async Logout() {
+      const confirmed = window.confirm("로그아웃하시겠습니까?");
+
+      if (confirmed) {
+        let LogoutData = {
+          access_token: this.$store.state.access_token,
+          refresh_token: sessionStorage.getItem("refresh_token"),
+        };
+        try {
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${LogoutData.access_token}`,
+            },
+          };
+
+          await this.$axios
+            .post(
+              "/user-service/user/logout",
+              JSON.stringify(LogoutData),
+              config
+            )
+            .then((res) => {
+              alert("로그아웃 되었습니다.");
+
+              this.$store.commit("setAccessToken", null);
+              sessionStorage.removeItem("refresh_token");
+              sessionStorage.removeItem("user_id");
+
+              this.$router.push("/login");
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+
+    async getMyClubs() {
+      try {
+        const access_token = this.$store.state.access_token;
+        const user_id = sessionStorage.getItem("user_id");
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        };
+        await this.$axios
+          .get(`/club-service/users/${user_id}/clubs`, config)
+          .then((res) => {
+            console.log(res.data);
+            this.myclubs = res.data;
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getImageDataUri(imageData) {
+      return `data:image/jpg;base64,${imageData}`;
+    },
+    adjustDrawerHeight() {
+      // homeHeight, itemHeight, clubHeight의 높이 값을 가져옴
+      const homeHeight = this.$refs.homeHeight.clientHeight;
+      const itemHeight = this.$refs.itemHeight.clientHeight;
+      const windowHeight = window.innerHeight;
+
+      // clubHeight에 적절한 높이를 설정
+      this.$refs.clubHeight.style.height =
+        windowHeight - homeHeight - itemHeight - 80 + "px";
+    },
+  },
+  watch: {
+    // 화면 크기가 변경될 때마다 높이를 조절
+    $route() {
+      this.adjustDrawerHeight();
+    },
+    $vuetify: {
+      handler() {
+        this.adjustDrawerHeight();
+      },
+      deep: true,
+    },
+  },
+  created() {
+    this.getMyClubs();
   },
 };
 </script>
@@ -284,12 +314,19 @@ export default {
   width: 100%;
   height: 100%;
   flex: 1; /* 남은 공간을 채우도록 설정 */
-  color: white; /* 입력 텍스트 색상 설정 */
+  color: rgb(255, 255, 255); /* 입력 텍스트 색상 설정 */
+}
+
+#search::placeholder {
+  color: #d4d4d4; /* 입력창의 플레이스홀더(검색어를 입력하세요) 색상 설정 */
 }
 
 #search:focus {
-  background-color: black; /* 포커스 시 배경색 검정색으로 변경 */
-  color: white; /* 글자색 변경 */
+  color: white;
+}
+
+#search:focus::placeholder {
+  color: gray;
 }
 
 .image {

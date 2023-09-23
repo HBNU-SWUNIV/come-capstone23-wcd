@@ -1,8 +1,11 @@
 <template>
-  <div style="width:100%;">
-    <clubRecommendCard />
+  <div style="width: 100%; padding: 30px;">
+    <ClubRecommendCard />
     <ClubCategoryCard />
-    <MyClubCard />
+    <div style="display: flex;">
+      <MyClubCard style="margin-right: 15px;"/> 
+      <MyCreateClubCard style="margin-left: 15px;"/>
+    </div>
   </div>
 </template>
 
@@ -10,15 +13,21 @@
 import ClubCategoryCard from "../components/ClubCategoryCard.vue";
 import ClubRecommendCard from "../components/ClubRecommendCard.vue";
 import MyClubCard from "../components/MyClubCard.vue";
+import MyCreateClubCard from "../components/MyCreateClubCard.vue";
 
 export default {
   name: "HomePage",
-  components: { MyClubCard, ClubRecommendCard, ClubCategoryCard },
+  components: {
+    MyClubCard,
+    ClubRecommendCard,
+    ClubCategoryCard,
+    MyCreateClubCard,
+  },
 };
 </script>
 
 <style>
-.v-card{
+.v-card {
   margin-bottom: 30px;
 }
 </style> 
