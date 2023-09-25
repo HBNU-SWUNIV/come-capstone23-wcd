@@ -5,19 +5,50 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/user-service/login
-            # - Path=/api/user-service/signup
-            # - Path=/api/user-service/regenerateToken
-            # - Path=/api/user-service/actuator/**
-            # - Path=/api/user-service/mail/**
+            - Path=/api/user-service/login, /api/user-service/signup
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service-authorized
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/user-service/regenerateToken
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/user-service/mail/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/user-service/logout
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/user-service/actuator/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/api/user-service/user/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/api/user-service/evaluation/**
           filters:
             - RemoveRequestHeader=Cookie
