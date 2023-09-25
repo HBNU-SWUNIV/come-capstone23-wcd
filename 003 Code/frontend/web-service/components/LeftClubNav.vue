@@ -5,15 +5,12 @@
       style="width: 320px; height: 240px"
     />
 
-    <h1 style="margin-top: 10px">{{ clubInfo.clubName }}</h1>
-
-    <p style="margin-top: 10px">{{ clubInfo.description }}</p>
-    <p style="margin-top: 10px; font-size: 13px;">
-      정원 수 : {{ clubInfo.maximumPeople }}
-    </p>
-    <p style="margin-top: 10px; font-size: 13px; color: rgb(125, 255, 125)">
+    <h1 style="margin-top: 10px; margin-bottom: 10px; font-size: 27px;">{{ clubInfo.clubName }}</h1>
+    <p style="margin-bottom: 10px; font-size: 13px; color: rgb(125, 255, 125)">
       멤버 수 : {{ clubmembers.length }}
     </p>
+    <p style="margin-bottom: 15px; color:rgb(202, 202, 202); font-size: 13px;">{{ clubInfo.description }}</p>
+    
     <hr />
     <div class="d-flex flex-column" style="margin-top: 10px">
       <v-btn

@@ -1,6 +1,6 @@
 <template>
   <v-card style="width: 50%; margin: 10px">
-    <v-card-title>{{ title }}<v-spacer/> <v-btn to="/club-manage">더보기</v-btn></v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
       <v-list>
         <v-list-item
           v-for="(room, i) in rooms"

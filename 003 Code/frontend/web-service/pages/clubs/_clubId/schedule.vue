@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%">
+  <div style="width: 100%;">
     <ClubNavigation />
     <div style="color: white; display: flex; flex-direction: row">
       <LeftClubNav />
@@ -17,9 +17,9 @@
   <script>
 import LeftClubNav from "../../../components/LeftClubNav.vue";
 import ClubNavigation from "../../../components/ClubNavigation.vue";
-import FullCalendar from "@fullcalendar/vue";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import FullCalendar from '@fullcalendar/vue'
+import interactionPlugin from '@fullcalendar/interaction'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 export default {
   components: {
@@ -30,10 +30,16 @@ export default {
   data() {
     return {
       calendarOptions: {
-        plugins: [dayGridPlugin, interactionPlugin],
-        initialView: "dayGridMonth",
-      },
-    };
-  },
+        plugins: [interactionPlugin, dayGridPlugin],
+        initialView: 'dayGridMonth',
+        nowIndicator: true,
+        editable: true,
+        initialEvents: [
+          { title: 'nice event', start: new Date() }
+        ],
+        eventTextColor: 'white'
+      }
+    }
+  }
 };
 </script>
