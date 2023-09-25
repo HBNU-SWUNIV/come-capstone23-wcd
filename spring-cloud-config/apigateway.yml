@@ -2,64 +2,27 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service-basic
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/user-service/login
+            - Path=/api/user-service/signup
+            - Path=/api/user-service/regenerateToken
+            - Path=/api/user-service/actuator/**
+            - Path=/api/user-service/mail/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
+
+        - id: user-service-authorized
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/signup
+            - Path=/api/user-service/logout
+            - Path=/api/user-service/user/**
+            - Path=/api/user-service/evaluation/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/regenerateToken
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/mail/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/logout
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/actuator/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/user/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/evaluation/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
         - id: club-service
           uri: lb://CLUB-SERVICE
