@@ -5,21 +5,11 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/user-service/login, /api/user-service/signup
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/user-service/regenerateToken
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/user-service/mail/**
+            - Path=/api/user-service/login
+                  /api/user-service/signup
+                  /api/user-service/regenerateToken
+                  /api/user-service/mail/**
+                  /api/user-service/actuator/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
@@ -27,29 +17,8 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/user-service/logout
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/user-service/actuator/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/user-service/user/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/user-service/evaluation/**
+                  /api/user-service/user/**
+                  /api/user-service/evaluation/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
