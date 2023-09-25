@@ -9,3 +9,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
+  rabbitmq:
+    host: "{cipher}AQDJ3qgnf3P00kJA+VgjEgpdmc/qosvR0spmZPCSPFIQCHOZTYp2ZrTnplgQFuA8EcBCsdEfDgcM3cQyUK+D1UmZAeOAsvgu7oX7WZiVoLoQ8w9vvJgyzpHWW+jS1ZhKzj4aagDHNkoId7YUSYTovtUJh6oZ9tA+fXhNUWVXEguBlxn0kXKeos8LFstsv0ZLdTus+CenWqwfOZapdEPWq3IkRYXzoL2sLU/C+0XmTJT31M7jjmVb6Gwxh6Lj6Jd59tYonaYWmGrvAGRohvlM9+FcLYOsmi0LzHFulxEEokY9QcmTZQdg9jdN78mh9rrp1ol/pm8pFBPf6YqCrTYOq27ccxH7RCumSN/MTIqNfggrAeawlOmXVOveYwGDh/WN1aE="
+    port: 5672
+    username: guest
+    password: "{cipher}AQCtFTnP3qdXI8ds4+mmSlQNFCrx8JyTPh5Q2UT6ecOo3r36QJkQn/pwbyk43MUO4bF4XG4+8cnZPbIUNBp7GYTRDBnXybDxe6ESIl5DopShVnHonZ36PUTPkyFjAbGHzSoyTi8KFR6jPMlMCZfTyHksvB4LyduzZ1rcADfOY++IXhNgtK6rc0TBVJPC7wjM9N5DyG/obhOkMgJI2Q8m6GQtT0lwIRKSvWOySH8s7JR8grd4aXtgkb+CCOMjS8uXLR+HIHBJ11RtNptwjv8nuAbP7EuZRyu4Ma7qpivQtWnPGS+XwZ9845lswtTB70U7trDp5OjHrJ+Y0sM0jCVlFBwV5RyiMI+6TVpE4thIPStJnKGw3CJcCte3sAG6+r7QTcc="
