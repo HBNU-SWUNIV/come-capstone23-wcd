@@ -5,20 +5,14 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/user-service/login
-                  /api/user-service/signup
-                  /api/user-service/regenerateToken
-                  /api/user-service/mail/**
-                  /api/user-service/actuator/**
+            - Path=/api/user-service/login, /api/user-service/signup, /api/user-service/regenerateToken, /api/user-service/mail/**, /api/user-service/actuator/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/user-service/logout
-                  /api/user-service/user/**
-                  /api/user-service/evaluation/**
+            - Path=/api/user-service/logout, /api/user-service/user/**, /api/user-service/evaluation/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
