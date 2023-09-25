@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service-basic
+        - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/user-service/login
@@ -13,7 +13,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
-
         - id: user-service-authorized
           uri: lb://USER-SERVICE
           predicates:
