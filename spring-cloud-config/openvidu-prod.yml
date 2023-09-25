@@ -1,0 +1,9 @@
+logging:
+  level:
+    com.example.board-service: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
