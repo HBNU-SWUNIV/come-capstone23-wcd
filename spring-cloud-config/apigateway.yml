@@ -6,10 +6,10 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/user-service/login
-            - Path=/api/user-service/signup
-            - Path=/api/user-service/regenerateToken
-            - Path=/api/user-service/actuator/**
-            - Path=/api/user-service/mail/**
+            # - Path=/api/user-service/signup
+            # - Path=/api/user-service/regenerateToken
+            # - Path=/api/user-service/actuator/**
+            # - Path=/api/user-service/mail/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/user-service/(?<segment>.*), /$\{segment}
