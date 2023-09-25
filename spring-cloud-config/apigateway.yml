@@ -20,40 +20,40 @@ spring:
         - id: club-service
           uri: lb://CLUB-SERVICE
           predicates:
-            - Path=/club-service/**
+            - Path=/api/club-service/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/club-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/club-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
         - id: chatting-service
           uri: lb://CHATTING-SERVICE
           predicates:
-            - Path=/chatting-service/**
+            - Path=/api/chatting-service/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/chatting-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: board-service
           uri: lb://BOARD-SERVICE
           predicates:
-            - Path=/board-service/clubs/{club-id}/**
+            - Path=/api/board-service/clubs/{club-id}/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/board-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
             - ClubMemberAuthorizationFilter
         - id: board-service
           uri: lb://BOARD-SERVICE
           predicates:
-            - Path=/board-service/users/**
+            - Path=/api/board-service/users/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/board-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/board-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
         - id: schedule-service
           uri: lb://SCHEDULE-SERVICE
           predicates:
-            - Path=/schedule-service/**
+            - Path=/api/schedule-service/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/schedule-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
