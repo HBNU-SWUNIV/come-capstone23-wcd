@@ -1,3 +1,7 @@
+openvidu:
+  url: http://10.1.1.116:5443/
+  secret: MY_SECRET
+
 logging:
   level:
     com.example.board-service: INFO

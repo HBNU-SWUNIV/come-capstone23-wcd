@@ -16,10 +16,6 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
-openvidu:
-  url: http://localhost:5443/
-  secret: MY_SECRET
-
 logging:
   level:
     com.wcd.openvidu: DEBUG
