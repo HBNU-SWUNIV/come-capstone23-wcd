@@ -46,8 +46,6 @@ import UserVideo from "../components/UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://211.115.222.246:5000/';
-
 export default {
   name: "App",
 

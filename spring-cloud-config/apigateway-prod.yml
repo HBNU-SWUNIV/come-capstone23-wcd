@@ -17,10 +17,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'http://localhost:3000'
-              - 'http://localhost:8080'
-              - 'http://wcd.kro.kr'
-              - 'https://wcd.kro.kr'
+              - '*'
             allow-credentials: true
             allowedHeaders: '*'
             exposedHeaders: '*'
