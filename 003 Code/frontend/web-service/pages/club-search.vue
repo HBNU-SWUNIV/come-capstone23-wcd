@@ -1,27 +1,43 @@
 <template>
-  <div style="width: 100%; padding: 30px">
-    <div><input type="text" placeholder="검색어를 입력하세요..." /></div>
-    <v-card>
+  <div style="width: 100%; padding: 30px; text-align: center;">
+    <div class="input-container" style="margin-bottom: 30px;">
+      <v-icon class="icon">mdi-magnify</v-icon>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="검색어를 입력하세요..."
+      />
+    </div>
+    <v-card color="none">
       <v-list>
         <v-row>
           <v-col
             v-for="(club, i) in clubs"
             :key="i"
-            cols="4"
+            cols="3"
             style="padding: 0"
           >
             <v-list-item router exact>
-              <v-list-item-action>
-                <img
-                  :src="getImageDataUri(club.multipartFile)"
-                  style="height: 45px; width: 45px"
-                />
-              </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>{{ club.clubName }}</v-list-item-title>
-                <v-list-item-subtitle>{{
-                  club.description
-                }}</v-list-item-subtitle>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <img
+                    :src="getImageDataUri(club.multipartFile)"
+                    style="height: 210px; width: 280px"
+                  />
+                  <v-list-item-title style="font-size: 17px; margin: 5px">{{
+                    club.clubName
+                  }}</v-list-item-title>
+                  <v-list-item-subtitle>{{
+                    club.description
+                  }}</v-list-item-subtitle>
+                </div>
               </v-list-item-content>
             </v-list-item>
           </v-col>
@@ -30,6 +46,8 @@
     </v-card>
   </div>
 </template>
+
+
     
   <script>
 export default {
@@ -66,7 +84,7 @@ export default {
 };
 </script>
   
-  <style>
+<style>
 .v-card {
   background-color: white;
 }
