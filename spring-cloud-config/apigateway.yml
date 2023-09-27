@@ -57,15 +57,15 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
-        - id: openvidu
-          uri: lb:https://OPENVIDU
+        - id: openvidu-http
+          uri: lb:http://OPENVIDU
           predicates:
             - Path=/api/openvidu/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/openvidu/(?<segment>.*), /$\{segment}
-        - id: openvidu
-          uri: lb:wss://OPENVIDU
+        - id: openvidu-wss
+          uri: lb:ws://OPENVIDU
           predicates:
             - Path=/api/openvidu/**
           filters:
