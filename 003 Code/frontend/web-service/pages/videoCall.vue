@@ -190,14 +190,14 @@ export default {
     },
 
     async createSession(sessionId) {
-      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
+      const response = await axios.post('/api/oenvidu/sessions', { customSessionId: sessionId }, {
         headers: { 'Content-Type': 'application/json', },
       });
       return response.data; // The sessionId
     },
 
     async createToken(sessionId) {
-      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
+      const response = await axios.post('/api/oenvidu/sessions/' + sessionId + '/connections', {}, {
         headers: { 'Content-Type': 'application/json', },
       });
       return response.data; // The token
