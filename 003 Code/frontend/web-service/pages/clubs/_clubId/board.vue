@@ -10,26 +10,14 @@
           border-right: 1px solid rgb(127, 127, 127);
         "
       >
-      <v-btn :to="`/clubs/${this.$route.params.clubId}/board-create`">게시글 작성</v-btn>
+        <v-btn :to="`/clubs/${this.$route.params.clubId}/board-create`"
+          >게시글 작성</v-btn
+        >
+        <div v-for="post in boards" :key="post.id">
+          <!-- 게시물 내용을 표시하는 부분 -->
+          <p>{{ post.title }}</p>
+        </div>
       </div>
-    </div>
-
-    <div>
-      <!-- 게시물 목록을 표시하는 부분 -->
-      <div v-for="post in boards" :key="post.id">
-        <!-- 게시물 내용을 표시하는 부분 -->
-        <div>{{ post.title }}</div>
-        <div>{{ post.content }}</div>
-      </div>
-
-      <!-- 페이지네이션 링크 생성 -->
-      <router-link
-        v-for="page in pageCount"
-        :key="page"
-        :to="generatePageLink(page)"
-      >
-        {{ page }}
-      </router-link>
     </div>
   </div>
 </template>
@@ -56,17 +44,15 @@ export default {
         const access_token = this.$store.state.access_token;
         const page = this.currentPage;
         // API 주소를 동적으로 생성
-        const apiUrl = `/board-service/clubs/${this.$route.params.clubId}/posts?page=${page}&size=10`;
-
         const config = {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${access_token}`,
           },
         };
-        await this.$axios.get(apiUrl, config).then((res) => {
+        await this.$axios.get(`/board-service/clubs/${this.$route.params.clubId}/posts`, config ).then((res) => {
           console.log(res.data);
-          this.myclubs = res.data;
+          this.boards = res.data.content;
         });
       } catch (err) {
         console.error("err", err);

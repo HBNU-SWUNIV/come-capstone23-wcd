@@ -19,6 +19,7 @@
         >모임 관리</v-btn
       >
       <v-btn v-else>모임 탈퇴</v-btn>
+      <v-btn>모임 가입</v-btn>
     </div>
   </div>
 </template>
