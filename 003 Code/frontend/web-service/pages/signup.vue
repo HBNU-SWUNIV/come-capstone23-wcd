@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 600px; margin-top: 40px">
+  <div style="width: 600px;">
     <v-container>
       <v-card style="background-color: rgba(0, 0, 0, 0.9)">
         <v-card-title class="d-flex justify-center">

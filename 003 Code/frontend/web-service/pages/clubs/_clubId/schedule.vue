@@ -4,11 +4,8 @@
     <div style="color: white; display: flex; flex-direction: row">
       <LeftClubNav />
 
-      <div style="width:930px; padding:20px;">
-        <FullCalendar :options="calendarOptions"/>
-      </div>
-      <div style="padding:20px;">
-        Schedule List
+      <div style="width:660px; padding:20px;">
+        <FullCalendar :options="calendarOptions" @dateClick="handleDateClick"/>
       </div>
     </div>
   </div>
@@ -40,6 +37,7 @@ export default {
         eventTextColor: 'white'
       }
     }
-  }
+  },
+  
 };
 </script>

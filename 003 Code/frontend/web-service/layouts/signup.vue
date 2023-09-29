@@ -1,7 +1,7 @@
 <template>
   <v-app class="signup-page">
     <h1 style="padding: 20px">WCD CAPSTONE</h1>
-    <div class="centered-content">
+    <div class="centered-content" style="height:100%;">
       <Nuxt />
     </div>
   </v-app>

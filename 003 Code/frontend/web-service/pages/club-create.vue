@@ -1,8 +1,8 @@
 <template>
   <div class="centered-content">
-    <v-card style="width: 80%">
+    <v-card style="width: 80%; margin:30px;">
       <v-card-title class="d-flex justify-center">
-        <h1 style="padding: 30px">CLUB CREATE</h1>
+        <h1 style="padding: 20px">CLUB CREATE</h1>
       </v-card-title>
       <v-card-text>
         <div class="d-flex flex-row">
@@ -39,7 +39,7 @@
           label="모임 설명"
           v-model="description"
           no-resize
-          :rows="3"
+          :rows="2"
         ></v-textarea>
 
         <!-- 승인방식 선택 -->

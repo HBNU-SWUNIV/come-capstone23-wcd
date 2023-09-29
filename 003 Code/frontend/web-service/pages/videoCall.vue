@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="main-container" class="container">
     <div id="join" v-if="!session">
       <div id="join-dialog" class="jumbotron vertical-center">
@@ -6,11 +6,22 @@
         <div class="form-group">
           <p>
             <label>Participant</label>
-            <input v-model="myUserName" class="form-control" type="text" color="white" required />
+            <input
+              v-model="myUserName"
+              class="form-control"
+              type="text"
+              color="white"
+              required
+            />
           </p>
           <p>
             <label>Session</label>
-            <input v-model="mySessionId" class="form-control" type="text" required />
+            <input
+              v-model="mySessionId"
+              class="form-control"
+              type="text"
+              required
+            />
           </p>
           <p class="text-center">
             <button class="btn btn-lg btn-success" @click="joinSession()">
@@ -24,16 +35,28 @@
     <div id="session" v-if="session">
       <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
-        <input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession"
-               value="Leave session" />
+        <input
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonLeaveSession"
+          @click="leaveSession"
+          value="Leave session"
+        />
       </div>
       <div id="main-video" class="col-md-6">
         <user-video :stream-manager="mainStreamManager" />
       </div>
       <div id="video-container" class="col-md-6">
-        <user-video :stream-manager="publisher" @click.native="updateMainVideoStreamManager(publisher)" />
-        <user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
-                    @click.native="updateMainVideoStreamManager(sub)" />
+        <user-video
+          :stream-manager="publisher"
+          @click.native="updateMainVideoStreamManager(publisher)"
+        />
+        <user-video
+          v-for="sub in subscribers"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+          @click.native="updateMainVideoStreamManager(sub)"
+        />
       </div>
     </div>
   </div>
@@ -89,7 +112,9 @@ export default {
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
-        stream.mediaStream.getVideoTracks().forEach(track => console.log(track));
+        stream.mediaStream
+          .getVideoTracks()
+          .forEach((track) => console.log(track));
         this.subscribers.push(subscriber);
       });
 
@@ -110,12 +135,11 @@ export default {
 
       // Get a token from the OpenVidu deployment
       this.getToken(this.mySessionId).then((token) => {
-
         // First param is the token. Second param can be retrieved by every user on event
         // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-        this.session.connect(token, { clientData: this.myUserName })
+        this.session
+          .connect(token, { clientData: this.myUserName })
           .then(() => {
-
             // --- 5) Get your own camera stream with the desired properties ---
 
             // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
@@ -140,7 +164,11 @@ export default {
             this.session.publish(this.publisher);
           })
           .catch((error) => {
-            console.log("There was an error connecting to the session:", error.code, error.message);
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
           });
       });
 
@@ -188,16 +216,24 @@ export default {
     },
 
     async createSession(sessionId) {
-      const response = await axios.post('/api/openvidu/sessions', { customSessionId: sessionId }, {
-        headers: { 'Content-Type': 'application/json', },
-      });
+      const response = await axios.post(
+        "/api/openvidu/sessions",
+        { customSessionId: sessionId },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       return response.data; // The sessionId
     },
 
     async createToken(sessionId) {
-      const response = await axios.post('/api/openvidu/sessions/' + sessionId + '/connections', {}, {
-        headers: { 'Content-Type': 'application/json', },
-      });
+      const response = await axios.post(
+        "/api/openvidu/sessions/" + sessionId + "/connections",
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       return response.data; // The token
     },
   },
@@ -205,5 +241,4 @@ export default {
 </script>
 
 <style scoped>
-
-</style>
+</style> -->

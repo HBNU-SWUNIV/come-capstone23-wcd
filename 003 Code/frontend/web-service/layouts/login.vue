@@ -1,7 +1,7 @@
 <template>
   <v-app class="login-page">
     <h1 style="padding: 20px">WCD CAPSTONE</h1>
-    <div class="centered-content">
+    <div class="centered-content" style="height:100%;">
       <Nuxt />
     </div>
   </v-app>
@@ -16,6 +16,6 @@
 .centered-content {
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
+  align-items: center;
 }
 </style>

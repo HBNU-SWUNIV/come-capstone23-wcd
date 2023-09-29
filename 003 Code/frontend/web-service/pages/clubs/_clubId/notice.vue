@@ -5,9 +5,8 @@
       <LeftClubNav />
       <div
         style="
-          width: 950px;
+          width: 100%;
           padding: 20px;
-          border-right: 1px solid rgb(127, 127, 127);
         "
       >
       </div>

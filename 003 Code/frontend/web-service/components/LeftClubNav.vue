@@ -1,11 +1,11 @@
 <template>
-  <div style="padding: 20px; padding-right: 30px; padding-left: 40px">
+  <div style="height:100%; padding: 20px; padding-right: 30px; padding-left: 30px">
     <img
       :src="getImageDataUri(clubInfo.multipartFile)"
-      style="width: 320px; height: 240px"
+      style="width: 280px; height: 210px"
     />
 
-    <h1 style="margin-top: 10px; margin-bottom: 10px; font-size: 27px;">{{ clubInfo.clubName }}</h1>
+    <h1 style="font-size: 27px;">{{ clubInfo.clubName }}</h1>
     <p style="margin-bottom: 10px; font-size: 13px; color: rgb(125, 255, 125)">
       멤버 수 : {{ clubmembers.length }}
     </p>

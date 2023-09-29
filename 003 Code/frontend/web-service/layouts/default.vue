@@ -65,7 +65,7 @@
               bottom: 0;
               width: 100%;
               text-align: center;
-              margin-bottom: 30px;
+              margin-bottom: 20px;
               margin margin-top: 10px;
             "
           >

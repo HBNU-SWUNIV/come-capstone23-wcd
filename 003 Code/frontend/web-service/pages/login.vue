@@ -1,6 +1,6 @@
 <template>
-  <div style="width: 500px; margin-top: 180px">
-    <v-card style="background-color: rgba(0, 0, 0, 0.9)">
+  <div style="width: 500px;">
+    <v-card style="background-color: rgba(0, 0, 0, 0.9);">
       <v-card-title class="d-flex justify-center">
         <h1 style="padding: 20px">LOGIN</h1>
       </v-card-title>

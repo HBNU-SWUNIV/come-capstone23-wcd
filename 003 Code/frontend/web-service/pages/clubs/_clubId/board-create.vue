@@ -1,6 +1,6 @@
 <template>
   <div style="width: 90%; padding: 30px; margin: auto">
-    <h1 style="margin-bottom: 20px">게시글 작성</h1>
+    <h1 style="margin-bottom: 10px">게시글 작성</h1>
     <v-form @submit.prevent="CreateBoardSubmit">
       <v-text-field
         v-model="title"
@@ -9,7 +9,7 @@
         required
         type="Title"
       ></v-text-field>
-      <CKEditor :editor="editor" style="color: black" />
+      <CKEditor :editor="editor" style="color: black" id="content"/>
 
       <v-btn style="margin-top: 20px; background-color: red" @click="cancel">취소</v-btn>
       <v-btn type="submit" style="margin-top: 20px; background-color: green"
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       title: "", // 게시글 제목
-      content: "", // ckeditor에서 작성한 내용
+      content: CKEditor.instances.content.getData(), // ckeditor에서 작성한 내용
       editor: ClassicEditor,
     };
   },
@@ -84,7 +84,7 @@ export default {
 
 <style>
 .ck-editor__editable {
-  height: 500px;
+  height: 350px;
 }
 .ck-content {
   font-size: 15px;
