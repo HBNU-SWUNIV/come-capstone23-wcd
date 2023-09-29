@@ -9,7 +9,7 @@
         required
         type="Title"
       ></v-text-field>
-      <CKEditor :editor="editor" style="color: black" id="content"/>
+      <CKEditor :editor="editor" style="color: black"/>
 
       <v-btn style="margin-top: 20px; background-color: red" @click="cancel">취소</v-btn>
       <v-btn type="submit" style="margin-top: 20px; background-color: green"

@@ -57,13 +57,13 @@ export default {
       light: false,
       themes: {
         dark: {
-          primary: 'white',
+          primary: "9e9e9e",
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          success: colors.green.accent3,
         },
         light: { // 라이트 모드 색상 설정
           primary: colors.blue.lighten2,
