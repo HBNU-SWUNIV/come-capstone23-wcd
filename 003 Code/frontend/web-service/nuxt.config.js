@@ -16,7 +16,19 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [
+      {
+        src: '../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js',
+        type: 'text/javascript',
+        charset: 'utf-8',
+      },
+      {
+        src: '../node_modules/@ckeditor/ckeditor5-vue2/dist/ckeditor.js',
+        type: 'text/javascript',
+        charset: 'utf-8',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
