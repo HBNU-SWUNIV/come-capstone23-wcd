@@ -9,10 +9,10 @@
         required
         type="Title"
       ></v-text-field>
-      <CKEditor :editor="editor" style="color: black"/>
+      <CKEditor :editor="editor"/>
 
-      <v-btn style="margin-top: 20px; background-color: red" @click="cancel">취소</v-btn>
-      <v-btn type="submit" style="margin-top: 20px; background-color: green"
+      <v-btn style="margin-top: 20px; color: rgb(255, 125, 125)" @click="cancel">취소</v-btn>
+      <v-btn type="submit" style="margin-top: 20px; color: rgb(125, 255, 125)"
         >게시</v-btn
       >
     </v-form> 
@@ -29,8 +29,8 @@ export default {
   },
   data() {
     return {
-      title: "", // 게시글 제목
-      content: CKEditor.instances.content.getData(), // ckeditor에서 작성한 내용
+      title: "",
+      content: "content",
       editor: ClassicEditor,
     };
   },
@@ -84,7 +84,7 @@ export default {
 
 <style>
 .ck-editor__editable {
-  height: 350px;
+  height: 400px;
 }
 .ck-content {
   font-size: 15px;
