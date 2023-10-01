@@ -41,7 +41,7 @@
       <div class="d-flex">
         <h2>댓글</h2>
         <h2 style="margin-left: 10px; color: rgb(161, 161, 161)">
-          {{ comments.totalElements }}개
+          {{ commentsElement }}개
         </h2>
       </div>
       <v-form
@@ -61,7 +61,10 @@
       <div
         style="height: 600px; margin-top: 10px; background-color: rgb(0, 0, 0)"
       >
-        {{ comments.content }}
+        <div v-for="(reply, i) in comments" :key="i">
+          {{ reply.content }}
+          <v-btn @click="deleteComment(reply.id)">삭제</v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +79,7 @@ export default {
       formattedContent: "",
       comment: "",
       user_id: "",
+      commentsElement: 0,
     };
   },
   methods: {
@@ -119,7 +123,9 @@ export default {
           )
           .then((res) => {
             console.log(res);
-            this.comments = res.data;
+            this.commentsElement = res.data.totalElements;
+            this.comments = res.data.content;
+            console.log(this.comments.content);
           });
       } catch (err) {
         console.log(err);
@@ -153,6 +159,33 @@ export default {
       }
     },
 
+    async deleteComment(postId) {
+      const confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+      if (confirmDelete) {
+        try {
+          const access_token = this.$store.state.access_token;
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+          };
+          await this.$axios
+            .delete(
+              `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}/comments/${postId}`,
+              config
+            )
+            .then(async (res) => {
+              console.log(res);
+              alert("댓글이 삭제되었습니다.");
+              await this.getComments();
+            });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+
     //댓글 기능
     async CommentSubmit() {
       let CommentData = {
@@ -176,11 +209,10 @@ export default {
             JSON.stringify(CommentData),
             config
           )
-          .then((res) => {
+          .then(async (res) => {
             console.log(res);
-            this.$router.push(
-              `/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}`
-            );
+            this.comment = "";
+            await this.getComments();
           });
       } catch (err) {
         console.log(err);
@@ -224,7 +256,7 @@ export default {
   created() {
     this.getBoardDetail();
     this.getComments();
-    this.user_id = sessionStorage.getItem("user_id")
+    this.user_id = sessionStorage.getItem("user_id");
   },
 };
 </script>
