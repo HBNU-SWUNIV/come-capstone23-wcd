@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%; padding: 20px; padding-right: 30px; padding-left: 30px">
+  <div style="height:100%; padding: 20px; padding-right: 30px; padding-left: 50px; padding-top: 50px;">
     <img
       :src="getImageDataUri(clubInfo.multipartFile)"
       style="width: 280px; height: 210px"
