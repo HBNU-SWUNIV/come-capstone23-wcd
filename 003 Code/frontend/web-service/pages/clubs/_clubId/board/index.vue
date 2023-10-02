@@ -19,7 +19,7 @@
             <div class="post-content">
               <h3>{{ post.title }}</h3>
               <p class="post-writer">작성자: {{ post.writerName }}</p>
-              <p class="post-date">{{ formatDate(post.createdAt) }}</p>
+              <p class="post-date">{{ formatDate(post.updateAt) }}</p>
             </div>
           </div>
         </div>

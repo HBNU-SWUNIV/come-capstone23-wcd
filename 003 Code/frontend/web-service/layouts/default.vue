@@ -21,6 +21,7 @@
               router
               exact
               style="margin-bottom: 10px"
+              @click="getMyClubsAgain"
             >
               <v-list-item-action class="d-block mx-auto">
                 <v-icon style="width: 100%">{{ home.icon }}</v-icon>
@@ -274,6 +275,10 @@ export default {
       this.$refs.clubHeight.style.height =
         windowHeight - homeHeight - itemHeight - 80 + "px";
     },
+    
+    async getMyClubsAgain(){
+      await this.getMyClubs();
+    }
   },
   watch: {
     // 화면 크기가 변경될 때마다 높이를 조절
