@@ -1,7 +1,5 @@
 server:
   port: 5000
-  ssl:
-    enabled: false
 
 spring:
   application:
