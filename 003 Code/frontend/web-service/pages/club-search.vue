@@ -17,8 +17,9 @@
             :key="i"
             cols="3"
             style="padding: 0"
+            
           >
-            <v-list-item router exact>
+            <v-list-item :to="`/clubs/${club.id}`" router exact>
               <v-list-item-content>
                 <div
                   style="

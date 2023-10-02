@@ -46,7 +46,7 @@
       </div>
       <v-form
         class="d-flex"
-        style="margin-top: 20px"
+        style="margin-top: 20px; margin-bottom: 10px"
         @submit.prevent="CommentSubmit"
       >
         <input
@@ -58,12 +58,48 @@
           댓글
         </button>
       </v-form>
-      <div
-        style="height: 600px; margin-top: 10px; background-color: rgb(0, 0, 0)"
-      >
-        <div v-for="(reply, i) in comments" :key="i">
-          {{ reply.content }}
-          <v-btn @click="deleteComment(reply.id)">삭제</v-btn>
+      <div class="drawer-content" style="height: 700px">
+        <div
+          class="d-flex"
+          v-for="(reply, i) in comments"
+          :key="i"
+          style="margin-top: 10px"
+        >
+          <v-avatar size="42">
+            <img
+              src="https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg"
+              alt="원 모양 이미지"
+            />
+          </v-avatar>
+          <div style="padding-left: 10px; width: 100%">
+            <div class="d-flex">
+              <p style="font-size: 15px; margin: 0">{{ reply.writerName }}</p>
+              <p
+                style="
+                  padding-left: 5px;
+                  margin: 0;
+                  font-size: 15px;
+                  color: gray;
+                "
+              >
+                {{ formatTimeAgo(reply.createdAt) }}
+              </p>
+            </div>
+            <div style="font-size: 13px; margin-top: 5px">
+              {{ reply.content }}
+            </div>
+            <div>
+              <span class="action-text" @click="editComment(reply.id)"
+                >수정</span
+              >
+              <span class="action-text" @click="replyComment(reply.id)"
+                >답글</span
+              >
+              <span class="action-text" @click="deleteComment(reply.id)"
+                >삭제</span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -71,6 +107,8 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
+
 export default {
   data() {
     return {
@@ -125,7 +163,6 @@ export default {
             console.log(res);
             this.commentsElement = res.data.totalElements;
             this.comments = res.data.content;
-            console.log(this.comments.content);
           });
       } catch (err) {
         console.log(err);
@@ -144,14 +181,11 @@ export default {
             },
           };
           await this.$axios
-            .delete(
-              `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
-              config
-            )
+            .delete(`/club-service/clubs/${this.$route.params.clubId}`, config)
             .then((res) => {
               console.log(res);
-              alert("게시글이 삭제되었습니다.");
-              this.$router.push(`/clubs/${this.$route.params.clubId}/board`);
+              alert("모임이 삭제되었습니다.");
+              this.$router.push(`/`);
             });
         } catch (err) {
           console.log(err);
@@ -252,6 +286,25 @@ export default {
       // 가공된 내용을 반환
       return formattedContent;
     },
+
+    formatTimeAgo(dateTimeString) {
+      const dateTime = dayjs(dateTimeString);
+      const now = dayjs();
+
+      const diffMinutes = now.diff(dateTime, "minute");
+      const diffHours = now.diff(dateTime, "hour");
+      const diffDays = now.diff(dateTime, "day");
+
+      if (diffMinutes < 60) {
+        return `${diffMinutes}분 전`;
+      } else if (diffHours < 24) {
+        return `${diffHours}시간 전`;
+      } else if (diffDays < 7) {
+        return `${diffDays}일 전`;
+      } else {
+        return dateTime.format("YYYY-MM-DD HH:mm:ss"); // 7일 이상 지난 경우 날짜 및 시간 표시
+      }
+    },
   },
   created() {
     this.getBoardDetail();
@@ -281,12 +334,12 @@ export default {
 
 .comment-input {
   width: 100%;
-  height: 40px;
+  height: 30px;
   padding: 10px;
   border: 1px solid #ccc;
   color: white;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 10px;
   transition: border-color 0.2s ease-in-out;
 }
@@ -301,19 +354,32 @@ export default {
 }
 
 .comment-submit-btn {
-  height: 40px;
+  height: 30px;
   width: 60px;
   margin-left: 10px;
   background-color: #565656; /* 제출 버튼 배경 색상 */
   color: white; /* 제출 버튼 텍스트 색상 */
   border: none;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 12px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 .comment-submit-btn:hover {
   background-color: #717171; /* 버튼에 호버 시 배경 색상 변경 */
+}
+
+.action-text {
+  font-size: 11px;
+  color: gray; /* 버튼 텍스트 색상 */
+  cursor: pointer; /* 커서를 포인터로 변경 */
+  text-decoration: none; /* 밑줄 추가 */
+  margin-right: 10px; /* 버튼 사이 여백 */
+}
+
+.action-text:hover {
+  text-decoration: underline; /* 호버 시 밑줄 제거 */
+  color: rgb(255, 255, 255); /* 호버 시 색상 변경 */
 }
 </style>
