@@ -58,7 +58,8 @@
     computed: {
       displayedClubs() {
         // 최대 5개 클럽만 표시
-        return this.myclubs.slice(0, 5);
+        const user_id = sessionStorage.getItem("user_id");
+        return this.myclubs.filter((myclub) => myclub.hostId == user_id).slice(0, 5);
       },
     },
     created() {

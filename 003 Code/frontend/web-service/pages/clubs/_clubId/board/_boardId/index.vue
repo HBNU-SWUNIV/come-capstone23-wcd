@@ -135,6 +135,11 @@
 
 <script>
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default {
   data() {
@@ -281,17 +286,6 @@ export default {
         console.log(err);
       }
     },
-    formatDate(dateTimeString) {
-      const dateTime = new Date(dateTimeString);
-      const year = dateTime.getFullYear();
-      const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
-      const day = dateTime.getDate().toString().padStart(2, "0");
-      const hours = dateTime.getHours().toString().padStart(2, "0");
-      const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-      const seconds = dateTime.getSeconds().toString().padStart(2, "0");
-
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    },
 
     goBoardList() {
       this.$router.push(`/clubs/${this.$route.params.clubId}/board`);
@@ -316,6 +310,17 @@ export default {
       return formattedContent;
     },
 
+    formatDate(dateTimeString) {
+      const dateTime = new Date(dateTimeString);
+      const year = dateTime.getFullYear();
+      const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
+      const day = dateTime.getDate().toString().padStart(2, "0");
+      const hours = dateTime.getHours().toString().padStart(2, "0");
+      const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+      const seconds = dateTime.getSeconds().toString().padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    },
     formatTimeAgo(dateTimeString) {
       const dateTime = dayjs(dateTimeString);
       const now = dayjs();

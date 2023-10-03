@@ -68,7 +68,7 @@ export default {
         await this.$axios
           .get(`/schedule-service/clubs/${this.$route.params.clubId}/calendars`, config)
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
           });
       } catch (err) {
         console.log(err);
