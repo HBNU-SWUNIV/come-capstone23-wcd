@@ -14,7 +14,7 @@
       >
         <v-list-item-content style="display: flex;">
           <v-list-item-title>{{ board.title }} </v-list-item-title>
-          <p style="margin:0;">{{ board.writerName }}</p>
+          <p style="margin:0; font-size: 13px; color:gray;">작성자: {{ board.writerName }}</p>
         </v-list-item-content>
       </v-list-item>
     </v-list>

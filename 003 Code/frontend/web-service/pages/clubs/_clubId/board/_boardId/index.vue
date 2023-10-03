@@ -28,11 +28,15 @@
       <div style="margin-top: 20px">
         <v-btn @click="goBoardList">목록</v-btn>
         <v-btn
+          v-if="post.writerId == user_id"
           style="color: rgb(125, 255, 125)"
           :to="`/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}/edit`"
           >수정</v-btn
         >
-        <v-btn style="color: rgb(255, 125, 125)" @click="deleteBoard"
+        <v-btn
+          v-if="post.writerId == user_id"
+          style="color: rgb(255, 125, 125)"
+          @click="deleteBoard"
           >삭제</v-btn
         >
       </div>
@@ -89,16 +93,39 @@
               {{ reply.content }}
             </div>
             <div>
-              <span class="action-text" @click="editComment(reply.id)"
+              <span
+                v-if="reply.writerId == user_id"
+                class="action-text"
+                @click="editComment(reply.id)"
                 >수정</span
               >
               <span class="action-text" @click="replyComment(reply.id)"
                 >답글</span
               >
-              <span class="action-text" @click="deleteComment(reply.id)"
+              <span
+                v-if="reply.writerId == user_id"
+                class="action-text"
+                @click="deleteComment(reply.id)"
                 >삭제</span
               >
             </div>
+            <v-form
+              v-if="editedCommentId === reply.id"
+              @submit.prevent="updateComment(reply.id)"
+            >
+              <input
+                class="comment-input"
+                placeholder="댓글을 입력하세요..."
+                v-model="editedCommentContent"
+              />
+              <button
+                type="submit"
+                class="comment-submit-btn"
+                :disabled="!editedCommentContent"
+              >
+                수정
+              </button>
+            </v-form>
           </div>
         </div>
       </div>
@@ -118,6 +145,8 @@ export default {
       comment: "",
       user_id: "",
       commentsElement: 0,
+      editedCommentId: null, // 수정 중인 댓글의 ID
+      editedCommentContent: "", // 수정 중인 댓글의 내용
     };
   },
   methods: {
@@ -303,6 +332,46 @@ export default {
         return `${diffDays}일 전`;
       } else {
         return dateTime.format("YYYY-MM-DD HH:mm:ss"); // 7일 이상 지난 경우 날짜 및 시간 표시
+      }
+    },
+    editComment(commentId) {
+      // 수정할 댓글의 ID와 내용 가져오기
+      const editedComment = this.comments.find(
+        (comment) => comment.id === commentId
+      );
+      if (editedComment) {
+        this.editedCommentId = commentId;
+        this.editedCommentContent = editedComment.content;
+      }
+    },
+    async updateComment(commentId) {
+      try {
+        const access_token = this.$store.state.access_token;
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        };
+        const updatedCommentData = {
+          content: this.editedCommentContent,
+        };
+
+        await this.$axios
+          .patch(
+            `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}/comments/${commentId}`,
+            JSON.stringify(updatedCommentData),
+            config
+          )
+          .then(async (res) => {
+            console.log(res);
+            alert("댓글이 수정되었습니다.");
+            this.editedCommentId = null; // 수정 중인 댓글 초기화
+            this.editedCommentContent = ""; // 수정 중인 댓글 내용 초기화
+            await this.getComments();
+          });
+      } catch (err) {
+        console.log(err);
       }
     },
   },
