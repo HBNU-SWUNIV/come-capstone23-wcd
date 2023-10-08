@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div id="main-container" class="container">
     <div id="join" v-if="!session">
       <div id="join-dialog" class="jumbotron vertical-center">
@@ -241,4 +241,4 @@ export default {
 </script>
 
 <style scoped>
-</style> -->
+</style>

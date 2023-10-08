@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
 	<video autoplay/>
 </template>
 
@@ -14,4 +14,4 @@ export default {
 		this.streamManager.addVideoElement(this.$el);
 	},
 };
-</script> -->
+</script>
