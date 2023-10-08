@@ -76,7 +76,7 @@ export default {
     UserVideo,
   },
   layout(context) {
-    return "login";
+    return "videoCall";
   },
 
   data() {
