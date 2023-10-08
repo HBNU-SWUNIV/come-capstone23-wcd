@@ -28,6 +28,11 @@ export default {
         type: 'text/javascript',
         charset: 'utf-8',
       },
+      {
+        src: '/openvidu-webcomponent-2.28.0.js',
+        type: 'text/javascript',
+        defer: true
+      }
     ],
   },
 
@@ -95,7 +100,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth'], 
+    middleware: ['auth'],
   },
 
   ssr: false,
