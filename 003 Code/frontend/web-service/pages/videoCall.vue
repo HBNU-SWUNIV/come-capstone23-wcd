@@ -19,7 +19,7 @@
     </div>
 
     <!-- OpenVidu Web Component -->
-    <openvidu-webcomponent style="height: 100%;"></openvidu-webcomponent>
+    <openvidu-webcomponent ref="openviduWebcomponent" style="height: 100%;"></openvidu-webcomponent>
   </div>
 </template>
 
