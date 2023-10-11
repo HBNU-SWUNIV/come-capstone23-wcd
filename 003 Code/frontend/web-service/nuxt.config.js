@@ -27,11 +27,6 @@ export default {
         src: '../node_modules/@ckeditor/ckeditor5-vue2/dist/ckeditor.js',
         type: 'text/javascript',
         charset: 'utf-8',
-      },
-      {
-        src: '/openvidu-webcomponent-2.28.0.js',
-        type: 'text/javascript',
-        defer: true
       }
     ],
   },
@@ -74,7 +69,7 @@ export default {
       light: false,
       themes: {
         dark: {
-          primary: "white",
+          primary: "#ffffff",
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -101,6 +96,12 @@ export default {
 
   router: {
     middleware: ['auth'],
+  },
+
+  vue: {
+    config: {
+      ignoredElements: ['openvidu-webcomponent']
+    }
   },
 
   ssr: false,
