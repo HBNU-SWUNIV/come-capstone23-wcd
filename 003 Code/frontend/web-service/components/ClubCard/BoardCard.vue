@@ -8,7 +8,7 @@
       <v-list-item
         v-for="(board, i) in displayedBoards"
         :key="i"
-        :to="`/clubs/${clubId}/board`"
+        :to="`/clubs/${clubId}/board/${board.id}`"
         router
         exact
       >

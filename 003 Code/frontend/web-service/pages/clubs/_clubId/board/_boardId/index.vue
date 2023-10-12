@@ -215,10 +215,10 @@ export default {
             },
           };
           await this.$axios
-            .delete(`/club-service/clubs/${this.$route.params.clubId}`, config)
+            .delete(`/club-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`, config)
             .then((res) => {
               console.log(res);
-              alert("모임이 삭제되었습니다.");
+              alert("게시글이 삭제되었습니다.");
               this.$router.push(`/`);
             });
         } catch (err) {

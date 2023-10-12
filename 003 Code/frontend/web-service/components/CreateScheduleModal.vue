@@ -45,7 +45,7 @@ export default {
     async addEvent() {
       let ScheduleData = {
         title: this.title,
-        description: this.content,
+        content: this.content,
         start: this.start + "T14:00:00",
         end: this.end + "T14:00:00",
         allDay: false,

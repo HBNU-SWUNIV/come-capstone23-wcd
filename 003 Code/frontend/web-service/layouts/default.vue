@@ -107,6 +107,10 @@
           >로그아웃</v-btn
         >
         <v-btn icon>
+          <v-icon @click="openModal">mdi-chat</v-icon>
+        </v-btn>
+        <ChatModal v-if="isModalVisible" @close-modal="closeModal" />
+        <v-btn icon>
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -165,8 +169,13 @@
 </template>
 
 <script>
+import ChatModal from '../components/ChatModal.vue';
+
 export default {
   name: "DefaultLayout",
+  components:{
+    ChatModal,
+  },
   data() {
     return {
       clipped: false,
@@ -202,6 +211,7 @@ export default {
           to: "/settings",
         },
       ],
+      isModalVisible: false,
     };
   },
   methods: {
@@ -278,7 +288,15 @@ export default {
     
     async getMyClubsAgain(){
       await this.getMyClubs();
-    }
+    },
+    openModal() {
+      // 날짜를 클릭할 때 모달을 표시
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      // 모달을 닫을 때 호출되는 메서드
+      this.isModalVisible = false;
+    },
   },
   watch: {
     // 화면 크기가 변경될 때마다 높이를 조절
