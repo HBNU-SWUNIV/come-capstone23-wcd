@@ -7,7 +7,7 @@
         label="게시글 제목"
         placeholder="게시글 제목"
         required
-        type="Title"
+        type="text"
       ></v-text-field>
       <ckeditor
         :editor="editor"
@@ -29,12 +29,12 @@
 </template>
   
   <script>
-import CKEditor from "~/components/CKEditor.vue";
+import CKEditor from "@ckeditor/ckeditor5-vue2";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default {
   components: {
-    CKEditor,
+    ckeditor: CKEditor.component,
   },
   data() {
     return {
@@ -43,6 +43,7 @@ export default {
       editorData: "",
       editorConfig: {},
       post: {},
+      formattedContent: "",
     };
   },
   methods: {
@@ -61,24 +62,24 @@ export default {
         const access_token = this.$store.state.access_token;
         const config = {
           headers: {
-            "Content-Type": "application/json", // JSON 형식으로 변경
+            "Content-Type": "application/json",
             Authorization: `Bearer ${access_token}`,
           },
         };
 
-        await this.$axios
-          .patch(
-            `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
-            JSON.stringify(BoardData),
-            config
-          )
-          .then((res) => {
-            console.log(res);
-            alert("게시글이 수정되었습니다.");
-            this.$router.push(`/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}`);
-          });
+        const response = await this.$axios.patch(
+          `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
+          JSON.stringify(BoardData),
+          config
+        );
+
+        console.log(response);
+        alert("게시글이 수정되었습니다.");
+        this.$router.push(
+          `/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}`
+        );
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     },
     async getBoardDetail() {

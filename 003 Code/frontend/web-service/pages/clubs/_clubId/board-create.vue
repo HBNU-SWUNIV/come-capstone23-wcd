@@ -7,7 +7,7 @@
         label="게시글 제목"
         placeholder="게시글 제목"
         required
-        type="Title"
+        type="text"
       ></v-text-field>
       <ckeditor
         :editor="editor"
@@ -18,7 +18,10 @@
       <v-btn style="margin-top: 20px; color: rgb(255, 125, 125)" @click="cancel"
         >취소</v-btn
       >
-      <v-btn type="submit" :disabled="!editorData" style="margin-top: 20px; color: rgb(125, 255, 125)"
+      <v-btn
+        type="submit"
+        :disabled="!editorData"
+        style="margin-top: 20px; color: rgb(125, 255, 125)"
         >게시</v-btn
       >
     </v-form>
@@ -26,21 +29,19 @@
 </template>
 
 <script>
-import CKEditor from "~/components/CKEditor.vue";
+import CKEditor from "@ckeditor/ckeditor5-vue2";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default {
   components: {
-    CKEditor,
+    ckeditor: CKEditor.component,
   },
   data() {
     return {
       title: "",
       editor: ClassicEditor,
       editorData: "",
-      editorConfig: {
-
-      },
+      editorConfig: {},
     };
   },
   methods: {
