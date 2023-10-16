@@ -85,6 +85,16 @@ public class SseService {
                 });
     }
 
+
+    public void test(Long num) {
+        SseEmitter emitter = emitterRepository.get(num);
+        try {
+            emitter.send(SseEmitter.event().name("test").data("test"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * 사용자 아이디를 기반으로 이벤트 Emitter를 생성
      *
@@ -102,4 +112,5 @@ public class SseService {
 
         return emitter;
     }
+
 }
