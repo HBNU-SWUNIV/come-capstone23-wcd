@@ -1,6 +1,7 @@
 package com.wcd.alarmservice.controller;
 
 import com.wcd.alarmservice.dto.request.RequestJoinClub;
+import com.wcd.alarmservice.dto.request.RequestTest;
 import com.wcd.alarmservice.service.SseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
+@RequestMapping("/")
 @Slf4j
 @RequiredArgsConstructor
 public class SseController {
-
     private final SseService notificationService;
 
     @GetMapping(value="/connect/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -26,4 +27,15 @@ public class SseController {
         notificationService.notifyJoinClub(requestJoinClub);
     }
 
+    @PostMapping("/sse/test")
+    public String test(@RequestBody RequestTest requestTest) {
+        notificationService.test(requestTest.getNum());
+
+        return "hi";
+    }
+
+    @GetMapping("test")
+    public String testapi() {
+        return "test";
+    }
 }

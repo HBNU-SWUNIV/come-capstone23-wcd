@@ -2,7 +2,6 @@ package com.wcd.alarmservice.client;
 
 import com.wcd.alarmservice.dto.feignclient.ResponseClubMemberIdsByClubId;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
