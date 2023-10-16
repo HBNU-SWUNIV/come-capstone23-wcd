@@ -18,7 +18,7 @@
       <textarea
         v-model="message"
         placeholder="메시지를 입력하세요"
-        @keydown.enter.shift="addNewLine"
+        @keyup.enter="sendMessage"
         style="
           flex: 1;
           padding: 10px;
@@ -36,25 +36,17 @@
 export default {
   data() {
     return {
-      message: "",
+      clubId: null,
     };
   },
   layout(context) {
     return "chatting";
   },
   methods: {
-    sendMessage() {
-      if (this.message.trim() !== "") {
-        // 메시지 전송 로직을 추가하세요
-        console.log("전송 메시지:", this.message);
-        // 메시지 전송 후 입력창 비우기
-        this.message = "";
-      }
-    },
-    addNewLine() {
-      // 엔터 키가 눌릴 때 줄 바꿈을 처리합니다.
-      this.message += "\n";
-    },
+   
+  },
+  created() {
+    this.clubId = this.$route.params.clubId;
   },
 };
 </script>

@@ -87,6 +87,7 @@ export default {
               return; 
             } 
         console.log(error);
+        alert("현재 로그인이 불가능합니다.")
       }
     },
   },

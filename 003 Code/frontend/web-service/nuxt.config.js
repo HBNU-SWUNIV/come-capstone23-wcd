@@ -1,5 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
+const fs = require("fs");
+const path = require('path');
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -39,7 +42,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/axios.js', mode: 'client' },
-    { src: '~/plugins/ckeditor.js', mode: 'client' },
+    // { src: '~/plugins/ckeditor.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -104,5 +107,15 @@ export default {
     }
   },
 
+  devServer: {
+    disableHostCheck: true,
+    https: {
+      key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
+      cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
+      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE)
+    }
+  },
+
   ssr: false,
+
 }
