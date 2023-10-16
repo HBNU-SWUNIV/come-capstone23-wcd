@@ -1,3 +1,10 @@
+server:
+  ssl:
+    enabled: true
+    key-store: /root/ssl/mycert.p12
+    key-store-password: "{cihper}AQDGS7480nOBoKFpSVm7W0fE9O+pj6nGPtaIY6Yk1v7sd4+vogPg/qZgsSEBxp2cpXIDuvZI0BOFYqxJ54XVGZnA03EL/CSp+aRHBo4++PvLB5f3PXkANrigyHZCsmqe3YsGVQ9FeqrYUlM/ln3wOTD6JLTdsIu5L+Z7BoqNpD7EP41k51undbqB7D5aalT7lOLbaYZr/sB0joqhgNkxz46QYSaO9RIuWGYM9Bi1QqP21xr/ydLlFkMyJ5ExZM0vYYANqKP88rk4QDr1MtN4X1YO/E/M7g/yU8WJiBw4oMtlh2PwrJR7in/Q/YWVYcY7uwKJyTiEh/ZpAcsqwIGQzs7aGPMbeKe500SsD1ss5Z/BIkuknPxCif9AkKP4/P6EDPg="
+    key-store-type: PKCS12
+
 spring:
   redis:
     host: "{cipher}AQAbHK9dcvo0R8pVBTb332LJXp7Zer8EarGfgkwieBmpwcjX+5OJLFVhQwi+QkfTBMYx9i3RLGG1bdbhJ14qBHFmcKytxwidcn3vbMwn0u4mc7X6wf194Vn10UqgEJwq/rpEQrP0dBRGNmND//apbiUmi29M8nn18YI9CNkVfssKZ+8h+yPGJdS38KIAc1OCrDe9Qcvoe6zXOUj4rdpE78TePKF9+3QSGZoKt4TvQ8XqrpuSsGDXkbarVf0HxmVSpiPKAEHApAPExqNcxbOW2cMm1/63mG2+/eUuiRROWNguNjdFvB3ghN1P8nV1nh486MT6wrsEGY0A4GIIBuGlI//OoNM4D9I2Sr2CJjB1blg5Yp4fsbqSSn3yb5PsOZNMnak="
