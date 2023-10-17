@@ -144,7 +144,7 @@ export default {
 
       let ScheduleData = {
         title: this.title,
-        content: this.content,
+        description: this.content,
         start: startDateTime,
         end: endDateTime,
         allDay: this.allDay,
