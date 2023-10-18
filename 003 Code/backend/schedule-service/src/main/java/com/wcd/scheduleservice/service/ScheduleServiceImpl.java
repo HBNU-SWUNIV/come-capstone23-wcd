@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -63,7 +64,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ResponseScheduleDto> getClubMonthSchedules(Long clubId, String yymm) {
         try {
-            LocalDate month = LocalDate.parse(yymm);
+            LocalDate month = LocalDate.parse(yymm, DateTimeFormatter.ofPattern("yyMM"));
             LocalDate startDay = month.withDayOfMonth(1);
             LocalDate endDay = month.withDayOfMonth(month.lengthOfMonth());
             LocalDateTime startTime = startDay.atStartOfDay();
