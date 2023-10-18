@@ -113,6 +113,7 @@ export default {
       key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
       cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
       ca: path.join(__dirname, process.env.SSL_CA_BUNDLE)
+    }
   },
 
   server: {
@@ -135,5 +136,4 @@ export default {
   },
 
   ssr: false,
-
 }
