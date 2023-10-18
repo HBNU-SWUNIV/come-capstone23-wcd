@@ -34,26 +34,38 @@ export default {
       calendarOptions: {
         plugins: [interactionPlugin, dayGridPlugin],
         initialView: "dayGridMonth",
+        defaultDate: new Date(),
         nowIndicator: true,
-        editable: true,
-        initialEvents: [
-        ],
+        editable: false,
+        initialEvents: [],
+        events: [],
+        dayMaxEventRows: true, // for all non-TimeGrid views
+        views: {
+          timeGrid: {
+            dayMaxEventRows: 1, // adjust to 6 only for timeGridWeek/timeGridDay
+          },
+        },
         eventTextColor: "white",
         dateClick: this.openModal,
       },
       isModalVisible: false,
+      // schedules: [],
     };
   },
   methods: {
     openModal() {
       // 날짜를 클릭할 때 모달을 표시
       this.isModalVisible = true;
+      // 선택한 날짜의 정보를 가져와서 년도와 월을 추출합니다.
+      const year = this.calendarOptions.defaultDate;
+      console.log(`Selected Year: ${year}`);
     },
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
       this.isModalVisible = false;
+      this.getSchedules();
     },
-    async getSchedules(){
+    async getSchedules() {
       try {
         const access_token = this.$store.state.access_token;
         const config = {
@@ -62,22 +74,27 @@ export default {
             Authorization: `Bearer ${access_token}`,
           },
           params: {
-            yymm: 2310
+            yymm: 2310,
           },
         };
         await this.$axios
-          .get(`/schedule-service/clubs/${this.$route.params.clubId}/calendars`, config)
+          .get(
+            `/schedule-service/clubs/${this.$route.params.clubId}/calendars`,
+            config
+          )
           .then((res) => {
-            console.log(res);
+            console.log(res.data);
+            this.calendarOptions.events = res.data;
+            console.log(this.calendarOptions.initialEvents);
           });
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
-  created(){
+  created() {
     this.getSchedules();
-  }
+  },
 };
 </script>
 

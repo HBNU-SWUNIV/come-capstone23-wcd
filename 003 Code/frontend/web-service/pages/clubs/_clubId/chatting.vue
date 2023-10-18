@@ -50,8 +50,8 @@
 <script>
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+// import { initializeApp } from "firebase/app";
+// import { getMessaging, getToken } from "firebase/messaging";
 
 export default {
   data() {
@@ -135,54 +135,54 @@ export default {
     this.connect();
     this.getMessage();
 
-    const firebaseConfig = {
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.FIREBASE_APP_ID,
-      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-    };
+    // const firebaseConfig = {
+    //   apiKey: process.env.FIREBASE_API_KEY,
+    //   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    //   projectId: process.env.FIREBASE_PROJECT_ID,
+    //   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    //   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    //   appId: process.env.FIREBASE_APP_ID,
+    //   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+    // };
 
-    const app = initializeApp(firebaseConfig);
-    const messaging = getMessaging(app);
+    // const app = initializeApp(firebaseConfig);
+    // const messaging = getMessaging(app);
 
-    Notification.requestPermission()
-      .then((permission) => {
-        if (permission === "granted") {
-          getToken(messaging, {vapidKey: process.env.FIREBASE_VAPID_KEY,})
-            .then((tokenValue) => {
-              console.log(`푸시 토큰 발급 완료 : ${tokenValue}`);
-              // 보낼 데이터
-              var data = {
-                token: tokenValue,
-                topicList: [1],
-              };
+    // Notification.requestPermission()
+    //   .then((permission) => {
+    //     if (permission === "granted") {
+    //       getToken(messaging, {vapidKey: process.env.FIREBASE_VAPID_KEY,})
+    //         .then((tokenValue) => {
+    //           console.log(`푸시 토큰 발급 완료 : ${tokenValue}`);
+    //           // 보낼 데이터
+    //           var data = {
+    //             token: tokenValue,
+    //             topicList: [1],
+    //           };
 
-              fetch("http://211.115.222.246:5003/subscribe", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              }).catch((error) => {
-                console.error(
-                  "There has been a problem with your fetch operation:",
-                  error
-                );
-              });
-            })
-            .catch((err) => {
-              console.log("푸시 토큰 가져오는 중에 에러 발생");
-            });
-        } else {
-          console.log("푸시 알림 거부됨");
-        }
-      })
-      .catch((error) => {
-        console.error("Firebase 토큰 가져오기 실패:", error);
-      });
+    //           fetch("http://211.115.222.246:5003/subscribe", {
+    //             method: "POST",
+    //             headers: {
+    //               "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(data),
+    //           }).catch((error) => {
+    //             console.error(
+    //               "There has been a problem with your fetch operation:",
+    //               error
+    //             );
+    //           });
+    //         })
+    //         .catch((err) => {
+    //           console.log("푸시 토큰 가져오는 중에 에러 발생");
+    //         });
+    //     } else {
+    //       console.log("푸시 알림 거부됨");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Firebase 토큰 가져오기 실패:", error);
+    //   });
   },
 };
 </script>

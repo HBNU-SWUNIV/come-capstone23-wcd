@@ -30,7 +30,7 @@ export default {
         src: '../node_modules/@ckeditor/ckeditor5-vue2/dist/ckeditor.js',
         type: 'text/javascript',
         charset: 'utf-8',
-      }
+      },
     ],
   },
 
