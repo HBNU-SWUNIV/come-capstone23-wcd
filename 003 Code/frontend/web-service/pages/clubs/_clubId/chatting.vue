@@ -14,10 +14,16 @@
     </div>
     <div style="height: 600px">
       <ul>
-        <li v-for="testmessage in testMessages" :key="testmessage.id" style="color:black;">
-          {{ testmessage.senderId }}: {{ testmessage.message }} [{{ testmessage.sendTime }}]
+        <li
+          v-for="testmessage in testMessages"
+          :key="testmessage.id"
+          style="color: black"
+        >
+          {{ testmessage.sender }}: {{ testmessage.message }} [{{
+            testmessage.sendTime
+          }}]
         </li>
-        <li v-for="message in messages" :key="message.id" style="color:black;">
+        <li v-for="message in messages" :key="message.id" style="color: black">
           {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
         </li>
       </ul>
@@ -42,8 +48,10 @@
 </template>
 
 <script>
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
 export default {
   data() {
@@ -64,13 +72,16 @@ export default {
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
-    onConnected(){
-      this.stompClient.subscribe(`/topic/${this.clubId}`, this.onMessageReceived)
+    onConnected() {
+      this.stompClient.subscribe(
+        `/topic/${this.clubId}`,
+        this.onMessageReceived
+      );
     },
-    onError(error){
-      console.error(error)
+    onError(error) {
+      console.error(error);
     },
-    onMessageReceived(payload){
+    onMessageReceived(payload) {
       const parseMessage = JSON.parse(payload.body);
       this.messages.push(parseMessage);
     },
@@ -92,7 +103,7 @@ export default {
         console.error("WebSocket connection is not established.");
       }
     },
-    async getMessage(){
+    async getMessage() {
       try {
         const access_token = this.$store.state.access_token;
         const config = {
@@ -107,24 +118,71 @@ export default {
           },
         };
         await this.$axios
-          .get(
-            `http://211.115.222.246:8777/chat`,
-            config
-          )
+          .get(`http://211.115.222.246:8777/chat`, config)
           .then((res) => {
+            console.log(res);
             console.log(res.data.content);
             this.testMessages = res.data.content.reverse();
-            console.log(this.testMessages)
+            console.log(this.testMessages);
           });
       } catch (err) {
         console.error("err", err);
       }
-    }
+    },
   },
-  created() {
+  async created() {
     this.clubId = this.$route.params.clubId;
     this.connect();
-    this.getMessage()
+    this.getMessage();
+
+    const firebaseConfig = {
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+      appId: process.env.FIREBASE_APP_ID,
+      measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
+
+    Notification.requestPermission()
+      .then((permission) => {
+        if (permission === "granted") {
+          getToken(messaging, {vapidKey: process.env.FIREBASE_VAPID_KEY,})
+            .then((tokenValue) => {
+              console.log(`푸시 토큰 발급 완료 : ${tokenValue}`);
+              // 보낼 데이터
+              var data = {
+                token: tokenValue,
+                topicList: [1],
+              };
+
+              fetch("http://211.115.222.246:5003/subscribe", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }).catch((error) => {
+                console.error(
+                  "There has been a problem with your fetch operation:",
+                  error
+                );
+              });
+            })
+            .catch((err) => {
+              console.log("푸시 토큰 가져오는 중에 에러 발생");
+            });
+        } else {
+          console.log("푸시 알림 거부됨");
+        }
+      })
+      .catch((error) => {
+        console.error("Firebase 토큰 가져오기 실패:", error);
+      });
   },
 };
 </script>
