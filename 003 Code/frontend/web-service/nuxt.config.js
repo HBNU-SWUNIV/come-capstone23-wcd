@@ -117,6 +117,15 @@ export default {
     }
   },
 
+  server: {
+    https: {
+      key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
+      cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
+      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE),
+      secureProtocol: 'TLSv1_3_method'  // Use TLSv1.2
+    }
+  },
+
   env:{
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
