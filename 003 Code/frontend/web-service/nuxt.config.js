@@ -112,7 +112,8 @@ export default {
     https: {
       key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
       cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
-      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE)
+      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE),
+      secureProtocol: 'TLSv1_3_method'  // Use TLSv1.2
     }
   },
 
@@ -120,7 +121,8 @@ export default {
     https: {
       key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
       cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
-      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE)
+      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE),
+      secureProtocol: 'TLSv1_3_method' // Use TLSv1.3
     }
   },
 
@@ -136,4 +138,5 @@ export default {
   },
 
   ssr: false,
+
 }
