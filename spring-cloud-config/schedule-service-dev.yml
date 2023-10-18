@@ -5,11 +5,11 @@ spring:
     username: sa  # H2 ?? ? ??? username ?? (??? ??? ??)
     password:  # H2 ?? ? ??? password ?? (??? ??? ??)
   jpa:
-  hibernate:
-    ddl-auto: create
-  properties:
     hibernate:
-      dialect: org.hibernate.dialect.H2Dialect
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
   show-sql: true
   h2:
     console:
