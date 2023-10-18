@@ -72,6 +72,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             List<ResponseScheduleDto> scheduleDtos = schedules.stream().map((schedule) -> schedule.toResponseScheduleDto()).toList();
             return scheduleDtos;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
