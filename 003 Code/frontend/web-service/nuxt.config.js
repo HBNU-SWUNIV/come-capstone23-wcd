@@ -37,6 +37,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/static/custom-ckeditor-styles.css',
+    '~/assets/scss/_global.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -52,11 +53,13 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
+    '@nuxtjs/dotenv',
     '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     'nuxt-vuex-localstorage',
     '@nuxtjs/pwa',
@@ -123,9 +126,19 @@ export default {
   devServer: {
     disableHostCheck: true,
     https: {
-      key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
-      cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
-      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE)
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+      secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
+    }
+  },
+
+  server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+      secureProtocol: 'TLSv1_2_method' // Use TLSv1.3
     }
   },
 
