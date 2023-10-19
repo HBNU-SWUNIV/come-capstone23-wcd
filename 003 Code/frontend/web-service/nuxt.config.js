@@ -112,9 +112,9 @@ export default {
   devServer: {
     disableHostCheck: true,
     https: {
-      key: path.join(__dirname, process.env.SSL_PRIVATE_KEY),
-      cert: path.join(__dirname, process.env.SSL_CERTIFICATE),
-      ca: path.join(__dirname, process.env.SSL_CA_BUNDLE),
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
       secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
     }
   },
