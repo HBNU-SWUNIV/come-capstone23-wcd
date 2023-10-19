@@ -7,7 +7,6 @@
       <div style="width: 1000px; padding: 20px; padding-right: 50px">
         <FullCalendar :options="calendarOptions" @dateClick="openModal" />
       </div>
-
       <!-- <v-btn @click="openModal">일정추가</v-btn> -->
       <CreateScheduleModal v-if="isModalVisible" @close-modal="closeModal" />
     </div>
@@ -47,18 +46,17 @@ export default {
         },
         eventTextColor: "white",
         dateClick: this.openModal,
+        datesSet: this.handleDateChange,
       },
       isModalVisible: false,
       // schedules: [],
+      yymm: this.formatDate(new Date()),
     };
   },
   methods: {
     openModal() {
       // 날짜를 클릭할 때 모달을 표시
       this.isModalVisible = true;
-      // 선택한 날짜의 정보를 가져와서 년도와 월을 추출합니다.
-      const year = this.calendarOptions.defaultDate;
-      console.log(`Selected Year: ${year}`);
     },
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
@@ -74,7 +72,7 @@ export default {
             Authorization: `Bearer ${access_token}`,
           },
           params: {
-            yymm: 2310,
+            yymm: this.yymm,
           },
         };
         await this.$axios
@@ -90,6 +88,19 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    formatDate(date) {
+      const year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      return `${year}${month}`;
+    },
+    handleDateChange(info) {
+      // FullCalendar에서 새로운 날짜를 가져와서 yymm 업데이트
+      const newDate = info.start;
+      newDate.setDate(newDate.getDate() + 8);
+      this.yymm = this.formatDate(newDate);
+      this.getSchedules(); // 스케줄 업데이트
+      
     },
   },
   created() {

@@ -169,11 +169,11 @@
 </template>
 
 <script>
-import ChatModal from '../components/ChatModal.vue';
+import ChatModal from "../components/ChatModal.vue";
 
 export default {
   name: "DefaultLayout",
-  components:{
+  components: {
     ChatModal,
   },
   data() {
@@ -267,6 +267,7 @@ export default {
           .then((res) => {
             console.log(res.data);
             this.myclubs = res.data;
+            // this.subscribeToPushNotifications();
           });
       } catch (err) {
         console.log(err);
@@ -285,8 +286,8 @@ export default {
       this.$refs.clubHeight.style.height =
         windowHeight - homeHeight - itemHeight - 80 + "px";
     },
-    
-    async getMyClubsAgain(){
+
+    async getMyClubsAgain() {
       await this.getMyClubs();
     },
     openModal() {
@@ -296,6 +297,77 @@ export default {
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
       this.isModalVisible = false;
+    },
+
+    unSubscribe() {
+      const push_token = localStorage.getItem("push_token");
+      // const push_token = this.$store.state.push_token;
+      const topicList = this.myclubs.map((myclub) => myclub.id);
+      console.log(topicList);
+      const data = {
+        token: push_token,
+        topicList: [1, 2, 3, 4, 5, 6],
+      };
+
+      fetch("http://211.115.222.246:5004/unsubscribe", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          console.log("Push 알림 구독취소 완료");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Push 알림 구독 실패:", error);
+        });
+    },
+    subscribeToPushNotifications() {
+      const push_token = localStorage.getItem("push_token");
+      // const push_token = this.$store.state.push_token;
+      const topicList = this.myclubs.map((myclub) => myclub.id);
+      console.log(topicList);
+      const data = {
+        token: push_token,
+        topicList: [6], // 구독하려는 주제 리스트
+      };
+
+      fetch("http://211.115.222.246:5004/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          console.log("Push 알림 구독 완료");
+          console.log(response);
+
+          const messageData = {
+            clubName: "클럽이름",
+            userName: "유저이름",
+            chatMessage: "메시지내용",
+            topic: 3,
+          };
+          fetch("http://211.115.222.246:5004/sendChatMessage", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageData),
+          })
+            .then((response) => {
+              console.log("데이터 전송 성공:", response);
+            })
+            .catch((error) => {
+              console.error("데이터 전송 중 오류:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Push 알림 구독 실패:", error);
+        });
     },
   },
   watch: {
@@ -312,6 +384,14 @@ export default {
   },
   created() {
     this.getMyClubs();
+    this.unSubscribe();
+    const sse = new EventSource(
+      `http://211.115.222.246:5005/connect/${sessionStorage.getItem("user_id")}`
+    );
+    sse.addEventListener("connect", (e) => {
+      const { data: receivedConnectData } = e;
+      console.log("connect event data: ", receivedConnectData); // "connected!"
+    });
   },
 };
 </script>
