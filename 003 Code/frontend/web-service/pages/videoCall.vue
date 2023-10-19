@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script src="/static/openvidu-webcomponent-2.28.0.js"></script>
+<script src="../static/openvidu-webcomponent-2.28.0.js"></script>
 <script>
 import $ from 'jquery'; // Assuming you're using jQuery
 
@@ -87,4 +87,4 @@ export default {
 }
 </script>
 
-<style src="/static/openvidu-webcomponent-2.28.0.css"></style>
+<style src="../static/openvidu-webcomponent-2.28.0.css"></style>
