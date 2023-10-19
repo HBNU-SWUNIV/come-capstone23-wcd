@@ -21,6 +21,9 @@ public class ResponseChat {
     @Schema(description = "채팅 송신자 멤버번호")
     private Long senderId;
 
+    @Schema(description = "채팅 송신자 이름")
+    private String sender;
+
     @Schema(description = "메세지")
     private String message;
 
@@ -28,10 +31,11 @@ public class ResponseChat {
     private LocalDateTime sendTime;
 
     @Builder
-    public ResponseChat(Long id, Long clubId, Long senderId, String message, LocalDateTime sendTime) {
+    public ResponseChat(Long id, Long clubId, Long senderId, String sender, String message, LocalDateTime sendTime) {
         this.id = id;
         this.clubId = clubId;
         this.senderId = senderId;
+        this.sender = sender;
         this.message = message;
         this.sendTime = sendTime;
     }
