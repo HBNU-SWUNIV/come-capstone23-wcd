@@ -1,0 +1,8 @@
+server:
+  port: 5004
+
+spring:
+  application:
+    name: fcm-service
+  profiles:
+    include: secret
