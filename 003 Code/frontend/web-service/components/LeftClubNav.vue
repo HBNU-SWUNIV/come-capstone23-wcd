@@ -9,7 +9,7 @@
     "
   >
     <img
-      :src="getImageDataUri(clubInfo.multipartFile)"
+      :src="clubInfo.mainImageUrl"
       style="width: 280px; height: 210px"
     />
 
