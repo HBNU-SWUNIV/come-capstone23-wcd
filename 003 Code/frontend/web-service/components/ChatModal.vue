@@ -10,7 +10,7 @@
           v-for="(myclub, i) in displayedClubs"
           :key="i"
           @click="openClubInPopup(myclub.id)"
-          style="color: black;"
+          style="color: black"
         >
           <v-list-item-action>
             <!-- <v-avatar size="42">
@@ -70,11 +70,24 @@ export default {
     getImageDataUri(imageData) {
       return `data:image/jpg;base64,${imageData}`;
     },
+
     openClubInPopup(clubId) {
       const clubUrl = `/clubs/${clubId}/chatting`;
 
       // 팝업 창 이름을 동적으로 생성
       const popupName = `ClubPopup_${clubId}`;
+
+      // 팝업 창 옵션 설정
+      const popupOptions = {
+        width: 450, // 팝업 창의 너비
+        height: 650, // 팝업 창의 높이
+        left: 100, // 팝업 창의 왼쪽 위치 (원하는 위치로 조절)
+        top: 100, // 팝업 창의 상단 위치 (원하는 위치로 조절)
+        location: false, // 주소 표시줄 표시 여부
+        toolbar: false, // 도구 모음 표시 여부
+        resizable: false, // 크기 조절 여부
+        scrollbars: false, // 스크롤바 표시 여부
+      };
 
       //이미 열린 팝업 창이 있는지 확인
       let popupWindow = popupWindows[popupName];
@@ -87,7 +100,9 @@ export default {
         popupWindow = window.open(
           clubUrl,
           popupName,
-          "width=450, height=650, overflowY=hidden"
+          Object.keys(popupOptions)
+            .map((key) => `${key}=${popupOptions[key]}`)
+            .join(",")
         );
 
         popupWindow.onload = function () {

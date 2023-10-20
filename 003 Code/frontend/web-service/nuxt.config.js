@@ -21,16 +21,16 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      {
-        src: '../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js',
-        type: 'text/javascript',
-        charset: 'utf-8',
-      },
-      {
-        src: '../node_modules/@ckeditor/ckeditor5-vue2/dist/ckeditor.js',
-        type: 'text/javascript',
-        charset: 'utf-8',
-      },
+      // {
+      //   src: '../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js',
+      //   type: 'text/javascript',
+      //   charset: 'utf-8',
+      // },
+      // {
+      //   src: '../node_modules/@ckeditor/ckeditor5-vue2/dist/ckeditor.js',
+      //   type: 'text/javascript',
+      //   charset: 'utf-8',
+      // },
     ],
   },
 
@@ -44,6 +44,7 @@ export default {
   plugins: [
     { src: '~/plugins/axios.js', mode: 'client' },
     { src: '~/plugins/ckeditor.js', mode: 'client' },
+    { src: '~/plugins/firebase.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -60,8 +61,20 @@ export default {
   modules: [
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
-    'nuxt-vuex-localstorage'
+    'nuxt-vuex-localstorage',
+    '@nuxtjs/pwa',
   ],
+
+  pwa: {
+    workbox: {
+      importScripts: ['/firebase-messaging-sw.js'], // Firebase Cloud Messaging Service Worker를 import합니다.
+    },
+    manifest: {
+      name: 'Your App Name',
+      short_name: 'App',
+      lang: 'en',
+    },
+  },
 
   axios: {
     baseURL: process.env.API_BASE_URL
@@ -129,16 +142,16 @@ export default {
     }
   },
 
-  env:{
-    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
-    FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
-    FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
-  },
+  // env: {
+  //   FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+  //   FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+  //   FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+  //   FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+  //   FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  //   FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+  //   FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+  //   FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
+  // },
 
   ssr: false,
 
