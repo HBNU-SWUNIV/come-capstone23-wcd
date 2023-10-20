@@ -8,7 +8,7 @@
             <v-list-item-action>
               <img
                 :src="club.mainImageUrl"
-                style="height: 45px; width: 45px"
+                style="height: 45px; width: 45px; border-radius: 5px;"
               />
             </v-list-item-action>
             <v-list-item-content>

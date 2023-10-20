@@ -105,11 +105,11 @@ export default {
             .join(",")
         );
 
-        popupWindow.onload = function () {
-          // 팝업 창 내의 스크롤바를 숨김
-          const popupDocument = popupWindow.document;
-          popupDocument.documentElement.style.overflowY = "hidden";
-        };
+        // popupWindow.onload = function () {
+        //   // 팝업 창 내의 스크롤바를 숨김
+        //   const popupDocument = popupWindow.document;
+        //   popupDocument.documentElement.style.overflowY = "hidden";
+        // };
 
         // 열린 팝업 창을 추적하기 위해 객체에 저장
         popupWindows[popupName] = popupWindow;
