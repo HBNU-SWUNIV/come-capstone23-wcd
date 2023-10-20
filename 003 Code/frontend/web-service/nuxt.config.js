@@ -1,7 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
-const fs = require("fs");
-const path = require('path');
+// const fs = require("fs");
+// const path = require('path');
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -122,35 +122,35 @@ export default {
     }
   },
 
-  devServer: {
-    disableHostCheck: true,
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
-      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
-      secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
-    }
-  },
-
-  server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
-      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
-      secureProtocol: 'TLSv1_2_method' // Use TLSv1.3
-    }
-  },
-
-  // env: {
-  //   FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-  //   FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-  //   FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-  //   FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
-  //   FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  //   FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-  //   FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
-  //   FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
+  // devServer: {
+  //   disableHostCheck: true,
+  //   https: {
+  //     key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+  //     cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+  //     ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+  //     secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
+  //   }
   // },
+
+  // server: {
+  //   https: {
+  //     key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+  //     cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+  //     ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+  //     secureProtocol: 'TLSv1_2_method' // Use TLSv1.3
+  //   }
+  // },
+
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+    FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+    FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
+  },
 
   ssr: false,
 

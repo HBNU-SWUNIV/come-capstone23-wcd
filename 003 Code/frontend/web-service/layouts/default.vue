@@ -50,7 +50,7 @@
                   >
                     <img
                       class="image"
-                      :src="getImageDataUri(myclub.multipartFile)"
+                      :src="myclub.mainImageUrl"
                     />
                   </v-list-item-action>
                 </template>

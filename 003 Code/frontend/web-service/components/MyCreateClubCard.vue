@@ -14,7 +14,7 @@
       >
         <v-list-item-action>
           <img
-            :src="getImageDataUri(myclub.multipartFile)"
+            :src="myclub.mainImageUrl"
             style="height: 45px; width: 45px"
           />
         </v-list-item-action>

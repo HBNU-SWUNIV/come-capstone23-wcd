@@ -7,7 +7,7 @@
           <v-list-item :to="`/clubs/${club.id}`" router exact>
             <v-list-item-action>
               <img
-                :src="getImageDataUri(club.multipartFile)"
+                :src="club.mainImageUrl"
                 style="height: 45px; width: 45px"
               />
             </v-list-item-action>
