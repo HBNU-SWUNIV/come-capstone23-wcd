@@ -10,7 +10,7 @@
         exact
       >
         <v-list-item-action>
-          <img :src="getImageDataUri(myclub.multipartFile)" style="height:45px; width:45px;"/>
+          <img :src="myclub.mainImageUrl" style="height:45px; width:45px;"/>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ myclub.clubName }}</v-list-item-title>
