@@ -37,7 +37,6 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/static/custom-ckeditor-styles.css',
-    '~/assets/scss/_global.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
