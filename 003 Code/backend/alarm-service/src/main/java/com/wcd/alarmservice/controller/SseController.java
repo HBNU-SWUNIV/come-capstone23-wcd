@@ -27,6 +27,12 @@ public class SseController {
         notificationService.notifyJoinClub(requestJoinClub);
     }
 
+    @PostMapping("/create-schedule/{clubId}")
+    public void notifyCreateSchedule(@PathVariable Long clubId) {
+        notificationService.notifyCreateSchedule(clubId);
+    }
+
+
     @PostMapping("/sse/test")
     public String test(@RequestBody RequestTest requestTest) {
         notificationService.test(requestTest.getNum());

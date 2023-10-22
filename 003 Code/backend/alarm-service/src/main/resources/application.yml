@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: alarm-service
+  config:
+    import:
+      - classpath:/bootstrap.yml
 
 eureka:
   instance:
