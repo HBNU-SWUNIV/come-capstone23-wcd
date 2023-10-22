@@ -61,10 +61,10 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             .isApproval(isApproval)
             .build();
 
-//        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
-//                .clubId(clubId)
-//                .userId(userId)
-//                .build());
+        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
+                .clubId(clubId)
+                .userId(userId)
+                .build());
 
         return clubMemberRepository.save(clubMember).getId();
     }
