@@ -1,6 +1,6 @@
 <template>
   <div class="centered-content">
-    <v-card style="width: 80%; margin:30px;">
+    <v-card style="width: 80%; margin: 30px">
       <v-card-title class="d-flex justify-center">
         <h1 style="padding: 20px">CLUB CREATE</h1>
       </v-card-title>
@@ -90,6 +90,7 @@
           prepend-icon="mdi-camera"
           accept="image/*"
           style="width: 40%"
+          @change="resizeImage"
         ></v-file-input>
         <v-card-actions>
           <v-btn style="color: rgb(255, 125, 125)" @click="cancel">취소</v-btn>
@@ -131,7 +132,8 @@ export default {
       maximumPeople: "", // 모임 인원
       tagInput: "",
       tagList: [], // 태그 리스트
-      defaultImagePath: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZfPzoyq-RUkAEjwz13d0WckOBy0-iWE3PqQ&usqp=CAU"
+      defaultImagePath:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZfPzoyq-RUkAEjwz13d0WckOBy0-iWE3PqQ&usqp=CAU",
     };
   },
   methods: {
@@ -181,7 +183,7 @@ export default {
         const config = {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": `Bearer ${access_token}`,
+            Authorization: `Bearer ${access_token}`,
           },
         };
 
@@ -209,14 +211,63 @@ export default {
       this.tagList.splice(index, 1);
     },
 
-    async cancel(){
-      const confirmCancel = confirm("작성한 내용이 모두 사라집니다. 모임생성을 취소하시겠습니까?")
+    async cancel() {
+      const confirmCancel = confirm(
+        "작성한 내용이 모두 사라집니다. 모임생성을 취소하시겠습니까?"
+      );
 
       if (confirmCancel) {
         // 사용자가 확인을 눌렀을 때
         this.$router.push("/"); // 홈 페이지로 이동 또는 원하는 경로로 이동
       }
-    }
+    },
+
+    async resizeImage(event) {
+      const maxSize = 150; // 원하는 최대 크기 (가로 또는 세로)
+
+      if (event.target && event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
+
+        const resizedBlob = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+
+            img.onload = () => {
+              let width = img.width;
+              let height = img.height;
+
+              if (width > height) {
+                if (width > maxSize) {
+                  height *= maxSize / width;
+                  width = maxSize;
+                }
+              } else {
+                if (height > maxSize) {
+                  width *= maxSize / height;
+                  height = maxSize;
+                }
+              }
+
+              const canvas = document.createElement("canvas");
+              canvas.width = width;
+              canvas.height = height;
+              canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+              canvas.toBlob((blob) => {
+                resolve(blob); // 비동기 작업 완료 후에 Promise를 resolve합니다.
+              }, file.type);
+            };
+          };
+          reader.readAsDataURL(file);
+        });
+
+        const formData = new FormData();
+        formData.append("multipartFile", resizedBlob); // 조정된 이미지 Blob을 추가합니다.
+        // 나머지 데이터도 FormData에 추가할 수 있습니다.
+      }
+    },
   },
 };
 </script>

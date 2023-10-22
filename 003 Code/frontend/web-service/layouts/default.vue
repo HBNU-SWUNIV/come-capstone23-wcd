@@ -267,7 +267,7 @@ export default {
           .then((res) => {
             console.log(res.data);
             this.myclubs = res.data;
-            // this.subscribeToPushNotifications();
+            this.subscribeToPushNotifications();
           });
       } catch (err) {
         console.log(err);
@@ -299,39 +299,37 @@ export default {
       this.isModalVisible = false;
     },
 
-    unSubscribe() {
-      const push_token = localStorage.getItem("push_token");
-      // const push_token = this.$store.state.push_token;
-      const topicList = this.myclubs.map((myclub) => myclub.id);
-      console.log(topicList);
-      const data = {
-        token: push_token,
-        topicList: [1, 2, 3, 4, 5, 6],
-      };
+    // unSubscribe() {
+    //   const push_token = localStorage.getItem("push_token");
+    //   const topicList = this.myclubs.map((myclub) => myclub.id);
+    //   console.log(topicList);
+    //   const data = {
+    //     token: push_token,
+    //     topicList: topicList,
+    //   };
 
-      fetch("http://211.115.222.246:5004/unsubscribe", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          console.log("Push 알림 구독취소 완료");
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error("Push 알림 구독 실패:", error);
-        });
-    },
+    //   fetch("http://211.115.222.246:5004/unsubscribe", {
+    //     method: "DELETE",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   })
+    //     .then((response) => {
+    //       console.log("Push 알림 구독취소 완료");
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Push 알림 구독 실패:", error);
+    //     });
+    // },
     subscribeToPushNotifications() {
       const push_token = localStorage.getItem("push_token");
-      // const push_token = this.$store.state.push_token;
       const topicList = this.myclubs.map((myclub) => myclub.id);
       console.log(topicList);
       const data = {
         token: push_token,
-        topicList: [6], // 구독하려는 주제 리스트
+        topicList: topicList, // 구독하려는 주제 리스트
       };
 
       fetch("http://211.115.222.246:5004/subscribe", {
@@ -384,7 +382,7 @@ export default {
   },
   created() {
     this.getMyClubs();
-    this.unSubscribe();
+    // this.unSubscribe();
     const sse = new EventSource(
       `http://211.115.222.246:5005/connect/${sessionStorage.getItem("user_id")}`
     );

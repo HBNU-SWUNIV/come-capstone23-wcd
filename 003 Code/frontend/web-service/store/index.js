@@ -9,9 +9,6 @@ export const mutations = {
   setAccessToken(state, access_token) {
     state.access_token = access_token;
   },
-  setPushToken(state, push_token){
-    state.push_token = push_token
-  }
 };
 
 export const actions = {
@@ -20,5 +17,4 @@ export const actions = {
 
 export const getters = {
   accessToken: state => state.access_token,
-  pushToken: state => state.push_token,
 };
