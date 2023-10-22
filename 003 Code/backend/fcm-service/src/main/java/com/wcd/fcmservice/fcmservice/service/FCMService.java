@@ -24,6 +24,8 @@ public class FCMService implements MessageService{
                 .setTopic(requestChatMessage.getTopic())
                 .build();
 
+        log.info("sendChatMessage : {} ", message.toString());
+
         send(message);
     }
 
@@ -56,9 +58,12 @@ public class FCMService implements MessageService{
 
         try {
             for(String topic : requestUnsubscribe.getTopicList()) {
-                FirebaseMessaging
+                TopicManagementResponse response = FirebaseMessaging
                         .getInstance()
-                        .subscribeToTopic(registrationTokens, topic);
+                        .unsubscribeFromTopic(registrationTokens, topic);
+
+                log.info("{} tokens were unsubscribed successfully", response.getSuccessCount());
+
             }
         } catch (FirebaseMessagingException e) {
             throw new RuntimeException(e);
@@ -66,7 +71,14 @@ public class FCMService implements MessageService{
     }
 
     public void send(Message message) {
-        String response = String.valueOf(FirebaseMessaging.getInstance().sendAsync(message));
-        log.info("Successfully sent message: " + response);
+        String response = null;
+        try {
+            response = String.valueOf(FirebaseMessaging.getInstance().send(message));
+            log.info("Successfully sent message: {}", response);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
     }
 }
