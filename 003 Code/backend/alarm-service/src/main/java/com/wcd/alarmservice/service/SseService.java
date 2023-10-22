@@ -35,12 +35,16 @@ public class SseService {
     }
 
     /**
-     * 서버의 이벤트를 클라이언트에게 보내는 메서드
+     * 서버의 이벤트를 클라이언트에게 보내는 메서드 (모임 가입 알람)
      *
      * @param requestJoinClub - 메세지를 전송할 사용자의 모임 아이디, 사용자 아이디
      */
     public void notifyJoinClub(RequestJoinClub requestJoinClub) {
         sendToClubMembers(requestJoinClub);
+    }
+
+    public void notifyCreateSchedule(Long clubId) {
+        sendToClubMembers(clubId);
     }
 
     /**
@@ -70,13 +74,31 @@ public class SseService {
         ResponseClubMemberIdsByClubId clubMemberIds = clubServiceClient.getClubMemberIds(requestJoinClub.getClubId());
         String clubName = clubServiceClient.getClubNameById(requestJoinClub.getClubId());
 
-        clubMemberIds.getUserIdList().stream()
+        clubMemberIds.getUserIdList()
                 .forEach(userId -> {
                     SseEmitter emitter = emitterRepository.get(userId);
                     String userName = userServiceClient.getUsernameById(userId);
                     if(emitter != null) {
                         try {
                             emitter.send(SseEmitter.event().name("notifyJoinClubMember").data(userName + "님 께서" + clubName + "에 가입했습니다."));
+                        } catch (IOException exception) {
+                            emitterRepository.deleteById(userId);
+                            emitter.completeWithError(exception);
+                        }
+                    }
+                });
+    }
+
+    private void sendToClubMembers(Long clubId) {
+        ResponseClubMemberIdsByClubId clubMemberIds = clubServiceClient.getClubMemberIds(clubId);
+        String clubName = clubServiceClient.getClubNameById(clubId);
+
+        clubMemberIds.getUserIdList()
+                .forEach(userId -> {
+                    SseEmitter emitter = emitterRepository.get(userId);
+                    if(emitter != null) {
+                        try {
+                            emitter.send(SseEmitter.event().name("notifyCreateSchedule").data( clubName + "에 일정이 등록되었습니다."));
                         } catch (IOException exception) {
                             emitterRepository.deleteById(userId);
                             emitter.completeWithError(exception);
@@ -112,5 +134,4 @@ public class SseService {
 
         return emitter;
     }
-
 }
