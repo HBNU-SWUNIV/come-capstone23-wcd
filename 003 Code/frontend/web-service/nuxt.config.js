@@ -141,6 +141,14 @@ export default {
   //   }
   // },
 
+  server: {
+    https: {
+      key: require('fs').readFileSync(process.env.SSL_PRIVATE_KEY),
+      cert: require('fs').readFileSync(process.env.SSL_CERTIFICATE),
+      ca: require('fs').readFileSync(process.env.SSL_CA_BUNDLE)
+    }
+  },
+
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
