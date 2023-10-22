@@ -71,6 +71,13 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+        - id: chatting-wss
+          uri: lb:ws://CHATTING-SERVICE
+          predicates:
+            - Path=/api/chatting-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: alarm-service
           uri: lb://ALRAM-SERVICE
           predicates:
