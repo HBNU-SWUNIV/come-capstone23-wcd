@@ -1,8 +1,6 @@
 <template>
   <div style="width: 100%">
-    <ClubNavigation />
     <div style="color: white; display: flex; flex-direction: row">
-      <LeftClubNav />
 
       <div style="width: 1000px; padding: 20px; padding-right: 50px">
         <FullCalendar :options="calendarOptions" @dateClick="openModal" />
@@ -14,17 +12,13 @@
 </template>
   
 <script>
-import LeftClubNav from "@/components/LeftClubNav.vue";
-import ClubNavigation from "@/components/ClubNavigation.vue";
 import FullCalendar from "@fullcalendar/vue";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import CreateScheduleModal from "../../../components/CreateScheduleModal.vue";
+import CreateScheduleModal from "@/components/CreateScheduleModal.vue";
 
 export default {
   components: {
-    ClubNavigation,
-    LeftClubNav,
     FullCalendar,
     CreateScheduleModal,
   },
