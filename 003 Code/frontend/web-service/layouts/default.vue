@@ -332,7 +332,7 @@ export default {
         topicList: topicList, // 구독하려는 주제 리스트
       };
 
-      fetch("http://211.115.222.246:5004/subscribe", {
+      fetch("https://wcd.kro.kr/api/alarm-service/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -343,25 +343,25 @@ export default {
           console.log("Push 알림 구독 완료");
           console.log(response);
 
-          const messageData = {
-            clubName: "클럽이름",
-            userName: "유저이름",
-            chatMessage: "메시지내용",
-            topic: 3,
-          };
-          fetch("http://211.115.222.246:5004/sendChatMessage", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(messageData),
-          })
-            .then((response) => {
-              console.log("데이터 전송 성공:", response);
-            })
-            .catch((error) => {
-              console.error("데이터 전송 중 오류:", error);
-            });
+          // const messageData = {
+          //   clubName: "클럽이름",
+          //   userName: "유저이름",
+          //   chatMessage: "메시지내용",
+          //   topic: 3,
+          // };
+          // fetch("http://211.115.222.246:5004/sendChatMessage", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify(messageData),
+          // })
+          //   .then((response) => {
+          //     console.log("데이터 전송 성공:", response);
+          //   })
+          //   .catch((error) => {
+          //     console.error("데이터 전송 중 오류:", error);
+          //   });
         })
         .catch((error) => {
           console.error("Push 알림 구독 실패:", error);
@@ -382,14 +382,16 @@ export default {
   },
   created() {
     this.getMyClubs();
+
     // this.unSubscribe();
-    const sse = new EventSource(
-      `http://211.115.222.246:5005/connect/${sessionStorage.getItem("user_id")}`
-    );
-    sse.addEventListener("connect", (e) => {
-      const { data: receivedConnectData } = e;
-      console.log("connect event data: ", receivedConnectData); // "connected!"
-    });
+
+    // const sse = new EventSource(
+    //   `http://211.115.222.246:5005/connect/${sessionStorage.getItem("user_id")}`
+    // );
+    // sse.addEventListener("connect", (e) => {
+    //   const { data: receivedConnectData } = e;
+    //   console.log("connect event data: ", receivedConnectData); // "connected!"
+    // });
   },
 };
 </script>

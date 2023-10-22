@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     connect() {
-      const socket = new SockJS("http://211.115.222.246:8777/ws");
+      const socket = new SockJS("https://wcd.kro.kr/api/chatting-service/ws");
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
@@ -143,7 +143,7 @@ export default {
           },
         };
         await this.$axios
-          .get(`http://211.115.222.246:8777/chat`, config)
+          .get(`https://wcd.kro.kr/api/chatting-service/chat`, config)
           .then((res) => {
             console.log(res);
             console.log(res.data.content);
