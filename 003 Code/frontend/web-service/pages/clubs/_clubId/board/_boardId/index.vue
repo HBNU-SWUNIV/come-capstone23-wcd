@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex" style="width: 100%">
-    <div style="width: 70%; padding: 60px; padding-top: 120px">
+  <div class="d-flex" style="width: 100%;">
+    <div style="width: 100%; padding: 20px; padding-top: 60px">
       <h1 style="margin-bottom: 20px">{{ post.title }}</h1>
       <p
         style="

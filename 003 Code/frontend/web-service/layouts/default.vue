@@ -48,10 +48,7 @@
                     class="d-block mx-auto"
                     style="height: 45px"
                   >
-                    <img
-                      class="image"
-                      :src="myclub.mainImageUrl"
-                    />
+                    <img class="image" :src="myclub.mainImageUrl" />
                   </v-list-item-action>
                 </template>
                 <span>{{ myclub.clubName }}</span>
@@ -130,7 +127,13 @@
           <Nuxt />
         </v-container>
       </v-main>
-      <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
+      <v-navigation-drawer
+        v-model="rightDrawer"
+        :right="right"
+        temporary
+        fixed
+        style="width: 300px"
+      >
         <v-list>
           <v-list-item>
             <v-list-item-title>NOTIFICATIONS</v-list-item-title>
@@ -192,7 +195,33 @@ export default {
           to: "/",
         },
       ],
-      notifications: [],
+      notifications: [
+        {
+          image: require("@/static/1.jpg"),
+          clubName: "모임1",
+          contents: "'사용자' 님이 모임에 가입했습니다.",
+        },
+        {
+          image: require("@/static/2.jpg"),
+          clubName: "모임2",
+          contents: "새로운 게시글이 있습니다.",
+        },
+        {
+          image: require("@/static/3.jpg"),
+          clubName: "모임3",
+          contents: "새로운 일정이 있습니다.",
+        },
+        {
+          image: require("@/static/4.jpg"),
+          clubName: "모임4",
+          contents: "새로운 공지사항을 확인해주세요.",
+        },
+        {
+          image: require("@/static/5.jpg"),
+          clubName: "모임5",
+          contents: "'사용자3' 님이 모임에 가입했습니다.",
+        },
+      ],
       myclubs: [],
       items: [
         {
@@ -272,6 +301,18 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+
+    async getSSE() {
+      const sse = new EventSource(
+        `http://211.115.222.246:5005/connect/${sessionStorage.getItem(
+          "user_id"
+        )}`
+      );
+      sse.addEventListener("connect", (e) => {
+        const { data: receivedConnectData } = e;
+        console.log("connect event data: ", receivedConnectData); // "connected!"
+      });
     },
     getImageDataUri(imageData) {
       return `data:image/jpg;base64,${imageData}`;
@@ -382,16 +423,8 @@ export default {
   },
   created() {
     this.getMyClubs();
-
+    this.getSSE();
     // this.unSubscribe();
-
-    // const sse = new EventSource(
-    //   `http://211.115.222.246:5005/connect/${sessionStorage.getItem("user_id")}`
-    // );
-    // sse.addEventListener("connect", (e) => {
-    //   const { data: receivedConnectData } = e;
-    //   console.log("connect event data: ", receivedConnectData); // "connected!"
-    // });
   },
 };
 </script>
