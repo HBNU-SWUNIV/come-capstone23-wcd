@@ -4,8 +4,7 @@
 
 |전재윤|노성준|김강산|
 |---|---|---|
-|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/c2577e8a-9384-4ed6-8aa4-e416518af978
-"/>|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/6dd9c22f-ba33-45a5-b2fa-744d9be0248d"/>|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/a430df62-b7df-440f-864c-d96a91010370"/>|
+|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/c2577e8a-9384-4ed6-8aa4-e416518af978"/>|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/6dd9c22f-ba33-45a5-b2fa-744d9be0248d"/>|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/a430df62-b7df-440f-864c-d96a91010370"/>|
 |20181633|20181613|20207124|
 |프론트엔드|백엔드|벡엔드|
 
