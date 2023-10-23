@@ -49,7 +49,7 @@
 - Docker : 컨테이너 가상화 
 
 ## 🤗 시스템 구성도
-<img width="100%" src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/7274eee8-e7f5-478c-86f3-8367b80af91e"/>
+<img width="100%" src="https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/8b8469b8-5e8c-4b4a-96ef-53bbd922c492"/>
 
 ### System Requirements
   - 온라인 모임 모집 기능
