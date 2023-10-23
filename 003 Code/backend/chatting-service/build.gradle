@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.wcd'
 sourceCompatibility = '17'
-version = '1.0'
 
 configurations {
 	compileOnly {
