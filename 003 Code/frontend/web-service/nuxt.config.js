@@ -1,7 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
-// const fs = require("fs");
-// const path = require('path');
+const fs = require("fs");
+const path = require('path');
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -122,32 +122,32 @@ export default {
     }
   },
 
-  // devServer: {
-  //   disableHostCheck: true,
-  //   https: {
-  //     key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-  //     cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
-  //     ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
-  //     secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
-  //   }
-  // },
-
-  // server: {
-  //   https: {
-  //     key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-  //     cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
-  //     ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
-  //     secureProtocol: 'TLSv1_2_method' // Use TLSv1.3
-  //   }
-  // },
+  devServer: {
+    disableHostCheck: true,
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+      secureProtocol: 'TLSv1_2_method'  // Use TLSv1.2
+    }
+  },
 
   server: {
     https: {
-      key: require('fs').readFileSync(process.env.SSL_PRIVATE_KEY),
-      cert: require('fs').readFileSync(process.env.SSL_CERTIFICATE),
-      ca: require('fs').readFileSync(process.env.SSL_CA_BUNDLE)
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
+      secureProtocol: 'TLSv1_2_method' // Use TLSv1.3
     }
   },
+
+  // server: {
+  //   https: {
+  //     key: require('fs').readFileSync(process.env.SSL_PRIVATE_KEY),
+  //     cert: require('fs').readFileSync(process.env.SSL_CERTIFICATE),
+  //     ca: require('fs').readFileSync(process.env.SSL_CA_BUNDLE)
+  //   }
+  // },
 
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,

@@ -1,8 +1,6 @@
 <template>
   <div style="width: 100%">
-    <ClubNavigation />
     <div style="color: white; display: flex; flex-direction: row">
-      <LeftClubNav />
       <div style="width: 100%; padding: 20px; padding-right: 50px">
 
         <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
@@ -35,13 +33,9 @@
 </template>
 
 <script>
-import LeftClubNav from "@/components/LeftClubNav.vue";
-import ClubNavigation from "@/components/ClubNavigation.vue";
 
 export default {
   components: {
-    ClubNavigation,
-    LeftClubNav,
   },
   data() {
     return {
