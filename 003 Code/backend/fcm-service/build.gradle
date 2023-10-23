@@ -5,7 +5,6 @@ plugins {
 }
 
 group = 'com.wcd.fcmservice'
-version = '1.0'
 
 java {
 	sourceCompatibility = '17'
