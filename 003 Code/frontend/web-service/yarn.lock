@@ -5605,6 +5605,11 @@ ignore@^5.2.0, ignore@^5.2.4:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.4.tgz"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+image-compressor@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/image-compressor/-/image-compressor-2.0.3.tgz"
+  integrity sha512-/cwVTp+Kx4KejzFtFgpS+TbR/H1eFi1931lptaBPZziQkdDFPKfBqxim9sGPExwF0jiVr7nlXKaG9+02XFo74Q==
+
 import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.0.tgz"

@@ -57,6 +57,27 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: fcm-service
+          uri: lb://FCM-SERVICE
+          predicates:
+            - Path=/api/fcm-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/fcm-service/(?<segment>.*), /$\{segment}
+        - id: chatting-service
+          uri: lb://CHATTING-SERVICE
+          predicates:
+            - Path=/api/chatting-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+        - id: alarm-service
+          uri: lb://ALRAM-SERVICE
+          predicates:
+            - Path=/api/alarm-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/alarm-service/(?<segment>.*), /$\{segment}
         - id: openvidu-http
           uri: lb://OPENVIDU
           predicates:

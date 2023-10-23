@@ -75,10 +75,7 @@ export default {
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
     onConnected() {
-      this.stompClient.subscribe(
-        `/topic/${this.clubId}`,
-        this.onMessageReceived
-      );
+      this.stompClient.subscribe(`/topic/${this.clubId}`,this.onMessageReceived);
     },
     onError(error) {
       console.error(error);
@@ -92,7 +89,7 @@ export default {
         return;
       }
 
-      const chat = {
+      let chat = {
         clubId: this.clubId,
         senderId: sessionStorage.getItem("user_id"),
         message: this.message,
@@ -107,7 +104,6 @@ export default {
       } else {
         console.error("WebSocket connection is not established.");
       }
-
     },
 
     sendAlarm() {
@@ -115,8 +111,7 @@ export default {
         clubName: this.clubName,
         userName: "유저이름",
         chatMessage: this.message,
-        // topic: this.clubId,
-        topic: 5,
+        topic: this.clubId,
       };
       fetch("http://211.115.222.246:5004/sendChatMessage", {
         method: "POST",
@@ -184,16 +179,6 @@ export default {
     this.getClubInfo();
     this.connect();
     this.getMessage();
-
-    // const firebaseConfig = {
-    //   apiKey: process.env.FIREBASE_API_KEY,
-    //   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    //   projectId: process.env.FIREBASE_PROJECT_ID,
-    //   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    //   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    //   appId: process.env.FIREBASE_APP_ID,
-    //   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-    // };
   },
 };
 </script>
