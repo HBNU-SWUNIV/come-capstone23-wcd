@@ -1,28 +1,66 @@
 # 한밭대학교 컴퓨터공학과 WCD팀
 
-**팀 구성**
+## 👪 1. 팀 구성
 
 - 20181613 노성준
 - 20181633 전재윤
 - 20207124 김강산
 
-## <u>Teamate</u> Project Background
+## 🌟 1. 서비스 소개
 
 - ### 필요성
-  - OOO
-  - OOO
-- ### 기존 해결책의 문제점
-  - OOO
-  - OOO
+  - 현재 대부분의 모임 플랫폼들은 여전히 오프라인 모임을 위주로 서비스를 제공하고 있어 온라인 모임 활동에 적합하지 않은 경우가 많다.
+  - 온라인 모임 활동 시 필요한 음성 채팅, 화상 채팅 등의 기능을 이용하기 위해서는 다른 플랫폼을 함께 사용해야 하는 등 불편한 점이 많다.
+  - 지역별 모임 활성화도 정도의 차이가 있어 수도권 및 광역권을 제외한 지역에서는 모임을 찾는 것조차도 어려운 경어가 많아, 모임 활동을 하고 싶어도 할 수 없는 상황이다.
+ 
+- ### 해결책
+  - 기존 모임 플랫폼을 개선하고, 온라인 환경의 장점을 살려 지역과 활동시간에 제약이 없는 자유로운 모임 활동이 가능하게 한다.
+  - 모임 모집, 소통, 기록, 관리 등 모임에 필요한 서비스를 통합하여 제공한다.
 
-## System Design
+## 🏗️ 2. System Design
+
+### 🔧 기술 스택
+
+#### Frontend
+
+- VueJS
+- NuxtJS
+- vuetify
+- Javascript
+
+#### Backend
+
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- Spring Cloud
+- Java
+- MariaDB
+- Redis
+- JUnit5
+
+#### Infra
+
+- RabbitMQ
+- AbleCloud
+- Jenkins
+- Docker
+
+### 시스템 구성도
+<img width="100" src="![WCD_시스템구성도](https://github.com/HBNU-SWUNIV/come-capstone23-wcd/assets/44565811/7274eee8-e7f5-478c-86f3-8367b80af91e)"/>
 
 - ### System Requirements
-  - OOO
-  - OOO
+  - 온라인 모임 모집 기능
+    - 모임 생성
+    - 모임 검
+  - 모임 소통 기능
+    - 채팅
+    - 음성, 화상 채팅
+    - 알림
+  - 모임 관리 기능
+    - 일정 관리 
 
 ## Case Study
-
 - ### Description
 
 ## Conclusion
@@ -43,8 +81,6 @@
 
 - 보조 브랜치는 사용을 마치면 브랜치를 삭제하도록 한다.
 - merge할 때는 --no-ff를 사용하여 기록을 그룹화한다.
-
-#### 
 
 ## Commit 규칙
 
