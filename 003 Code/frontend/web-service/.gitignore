@@ -94,3 +94,4 @@ sw.*
 
 # sse 인증서 파일 내용
 /ssl-certificates
+/local-ssl

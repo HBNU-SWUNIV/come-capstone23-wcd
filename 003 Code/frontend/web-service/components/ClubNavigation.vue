@@ -57,6 +57,11 @@ export default {
           to: "/board",
         },
         {
+          icon: "mdi-wechat",
+          title: "채팅",
+          to: "/chatting",
+        },
+        {
           icon: "mdi-webcam",
           title: "화상채팅",
           to: "/cam",
