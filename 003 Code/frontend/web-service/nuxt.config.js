@@ -121,16 +121,25 @@ export default {
   devServer: {
     disableHostCheck: true,
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      key: fs.readFileSync(
+        path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)
+      ),
+      cert: fs.readFileSync(
+        path.resolve(__dirname, process.env.SSL_CERTIFICATE)
+      ),
+      ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
       secureProtocol: "TLSv1_2_method", // Use TLSv1.2
     },
   },
 
   server: {
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
-      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
+      key: fs.readFileSync(
+        path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)
+      ),
+      cert: fs.readFileSync(
+        path.resolve(__dirname, process.env.SSL_CERTIFICATE)
+      ),
       ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
       secureProtocol: "TLSv1_2_method", // Use TLSv1.3
     },
@@ -151,6 +160,7 @@ export default {
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+
     FIREBASE_VAPID_KEY: process.env.FIREBASE_VAPID_KEY,
   },
 
