@@ -6,6 +6,7 @@
         :mini-variant="miniVariant"
         :mini-variant-width="miniVariantWidth"
         :clipped="clipped"
+        :permanent="true"
         fixed
         app
       >
@@ -89,7 +90,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-app-bar :clipped-left="clipped" fixed app>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
         <div class="input-container">
           <v-icon class="icon">mdi-magnify</v-icon>
           <input
