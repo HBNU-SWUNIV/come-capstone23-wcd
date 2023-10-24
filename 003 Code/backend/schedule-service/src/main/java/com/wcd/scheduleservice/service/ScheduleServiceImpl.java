@@ -1,5 +1,6 @@
 package com.wcd.scheduleservice.service;
 
+import com.wcd.scheduleservice.client.AlarmServiceClient;
 import com.wcd.scheduleservice.dto.RequestScheduleDto;
 import com.wcd.scheduleservice.dto.ResponseScheduleDto;
 import com.wcd.scheduleservice.entity.Schedule;
@@ -20,12 +21,16 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
+    private final AlarmServiceClient alarmServiceClient;
 
     @Override
     public ResponseScheduleDto createSchedule(Long clubId, RequestScheduleDto requestScheduleDto) {
         Schedule newSchedule = requestScheduleDto.toEntity(clubId);
         Schedule savedSchedule = scheduleRepository.save(newSchedule);
         ResponseScheduleDto responseScheduleDto = savedSchedule.toResponseScheduleDto();
+
+        alarmServiceClient.notifyCreateSchedule(clubId);
+
         return responseScheduleDto;
     }
 
