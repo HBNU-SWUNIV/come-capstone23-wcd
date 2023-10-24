@@ -24,7 +24,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'http://localhost:3000'
+              # - 'http://localhost:3000'
               - 'https://localhost:3000'
               - 'http://localhost:8080'
               - 'http://wcd.kro.kr'

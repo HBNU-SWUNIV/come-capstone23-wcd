@@ -72,7 +72,7 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: alarm-service
-          uri: lb://ALRAM-SERVICE
+          uri: lb://ALARM-SERVICE
           predicates:
             - Path=/api/alarm-service/**
           filters:

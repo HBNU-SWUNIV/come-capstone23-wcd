@@ -28,7 +28,7 @@
             <v-list-item-content>
               <div class="club-item">
                 <img
-                  :src="getImageDataUri(club.multipartFile)"
+                  :src="club.mainImageUrl"
                   class="club-logo"
                 />
                 <v-list-item-title class="club-name">{{
