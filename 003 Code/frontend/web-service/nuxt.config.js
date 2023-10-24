@@ -121,24 +121,16 @@ export default {
   devServer: {
     disableHostCheck: true,
     https: {
-      key: fs.readFileSync(
-        path.resolve(__dirname, process.env.SSL_LOCAL_PRIVATE_KEY)
-      ),
-      cert: fs.readFileSync(
-        path.resolve(__dirname, process.env.SSL_LOCAL_CERTIFICATE)
-      ),
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
       secureProtocol: "TLSv1_2_method", // Use TLSv1.2
     },
   },
 
   server: {
     https: {
-      key: fs.readFileSync(
-        path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)
-      ),
-      cert: fs.readFileSync(
-        path.resolve(__dirname, process.env.SSL_CERTIFICATE)
-      ),
+      key: fs.readFileSync(path.resolve(__dirname, process.env.SSL_PRIVATE_KEY)),
+      cert: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CERTIFICATE)),
       ca: fs.readFileSync(path.resolve(__dirname, process.env.SSL_CA_BUNDLE)),
       secureProtocol: "TLSv1_2_method", // Use TLSv1.3
     },
