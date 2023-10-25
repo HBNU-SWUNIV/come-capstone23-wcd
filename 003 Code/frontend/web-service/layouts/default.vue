@@ -295,7 +295,7 @@ export default {
         await this.$axios
           .get(`/club-service/users/${user_id}/clubs`, config)
           .then((res) => {
-            console.log(res.data);
+            console.log(res);
             this.myclubs = res.data;
             this.subscribeToPushNotifications();
           });

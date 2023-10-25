@@ -1,39 +1,54 @@
 export default function ({ $axios, store, redirect }) {
-    $axios.onError((error) => {
-      const code = parseInt(error.response && error.response.status);
-      if (code === 401) {
-        // 401 오류가 발생하면 세션 스토리지에서 refresh_token을 가져옴
-        const refresh_token = sessionStorage.getItem('refresh_token');
-        if (refresh_token) {
-          // refresh_token이 있으면 백엔드의 refresh_token 엔드포인트를 호출하여 새로운 access_token을 가져옴
-          // API 요청을 재시도하기 전에 access_token을 업데이트
+  let isRefreshing = false; // 토큰 갱신 중 여부를 나타내는 변수
+  let subscribers = []; // 대기 중인 요청을 저장하는 배열
+
+  function onAccessTokenFetched(newToken) {
+    // 대기 중인 요청들에게 새로운 토큰을 적용
+    subscribers.forEach((callback) => callback(newToken));
+    subscribers = [];
+  }
+
+  $axios.onError((error) => {
+    const code = parseInt(error.response && error.response.status);
+
+    if (code === 401) {
+      const refresh_token = sessionStorage.getItem('refresh_token');
+      if (refresh_token) {
+        if (!isRefreshing) {
+          isRefreshing = true;
           return $axios
-            .post('/user-service/regenerateToken', { refresh_token: refresh_token })
+            .post('/user-service/regenerateToken', { refresh_token })
             .then((response) => {
               if (response.data.access_token) {
-                // 성공적으로 access_token을 업데이트하면 Vuex에 저장
                 store.commit('setAccessToken', response.data.access_token);
-                sessionStorage.setItem("refresh_token", response.data.refresh_token);
-                
-                // 원래의 요청을 복구
-                const originalRequest = error.config;
-                originalRequest.headers['Authorization'] = `Bearer ${response.data.access_token}`;
-                return $axios(originalRequest);
+                sessionStorage.setItem('refresh_token', response.data.refresh_token);
+                onAccessTokenFetched(response.data.access_token);
               } else {
-                // access_token을 얻을 수 없으면 로그인 페이지로 리다이렉트
                 redirect('/login');
               }
             })
             .catch(() => {
-              // refresh_token을 사용하여 access_token을 업데이트하지 못하면 로그인 페이지로 리다이렉트
               redirect('/login');
+            })
+            .finally(() => {
+              isRefreshing = false;
             });
         } else {
-          // refresh_token이 없으면 로그인 페이지로 리다이렉트
-          redirect('/login');
+          // 토큰 재발급 중인 경우 대기열에 추가
+          return new Promise((resolve) => {
+            subscribers.push((newToken) => {
+              error.config.headers['Authorization'] = `Bearer ${newToken}`;
+              resolve($axios(error.config));
+            });
+          });
         }
+      } else {
+        redirect('/login');
       }
-      return Promise.reject(error);
-    });
-  }
-  
+    } else if (code === 500) {
+      redirect('/login');
+    }
+
+    return Promise.reject(error);
+  });
+}
