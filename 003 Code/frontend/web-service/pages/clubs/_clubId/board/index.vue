@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <div style="color: white; display: flex; flex-direction: row">
-      <div style="width: 100%; padding: 20px; padding-right: 50px">
+      <div style="width: 100%; padding: 20px; padding-right: 20px">
 
         <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
 

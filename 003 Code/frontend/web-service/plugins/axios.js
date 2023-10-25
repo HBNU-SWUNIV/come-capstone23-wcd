@@ -37,19 +37,8 @@ export default function ({ $axios, store, redirect }) {
           // 토큰 재발급 중인 경우 대기열에 추가
           return new Promise((resolve) => {
             subscribers.push((newToken) => {
-              // 변경된 토큰을 요청 헤더에 적용
               error.config.headers['Authorization'] = `Bearer ${newToken}`;
-        
-              // $axios를 사용하여 재요청을 보내고 이에 대한 프로미스를 반환
-              $axios(error.config)
-                .then((response) => {
-                  // 재요청이 완료되면 결과를 resolve로 전달
-                  resolve(response);
-                })
-                .catch((error) => {
-                  // 에러 발생 시 reject로 전달
-                  reject(error);
-                });
+              resolve($axios(error.config));
             });
           });
         }

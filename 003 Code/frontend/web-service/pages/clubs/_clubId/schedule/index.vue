@@ -1,8 +1,8 @@
 <template>
   <div style="width: 100%">
-    <div style="color: white; display: flex; flex-direction: row">
+    <div style="color: white; display: flex; flex-direction: row; justify-content: center;">
 
-      <div style="width: 1000px; padding: 20px; padding-right: 50px">
+      <div style="width:900px; padding: 20px; padding-right: 50px">
         <FullCalendar :options="calendarOptions" @dateClick="openModal" />
       </div>
       <!-- <v-btn @click="openModal">일정추가</v-btn> -->
