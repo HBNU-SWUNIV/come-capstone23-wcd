@@ -1,33 +1,17 @@
 <template>
-  <div>
-    <div
-      style="
-        background-color: rgb(243, 94, 49);
-        height: 65px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <h3>채팅방</h3>
-    </div>
-    <div style="height: 600px">
-      <ul>
-        <li
-          v-for="testmessage in testMessages"
-          :key="testmessage.id"
-          style="color: black"
-        >
-          {{ testmessage.sender }}: {{ testmessage.message }} [{{
-            testmessage.sendTime
-          }}]
-        </li>
-        <li v-for="message in messages" :key="message.id" style="color: black">
-          {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
-        </li>
-      </ul>
-    </div>
+  <div style="width:100%;">
+    <h1>채팅방</h1>
+
+    <ul>
+      <li v-for="testmessage in testMessages" :key="testmessage.id">
+        {{ testmessage.sender }}: {{ testmessage.message }} [{{
+          testmessage.sendTime
+        }}]
+      </li>
+      <li v-for="message in messages" :key="message.id" style="color: black">
+        {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
+      </li>
+    </ul>
     <div style="height: 50px; background-color: gray">
       <v-btn>알림 활성화</v-btn>
     </div>
@@ -75,7 +59,10 @@ export default {
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
     onConnected() {
-      this.stompClient.subscribe(`/topic/${this.clubId}`,this.onMessageReceived);
+      this.stompClient.subscribe(
+        `/topic/${this.clubId}`,
+        this.onMessageReceived
+      );
     },
     onError(error) {
       console.error(error);

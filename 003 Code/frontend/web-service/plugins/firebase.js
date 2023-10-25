@@ -26,7 +26,10 @@ if (!firebase.apps.length) {
 
         // Service Worker 등록 후에 푸시 토큰을 요청
         messaging
-          .getToken({ vapidKey: "BN4UXj5_xn7lEegLHRDDlVlNQPbHV26-I9HCz_RR-ucOJAw_LpP78EmEmqt9DVhZiO5SxtBP0gH1a0NrjjtC-xw" })
+          .getToken({
+            vapidKey:
+              "BN4UXj5_xn7lEegLHRDDlVlNQPbHV26-I9HCz_RR-ucOJAw_LpP78EmEmqt9DVhZiO5SxtBP0gH1a0NrjjtC-xw",
+          })
           .then((tokenValue) => {
             console.log("푸시토큰 발급완료:", tokenValue);
             localStorage.setItem("push_token", tokenValue);
