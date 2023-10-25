@@ -1,7 +1,7 @@
 <template>
   <div style="width:100%;">
     <ClubNavigation />
-    <div style="display: flex; flex-direction: row; height:100%;">
+    <div style="display: flex; flex-direction: row;">
       <router-view />
     </div>
   </div>

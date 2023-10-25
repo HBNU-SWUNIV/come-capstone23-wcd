@@ -48,7 +48,7 @@ export default {
           },
         };
         const response = await this.$axios.get(`/club-service/clubs`, config);
-        console.log(response.data.content);
+        console.log(response);
         const shuffledClubs = response.data.content.sort(
           () => 0.5 - Math.random()
         );
