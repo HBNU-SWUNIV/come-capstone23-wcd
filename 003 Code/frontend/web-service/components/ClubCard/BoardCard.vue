@@ -1,5 +1,5 @@
 <template>
-  <v-card style="width: 50%; margin: 10px"
+  <v-card style="width: 50%; margin: 10px; height: fit-content;" 
     ><v-card-title
       >{{ title }}<v-spacer />
       <v-btn :to="`/clubs/${clubId}/board`">더보기</v-btn></v-card-title

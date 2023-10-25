@@ -8,7 +8,7 @@
           testmessage.sendTime
         }}]
       </li>
-      <li v-for="message in messages" :key="message.id" style="color: black">
+      <li v-for="message in messages" :key="message.id" style="color: white">
         {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
       </li>
     </ul>
@@ -27,6 +27,7 @@
           height: 100%;
           width: 100%;
           resize: none;
+          color:white;
         "
       ></textarea>
     </div>
@@ -54,7 +55,7 @@ export default {
   },
   methods: {
     connect() {
-      const socket = new SockJS("https://wcd.kro.kr/api/chatting-service/ws");
+      const socket = new SockJS("https://211.115.222.246:5006/ws");
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
@@ -130,7 +131,7 @@ export default {
           },
         };
         await this.$axios
-          .get(`https://wcd.kro.kr/api/chatting-service/chat`, config)
+          .get(`https://211.115.222.246:5006/chat`, config)
           .then((res) => {
             console.log(res);
             console.log(res.data.content);
