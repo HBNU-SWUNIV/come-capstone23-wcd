@@ -305,11 +305,19 @@ export default {
     },
 
     async getSSE() {
-      const sse = new EventSource(`https://211.115.222.246:5008/alarm-service/connect/${sessionStorage.getItem("user_id")}`
+      const sse = new EventSource(`https://211.115.222.246:5008/connect/${sessionStorage.getItem("user_id")}`
       );
       sse.addEventListener("connect", (e) => {
         const { data: receivedConnectData } = e;
         console.log("connect event data: ", receivedConnectData); // "connected!"
+      });
+      sse.addEventListener("notifyJoinClubMember", (e) => {
+        const { data: receivedConnectData } = e;
+        console.log("join event data: ", receivedConnectData); // "connected!"
+      });
+      sse.addEventListener("notifyCreateSchedule", (e) => {
+        const { data: receivedConnectData } = e;
+        console.log("schedule event data: ", receivedConnectData); // "connected!"
       });
     },
     getImageDataUri(imageData) {
