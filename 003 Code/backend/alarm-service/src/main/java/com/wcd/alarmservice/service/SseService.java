@@ -76,20 +76,22 @@ public class SseService {
         ResponseClubMemberIdsByClubId clubMemberIds = clubServiceClient.getClubMemberIds(requestJoinClub.getClubId());
         String clubName = clubServiceClient.getClubNameById(requestJoinClub.getClubId());
 
-        clubMemberIds.getUserIdList()
-                .forEach(userId -> {
-                    SseEmitter emitter = emitterRepository.get(userId);
-                    String userName = userServiceClient.getUsernameById(userId);
-                    if(emitter != null) {
-                        try {
-                            log.info("notifyJoinClubMember : {}", userId);
-                            emitter.send(SseEmitter.event().name("notifyJoinClubMember").data(userName + "님 께서" + clubName + "에 가입했습니다."));
-                        } catch (IOException exception) {
-                            emitterRepository.deleteById(userId);
-                            emitter.completeWithError(exception);
+        if(clubMemberIds != null) {
+            clubMemberIds.getUserIdList()
+                    .forEach(userId -> {
+                        SseEmitter emitter = emitterRepository.get(userId);
+                        String userName = userServiceClient.getUsernameById(userId);
+                        if(emitter != null) {
+                            try {
+                                log.info("notifyJoinClubMember : {}", userId);
+                                emitter.send(SseEmitter.event().name("notifyJoinClubMember").data(userName + "님 께서" + clubName + "에 가입했습니다."));
+                            } catch (IOException exception) {
+                                emitterRepository.deleteById(userId);
+                                emitter.completeWithError(exception);
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void sendToClubMembers(Long clubId) {
