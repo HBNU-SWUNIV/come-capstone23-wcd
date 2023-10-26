@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%">
+  <div style="width: 100%; height: 100%; padding: 40px;">
     <div style="height: 100%; color: white; display: flex; flex-direction: column">
       <div style="width: 100%;">
         <div
@@ -18,7 +18,7 @@
             {{ formatDate(post.updateAt) }}</p></div>
         </div>
       </div>
-      <div style="display: flex; margin-top: auto; align-items: flex-end; flex-direction: row">
+      <div style="display: flex; margin-top: 50px; flex-direction: row;">
         <div style="width: 70%; margin-left: 15%;">
           <v-pagination
             color="#424242"
@@ -29,7 +29,7 @@
             @input="handlePageChange"
           ></v-pagination>
         </div>
-        <div style="margin: auto 0">
+        <div style="margin: auto 0;">
           <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
         </div>
       </div>
