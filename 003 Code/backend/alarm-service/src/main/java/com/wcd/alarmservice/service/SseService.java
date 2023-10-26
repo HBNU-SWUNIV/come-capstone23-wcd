@@ -6,12 +6,14 @@ import com.wcd.alarmservice.dto.feignclient.ResponseClubMemberIdsByClubId;
 import com.wcd.alarmservice.dto.request.RequestJoinClub;
 import com.wcd.alarmservice.repository.EmitterRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SseService {
     // 기본 타임아웃 설정
@@ -80,6 +82,7 @@ public class SseService {
                     String userName = userServiceClient.getUsernameById(userId);
                     if(emitter != null) {
                         try {
+                            log.info("notifyJoinClubMember : {}", userId);
                             emitter.send(SseEmitter.event().name("notifyJoinClubMember").data(userName + "님 께서" + clubName + "에 가입했습니다."));
                         } catch (IOException exception) {
                             emitterRepository.deleteById(userId);
