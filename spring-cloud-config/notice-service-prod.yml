@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: "{cipher}AQA9G+89tJBSbPFlGciphEBcNa5MpD66RAxy7lIBtEWDoSqIOY1IdXy8N+WTEcVItgg4Xk3UT5qRVnXngwn1e2BuezX4r3XXdVpZbz4TM77gwZ5cYPSTxqNImp18IhLUtko9WUexs0Nobcqu2ImYl8vW1OCLcblGSlaY8CSc/Z8C2OGQMhBFlV2vcX/45yZwWKRNyrN2GQyp+34X2S+cFgBxaZAqFpZYPaSCTpkfACyClgj7kXPHnDVwgl5ObBSYwYtaTDbsVbPq/xscjxwO7SauFllayzTQyVKuzby+Jmave7/srSblCcofB/K7MhnXqACdatzjkB6fK/ugKT+OQEJH7ejIsnfnZTMaktK9HdVP0GdqEcPaIbzO0cBO5mGz/rbRZikkBQdYwxh4ZUl+B/cMjXedSUEg5rAAkh8dKvgPvg=="
+        dialect: "{cipher}AQACeoIlW3l6FJdYc48ikCVoZ5PBotTlKy5G7uZoPb4TyQ4GM51WDjqFNqcVVN4EQMn+aWw5c1nsyNnsKiab1/hj75fX5M0ypvhstBEfAZF8BFtY4b/XKBh0BBC/U4uxt5EVwKiicE0Rx1uBUDuWZ4x785hC0qPl++lGf81ip4jyYw2qYgRqm33A+pmBaseb/Oy+jkal/AEvssCCV3h3X7VrNenX2UCZZ5KxIlQvG+uUltPLOgF3z/fEp9xAp6QuNkviAYGT4bBamiCMPp6uPzItnu2N4Czuy6GPwlZgPtzf1KmEb0Y8Qk03RN1wImoXPK9N61yA0Fa+dCxGIgMSGC0fgtOw2u8jL8Nw9W7ww0UtT5Xh2wbRJCIYnMa+LaVmbOq9q7P8OuX0gZl6nioAPUNRjyHusocL14k4ays2WeHKYg=="
 
 logging:
   level:
