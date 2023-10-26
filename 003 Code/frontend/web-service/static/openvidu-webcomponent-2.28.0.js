@@ -30847,32 +30847,32 @@
         }, sR = {
             NICKNAME_SECTION: "Set your nickname",
             NICKNAME: "Nickname",
-            DEVICE_SECTION: "Choose your devices",
-            VIDEO_DEVICE: "Video device",
-            AUDIO_DEVICE: "Audio device",
-            NO_VIDEO_DEVICE: "Video device not found",
-            NO_AUDIO_DEVICE: "Audio device not found",
-            JOIN: "Join session",
+            DEVICE_SECTION: "장치 선택",
+            VIDEO_DEVICE: "카메라",
+            AUDIO_DEVICE: "마이크",
+            NO_VIDEO_DEVICE: "카메라를 찾을 수 없습니다",
+            NO_AUDIO_DEVICE: "마이크를 찾을 수 없습니다",
+            JOIN: "참가",
             PREPARING: "Preparing session..."
         }, aR = {
-            MUTE_AUDIO: "Mute your audio",
-            UNMUTE_AUDIO: "Unmute your audio",
-            MUTE_VIDEO: "Mute your video",
-            UNMUTE_VIDEO: "Unmute your video",
-            ENABLE_SCREEN: "Enable screen share",
-            DISABLE_SCREEN: "Disable screen share",
-            MORE_OPTIONS: "More options",
-            FULLSCREEN: "Fullscreen",
-            EXIT_FULLSCREEN: "Exit fullscreen",
+            MUTE_AUDIO: "음소거",
+            UNMUTE_AUDIO: "음소거 해제",
+            MUTE_VIDEO: "카메라 끄기",
+            UNMUTE_VIDEO: "카메라 켜기",
+            ENABLE_SCREEN: "화면공유 하기",
+            DISABLE_SCREEN: "화면공유 중단",
+            MORE_OPTIONS: "추가 옵션",
+            FULLSCREEN: "전체화면",
+            EXIT_FULLSCREEN: "전체화면 종료",
             ENABLE_CAPTIONS: "Enable captions",
             DISABLE_CAPTIONS: "Disable captions",
             BACKGROUND: "Background effects",
             START_RECORDING: "Start recording",
             STOP_RECORDING: "Stop recording",
-            SETTINGS: "Settings",
-            LEAVE: "Leave the session",
-            PARTICIPANTS: "Participants",
-            CHAT: "Chat",
+            SETTINGS: "설정",
+            LEAVE: "연결 끊기",
+            PARTICIPANTS: "참가자",
+            CHAT: "채팅",
             ACTIVITIES: "Activities"
         }, lR = {
             SETTINGS: "Settings",
@@ -30895,11 +30895,11 @@
             },
             PARTICIPANTS: {TITLE: "Participants", CAMERA: "CAMERA", SCREEN: "SCREEN"},
             SETTINGS: {
-                TITLE: "Settings",
-                GENERAL: "General",
-                VIDEO: "Video",
-                AUDIO: "Audio",
-                LANGUAGE: "Language",
+                TITLE: "설정",
+                GENERAL: "일반",
+                VIDEO: "카메라",
+                AUDIO: "마이크",
+                LANGUAGE: "언어",
                 CAPTIONS: "Captions",
                 CAPTIONS_LANG_TEXT: "Select the language that the participants of the session will use. The captions will appear in that language."
             },
@@ -36051,7 +36051,7 @@
                     }), Z(8, Wte, 2, 3, "mat-option", 7), B()()()), 2 & e && (A(1), ut("warn-btn", i.isVideoMuted), j("disabled", !i.hasVideoDevices || i.videoMuteChanging), A(1), j("ngIf", !i.isVideoMuted), A(1), j("ngIf", i.isVideoMuted), A(2), j("ngIf", i.hasVideoDevices), A(1), j("ngIf", !i.hasVideoDevices), A(1), j("disabled", i.isVideoMuted || !i.hasVideoDevices)("compareWith", i.compareObjectDevices)("value", i.cameraSelected), A(1), j("ngForOf", i.cameras))
                 },
                 dependencies: [Ir, Qt, xn, oi, jf, Bl, Nr, Nb, O_, Hn],
-                styles: ["#camera-button[_ngcontent-%COMP%]{border-radius:var(--ov-buttons-radius)}.device-container-element[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:#000}.device-container-element[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}.device-container-element[_ngcontent-%COMP%]{display:flex}.warn-btn[_ngcontent-%COMP%]{color:var(--ov-text-color);background-color:var(--ov-warn-color)!important}"]
+                styles: ["#camera-button[_ngcontent-%COMP%]{border-radius:var(--ov-buttons-radius)}.device-container-element[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:white}.device-container-element[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}.device-container-element[_ngcontent-%COMP%]{display:flex}.warn-btn[_ngcontent-%COMP%]{color:var(--ov-text-color);background-color:var(--ov-warn-color)!important}"]
             }), t
         })(), Ay = (() => {
             class t {
@@ -36114,7 +36114,7 @@
                     }), Z(8, Xte, 2, 2, "mat-option", 6), B()()()), 2 & e && (A(1), ut("warn-btn", i.isAudioMuted), j("disabled", !i.hasAudioDevices), A(1), j("ngIf", !i.isAudioMuted), A(1), j("ngIf", i.isAudioMuted), A(2), j("ngIf", i.hasAudioDevices), A(1), j("ngIf", !i.hasAudioDevices), A(1), j("disabled", i.isAudioMuted || !i.hasAudioDevices)("value", null == i.microphoneSelected ? null : i.microphoneSelected.device), A(1), j("ngForOf", i.microphones))
                 },
                 dependencies: [Ir, Qt, xn, oi, jf, Bl, Nr, Nb, O_, Hn],
-                styles: [".device-container-element[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:#000}.device-container-element[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}.device-container-element[_ngcontent-%COMP%]{display:flex}.warn-btn[_ngcontent-%COMP%]{color:var(--ov-text-color);background-color:var(--ov-warn-color)!important}"]
+                styles: [".device-container-element[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:white}.device-container-element[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}.device-container-element[_ngcontent-%COMP%]{display:flex}.warn-btn[_ngcontent-%COMP%]{color:var(--ov-text-color);background-color:var(--ov-warn-color)!important}"]
             }), t
         })(), wy = (() => {
             class t {
@@ -36153,7 +36153,7 @@
                     }), B()()()), 2 & e && (A(6), Ne(Se(7, 2, "PREJOIN.NICKNAME")), A(2), j("ngModel", i.nickname))
                 },
                 dependencies: [Wo, la, Fl, bs, xn, oi, jf, Bl, gb, Hn],
-                styles: ["#nickname-input-container[_ngcontent-%COMP%]{display:flex}#nickname-input-container[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}#nickname-input-container[_ngcontent-%COMP%]   button.mat-button-disabled[_ngcontent-%COMP%]{color:#000!important}#nickname-input-container[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:#000}#nickname-input-container[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{color:#000}"]
+                styles: ["#nickname-input-container[_ngcontent-%COMP%]{display:none}#nickname-input-container[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]{margin:auto 10px auto auto}#nickname-input-container[_ngcontent-%COMP%]   button.mat-button-disabled[_ngcontent-%COMP%]{color:#000!important}#nickname-input-container[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{width:100%;margin-top:10px;color:white}#nickname-input-container[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%]{color:white}"]
             }), t
         })(), Dy = (() => {
             class t {
@@ -36307,12 +36307,12 @@
                 outputs: {onJoinButtonClicked: "onJoinButtonClicked"},
                 decls: 12,
                 vars: 5,
-                consts: [[1, "prejoin-toolbar"], ["id", "toolbar"], ["id", "branding-logo", "src", "assets/images/logo.png", "ovLogo", "", 4, "ngIf"], [1, "spacer"], [3, "onLangSelectorClicked", 4, "ngIf"], ["id", "prejoin-container", "fxLayout.landscape", "row", "fxLayout.lt-md", "column", "fxLayout.md", "row", "fxLayout.gt-md", "row", 1, "container"], ["fxFlex.lt-sm", "50%", "fxFlex.lt-md", "50%", "fxFlex.md", "45%", "fxFlex.gt-md", "45%", "fxLayoutAlign", "center center", "id", "layout-container"], [1, "ov-session", 3, "usedInPrejoinPage"], [4, "ngIf"], ["layout", ""], ["fxFlex.lt-md", "50%", "fxFlex.md", "55%", "fxFlex.gt-md", "55%", "fxLayoutAlign", "center center", "class", "media-panel", 4, "ngIf"], ["id", "branding-logo", "src", "assets/images/logo.png", "ovLogo", ""], [3, "onLangSelectorClicked"], ["panel", ""], ["backgroundEffectsPanel", ""], ["stream", ""], ["mat-icon-button", "", "id", "background-effects-btn", 3, "disabled", "matTooltip", "click", 4, "ngIf"], [3, "stream", "displayParticipantName", "settingsButton"], ["mat-icon-button", "", "id", "background-effects-btn", 3, "disabled", "matTooltip", "click"], ["fxFlex.lt-md", "50%", "fxFlex.md", "55%", "fxFlex.gt-md", "55%", "fxLayoutAlign", "center center", 1, "media-panel"], ["fxLayout", "column", "fxLayoutGap", "10px", 1, "media-panel-container"], ["fxLayout.gt-sm", "column", "fxLayout.lt-md", "column", "fxLayoutGap", "10px", "fxFlex", "33%"], ["fxFlex.gt-sm", "100%", "fxFlex.lt-md", "33%", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "nickname-container"], ["fxFlex.gt-sm", "100%", "fxFlex.lt-md", "33%", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "buttons-container"], [3, "onDeviceSelectorClicked", "onVideoMutedClicked"], [3, "onDeviceSelectorClicked"], ["fxFlex.gt-sm", "60%", "fxLayout.lt-md", "column", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "join-btn-container"], ["mat-flat-button", "", "form", "nicknameForm", "id", "join-button", 3, "click"]],
+                consts: [[1, "prejoin-toolbar"], ["id", "toolbar"], ["id", "branding-logo", "src", "assets/images/logo.png", "ovLogo", "", 4, "ngIf"], [1, "spacer"], [3, "onLangSelectorClicked", 4, "ngIf"], ["id", "prejoin-container", "fxLayout.landscape", "column", "fxLayout.lt-md", "column", "fxLayout.md", "row", "fxLayout.gt-md", "row", 1, "container"], ["fxFlex.lt-sm", "50%", "fxFlex.lt-md", "50%", "fxFlex.md", "45%", "fxFlex.gt-md", "45%", "fxLayoutAlign", "center center", "id", "layout-container"], [1, "ov-session", 3, "usedInPrejoinPage"], [4, "ngIf"], ["layout", ""], ["fxFlex.lt-md", "50%", "fxFlex.md", "55%", "fxFlex.gt-md", "55%", "fxLayoutAlign", "center center", "class", "media-panel", 4, "ngIf"], ["id", "branding-logo", "src", "assets/images/logo.png", "ovLogo", ""], [3, "onLangSelectorClicked"], ["panel", ""], ["backgroundEffectsPanel", ""], ["stream", ""], ["mat-icon-button", "", "id", "background-effects-btn", 3, "disabled", "matTooltip", "click", 4, "ngIf"], [3, "stream", "displayParticipantName", "settingsButton"], ["mat-icon-button", "", "id", "background-effects-btn", 3, "disabled", "matTooltip", "click"], ["fxFlex.lt-md", "50%", "fxFlex.md", "55%", "fxFlex.gt-md", "55%", "fxLayoutAlign", "center center", 1, "media-panel"], ["fxLayout", "column", "fxLayoutGap", "10px", 1, "media-panel-container"], ["fxLayout.gt-sm", "column", "fxLayout.lt-md", "column", "fxLayoutGap", "10px", "fxFlex", "33%"], ["fxFlex.gt-sm", "100%", "fxFlex.lt-md", "33%", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "nickname-container"], ["fxFlex.gt-sm", "100%", "fxFlex.lt-md", "33%", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "buttons-container"], [3, "onDeviceSelectorClicked", "onVideoMutedClicked"], [3, "onDeviceSelectorClicked"], ["fxFlex.gt-sm", "60%", "fxLayout.lt-md", "column", "fxLayoutAlign", "center center", "fxFlexFill", "", 1, "join-btn-container"], ["mat-flat-button", "", "form", "nicknameForm", "id", "join-button", 3, "click"]],
                 template: function (e, i) {
                     1 & e && (I(0, "div", 0)(1, "mat-toolbar", 1), Z(2, Jte, 1, 0, "img", 2), Ze(3, "span", 3), Z(4, ene, 1, 0, "ov-lang-selector", 4), B()(), I(5, "div", 5)(6, "div", 6)(7, "ov-session", 7), Z(8, ine, 2, 0, null, 8), Z(9, sne, 3, 0, "ng-template", null, 9, un), B()(), Z(11, dne, 16, 7, "div", 10), B()), 2 & e && (A(2), j("ngIf", !i.isMinimal && i.showLogo), A(2), j("ngIf", !i.isMinimal), A(3), j("usedInPrejoinPage", !0), A(1), j("ngIf", !i.isMinimal && i.showBackgroundEffectsButton), A(3), j("ngIf", i.localParticipant))
                 },
                 dependencies: [Qt, xn, Vf, oi, Nr, Cs, Kf, Ss, bO, Es, Dk, Tk, Ak, gy, by, fy, Cy, Ey, Sy, Ay, wy, Dy, rre, Hn],
-                styles: [".container[_ngcontent-%COMP%]{height:calc(100% - 64px);padding:30px 60px;background-color:var(--ov-light-color)}.prejoin-toolbar[_ngcontent-%COMP%]{max-height:40px;height:40px}#toolbar[_ngcontent-%COMP%]{background-color:var(--ov-light-color);height:100%}#toolbar[_ngcontent-%COMP%]     .lang-button{height:25px!important;font-size:14px!important;line-height:0px;align-items:unset!important}.spacer[_ngcontent-%COMP%]{flex:1 1 auto}#branding-logo[_ngcontent-%COMP%]{border-radius:var(--ov-panel-radius);max-width:35px;max-height:35px;height:-webkit-fill-available;height:-moz-available;padding:10px;margin-right:10px}#layout-container[_ngcontent-%COMP%]{display:block!important}h4[_ngcontent-%COMP%]{margin-bottom:1px;font-weight:700}hr[_ngcontent-%COMP%]{margin:0}#prejoin-container[_ngcontent-%COMP%]{height:calc(100% - 40px)}#prejoin-container[_ngcontent-%COMP%]     .sidenav-container{padding-top:0!important}#prejoin-container[_ngcontent-%COMP%]     #background-effects-container{margin:0!important;max-height:100%!important;height:100%!important}#prejoin-container[_ngcontent-%COMP%]     .mat-drawer-container, #prejoin-container[_ngcontent-%COMP%]     .sidenav-menu, #prejoin-container[_ngcontent-%COMP%]     #session-container{background-color:transparent!important}#prejoin-container[_ngcontent-%COMP%]     .sidenav-menu{width:320px}#prejoin-container[_ngcontent-%COMP%]     .layout{min-width:0px!important}#prejoin-container[_ngcontent-%COMP%]     .OT_root{padding:0!important}#background-effects-btn[_ngcontent-%COMP%]{position:absolute;z-index:2;background-color:var(--ov-secondary-color);bottom:5px;right:5px}.media-panel[_ngcontent-%COMP%]{background-color:var(--ov-light-color)}.media-panel-container[_ngcontent-%COMP%]{width:100%;padding:20px 0 20px 20px}.nickname-container[_ngcontent-%COMP%]{display:block!important;margin-bottom:0!important}.mat-form-field-appearance-fill[_ngcontent-%COMP%]   .mat-form-field-flex[_ngcontent-%COMP%]{border-radius:var(--ov-video-radius)}.buttons-container[_ngcontent-%COMP%]{border-radius:5px;padding:10px 0;height:100px;display:block!important}.join-btn-container[_ngcontent-%COMP%]{width:inherit;text-align:center}#join-button[_ngcontent-%COMP%]{width:100%;font-weight:700;color:var(--ov-text-color);background-color:var(--ov-tertiary-color);border-radius:var(--ov-video-radius)}@media only screen and (max-width: 480px){.container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:90%!important;margin:auto}.join-btn-container[_ngcontent-%COMP%]{padding:0 10px}.media-panel[_ngcontent-%COMP%]{align-items:flex-start!important}}@media only screen and (min-width: 480px) and (max-width: 959px){.media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:80%!important;min-width:80%!important;margin:auto}.buttons-container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%]{padding-top:0;max-width:600px}}"]
+                styles: [".container[_ngcontent-%COMP%]{height:calc(100% - 64px);padding:30px 60px;background-color:var(--ov-light-color)}.prejoin-toolbar[_ngcontent-%COMP%]{max-height:40px;height:40px}#toolbar[_ngcontent-%COMP%]{background-color:var(--ov-light-color);height:100%}#toolbar[_ngcontent-%COMP%]     .lang-button{height:25px!important;font-size:14px!important;line-height:0px;align-items:unset!important}.spacer[_ngcontent-%COMP%]{flex:1 1 auto}#branding-logo[_ngcontent-%COMP%]{border-radius:var(--ov-panel-radius);max-width:35px;max-height:35px;height:-webkit-fill-available;height:-moz-available;padding:10px;margin-right:10px}#layout-container[_ngcontent-%COMP%]{display:block!important}h4[_ngcontent-%COMP%]{margin-bottom:1px;font-weight:700}hr[_ngcontent-%COMP%]{margin:0}#prejoin-container[_ngcontent-%COMP%]{height:calc(100% - 40px)}#prejoin-container[_ngcontent-%COMP%]     .sidenav-container{padding-top:0!important}#prejoin-container[_ngcontent-%COMP%]     #background-effects-container{margin:0!important;max-height:100%!important;height:100%!important}#prejoin-container[_ngcontent-%COMP%]     .mat-drawer-container, #prejoin-container[_ngcontent-%COMP%]     .sidenav-menu, #prejoin-container[_ngcontent-%COMP%]     #session-container{background-color:transparent!important}#prejoin-container[_ngcontent-%COMP%]     .sidenav-menu{width:320px}#prejoin-container[_ngcontent-%COMP%]     .layout{min-width:0px!important}#prejoin-container[_ngcontent-%COMP%]     .OT_root{padding:0!important}#background-effects-btn[_ngcontent-%COMP%]{position:absolute;z-index:2;background-color:var(--ov-secondary-color);bottom:5px;right:5px}.media-panel[_ngcontent-%COMP%]{background-color:var(--ov-light-color)}.media-panel-container[_ngcontent-%COMP%]{width:100%;padding:20px 0 20px 20px}.nickname-container[_ngcontent-%COMP%]{display:none!important;margin-bottom:0!important}.mat-form-field-appearance-fill[_ngcontent-%COMP%]   .mat-form-field-flex[_ngcontent-%COMP%]{border-radius:var(--ov-video-radius)}.buttons-container[_ngcontent-%COMP%]{border-radius:5px;padding:10px 0;height:100px;display:block!important}.join-btn-container[_ngcontent-%COMP%]{width:inherit;text-align:center}#join-button[_ngcontent-%COMP%]{width:100%;font-weight:700;color:var(--ov-text-color);background-color:var(--ov-tertiary-color);border-radius:var(--ov-video-radius)}@media only screen and (max-width: 480px){.container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:90%!important;margin:auto}.join-btn-container[_ngcontent-%COMP%]{padding:0 10px}.media-panel[_ngcontent-%COMP%]{align-items:flex-start!important}}@media only screen and (min-width: 480px) and (max-width: 959px){.media-panel-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%]{padding:0}.nickname-container[_ngcontent-%COMP%], .buttons-container[_ngcontent-%COMP%], .join-btn-container[_ngcontent-%COMP%]{width:80%!important;min-width:80%!important;margin:auto}.buttons-container[_ngcontent-%COMP%], .media-panel-container[_ngcontent-%COMP%]{padding-top:0;max-width:600px}}"]
             }), t
         })(), Mk = (() => {
             class t {

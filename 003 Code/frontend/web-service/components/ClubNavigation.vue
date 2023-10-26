@@ -8,6 +8,7 @@
       padding-right: 20%;
       padding-bottom: 0;
       padding-top: 0;
+      height: 64px;
     "
   >
     <v-list-item
