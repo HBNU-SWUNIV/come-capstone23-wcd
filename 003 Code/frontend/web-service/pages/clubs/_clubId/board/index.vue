@@ -21,6 +21,7 @@
       <div style="display: flex; margin-top: auto; align-items: flex-end; flex-direction: row">
         <div style="width: 70%; margin-left: 15%;">
           <v-pagination
+            color="#424242"
             style="width: auto"
             v-model="pageNumber"
             :length="totalPages"
@@ -28,7 +29,7 @@
             @input="handlePageChange"
           ></v-pagination>
         </div>
-        <div>
+        <div style="margin: auto 0">
           <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
         </div>
       </div>
