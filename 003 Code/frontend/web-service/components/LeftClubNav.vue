@@ -10,7 +10,7 @@
   >
     <img
       :src="clubInfo.mainImageUrl"
-      style="width: 280px; height: 210px"
+      style="width: 320px; height: 240px; border-radius: 5px;"
     />
 
     <h1 style="font-size: 27px; margin-bottom: 5px;">{{ clubInfo.clubName }}</h1>
