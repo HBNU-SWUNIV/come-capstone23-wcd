@@ -101,7 +101,7 @@ export default {
         chatMessage: this.message,
         topic: this.clubId,
       };
-      fetch("http://211.115.222.246:5004/sendChatMessage", {
+      fetch("https://211.115.222.246:5007/sendChatMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

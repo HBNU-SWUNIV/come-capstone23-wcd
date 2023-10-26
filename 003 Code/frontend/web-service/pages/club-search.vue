@@ -24,8 +24,8 @@
           cols="6"
           style="padding: 0"
         >
-          <v-list-item :to="`/clubs/${club.id}`" router exact>
-            <v-list-item-content>
+          <v-list-item>
+            <v-list-item-content @click="goClubHome(club.id)" router exact style="cursor: pointer;">
               <div class="club-item">
                 <img :src="club.mainImageUrl" class="club-logo" />
                 <div style="padding-left: 15px;">
@@ -71,6 +71,9 @@ export default {
     };
   },
   methods: {
+    goClubHome(clubId){
+      this.$router.push(`/clubs/${clubId}`)
+    },
     async getClubs() {
       try {
         const access_token = this.$store.state.access_token;

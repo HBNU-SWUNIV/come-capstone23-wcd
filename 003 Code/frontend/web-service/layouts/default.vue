@@ -119,7 +119,7 @@
         <v-container
           style="
             max-width: 100%;
-            height: 100%;
+            height:100%;
             padding: 0;
             display: flex;
             justify-content: center;
@@ -305,7 +305,7 @@ export default {
     },
 
     async getSSE() {
-      const sse = new EventSource(`https://wcd.kro.kr/api/alarm-service/connect/${sessionStorage.getItem("user_id")}`
+      const sse = new EventSource(`https://211.115.222.246:5008/alarm-service/connect/${sessionStorage.getItem("user_id")}`
       );
       sse.addEventListener("connect", (e) => {
         const { data: receivedConnectData } = e;
@@ -371,7 +371,7 @@ export default {
         topicList: topicList, // 구독하려는 주제 리스트
       };
 
-      fetch("https://wcd.kro.kr/api/alarm-service/subscribe", {
+      fetch("https://211.115.222.246:5007/alarm-service/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -388,7 +388,7 @@ export default {
           //   chatMessage: "메시지내용",
           //   topic: 3,
           // };
-          // fetch("http://211.115.222.246:5004/sendChatMessage", {
+          // fetch("https://211.115.222.246:5008/sendChatMessage", {
           //   method: "POST",
           //   headers: {
           //     "Content-Type": "application/json",

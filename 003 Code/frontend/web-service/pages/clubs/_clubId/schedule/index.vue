@@ -1,8 +1,14 @@
 <template>
   <div style="width: 100%">
-    <div style="color: white; display: flex; flex-direction: row; justify-content: center;">
-
-      <div style="width:900px; padding: 20px; padding-right: 50px">
+    <div
+      style="
+        color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      "
+    >
+      <div style="width: 900px; padding: 20px; padding-right: 20px">
         <FullCalendar :options="calendarOptions" @dateClick="openModal" />
       </div>
       <!-- <v-btn @click="openModal">일정추가</v-btn> -->
@@ -37,6 +43,13 @@ export default {
           timeGrid: {
             dayMaxEventRows: 1, // adjust to 6 only for timeGridWeek/timeGridDay
           },
+        },
+        eventClick: function (info) {
+          const confirmation = confirm("삭제하시겠습니까?");
+          console.log(info.event)
+          if (confirmation) {
+            this.deleteEvent(info.event.id);
+          }
         },
         eventTextColor: "white",
         dateClick: this.openModal,
@@ -83,6 +96,27 @@ export default {
         console.log(err);
       }
     },
+    async deleteEvent(scheduleId){
+      try {
+        const access_token = this.$store.state.access_token;
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        };
+        await this.$axios
+          .delete(
+            `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${scheduleId}`,
+            config
+          )
+          .then((res) => {
+            console.log(res);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
     formatDate(date) {
       const year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
       const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -94,7 +128,6 @@ export default {
       newDate.setDate(newDate.getDate() + 8);
       this.yymm = this.formatDate(newDate);
       this.getSchedules(); // 스케줄 업데이트
-      
     },
   },
   created() {
