@@ -42,6 +42,15 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/board-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: notice-service
+          uri: lb://NOTICE-SERVICE
+          predicates:
+            - Path=/api/notice-service/clubs/{club-id}/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/notice-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+            - ClubMemberAuthorizationFilter
         - id: schedule-service
           uri: lb://SCHEDULE-SERVICE
           predicates:
