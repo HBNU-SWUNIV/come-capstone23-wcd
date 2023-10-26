@@ -1,29 +1,38 @@
 <template>
-  <div style="width: 90%; padding: 30px; margin: auto">
-    <h1 style="margin-bottom: 10px">게시글 작성</h1>
-    <v-form @submit.prevent="CreateBoardSubmit">
-      <v-text-field
-        v-model="title"
-        label="게시글 제목"
-        placeholder="게시글 제목"
-        required
-        type="text"
-      ></v-text-field>
-      <ckeditor
-        :editor="editor"
-        v-model="editorData"
-        :config="editorConfig"
-      ></ckeditor>
+  <div style="width: 100%; height: 100%">
+    <v-form style="height: 100%" @submit.prevent="CreateBoardSubmit">
+      <div style="height: 100%; display: flex; flex-direction: column">
+        <div style="height: 10%">
+          <v-text-field
+            v-model="title"
+            label="게시글 제목"
+            placeholder="게시글 제목"
+            required
+            type="text"
+          ></v-text-field>
+        </div>
+        <ckeditor
+          :editor="editor"
+          v-model="editorData"
+          :config="editorConfig"
+        ></ckeditor>
 
-      <v-btn style="margin-top: 20px; color: rgb(255, 125, 125)" @click="cancel"
-        >취소</v-btn
-      >
-      <v-btn
-        type="submit"
-        :disabled="!editorData"
-        style="margin-top: 20px; color: rgb(125, 255, 125)"
-        >게시</v-btn
-      >
+        <div style="margin-top: auto; display: flex; flex-direction: row-reverse; align-items: flex-end; width: 100%; height: 10%">
+          <div >
+            <v-btn style="color: rgb(255, 125, 125)" @click="cancel"
+            >취소
+            </v-btn>
+          </div>
+          <div>
+            <v-btn
+              type="submit"
+              :disabled="!editorData"
+              style="color: rgb(125, 255, 125)"
+            >게시
+            </v-btn>
+          </div>
+        </div>
+      </div>
     </v-form>
   </div>
 </template>
@@ -96,8 +105,9 @@ export default {
 
 <style>
 .ck-editor__editable {
-  height: 400px;
+  height: 620px;
 }
+
 .ck-content {
   font-size: 15px;
 }
