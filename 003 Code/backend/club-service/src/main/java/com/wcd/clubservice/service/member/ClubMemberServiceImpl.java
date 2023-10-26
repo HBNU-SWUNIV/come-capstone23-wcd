@@ -61,6 +61,7 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             .isApproval(isApproval)
             .build();
 
+        log.info("alarmService 시작");
         alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
                 .clubId(clubId)
                 .userId(userId)
