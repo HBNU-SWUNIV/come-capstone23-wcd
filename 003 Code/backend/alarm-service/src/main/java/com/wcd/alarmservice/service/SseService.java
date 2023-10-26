@@ -74,9 +74,12 @@ public class SseService {
      */
     private void sendToClubMembers(RequestJoinClub requestJoinClub) {
         ResponseClubMemberIdsByClubId clubMemberIds = clubServiceClient.getClubMemberIds(requestJoinClub.getClubId());
-        String clubName = clubServiceClient.getClubNameById(requestJoinClub.getClubId());
+
+        log.info("clubMemberIds = {}", clubMemberIds);
 
         if(clubMemberIds != null) {
+            String clubName = clubServiceClient.getClubNameById(requestJoinClub.getClubId());
+
             clubMemberIds.getUserIdList()
                     .forEach(userId -> {
                         SseEmitter emitter = emitterRepository.get(userId);
