@@ -1,32 +1,36 @@
 <template>
-  <div style="width: 100%">
-    <div style="color: white; display: flex; flex-direction: row">
-      <div style="width: 100%; padding: 20px; padding-right: 20px">
-
-        <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
-
-        <div style="margin-top: 20px" class="post-columns">
-          <div
-            v-for="post in boards"
-            :key="post.id"
-            class="post-container"
-            @click="goBoardDetail(clubId, post.id)"
-            style="cursor: pointer;"
-          >
-            <!-- 게시물 내용을 표시하는 부분 -->
-            <div class="post-content">
-              <h3>{{ post.title }}</h3>
-              <p class="post-writer">작성자: {{ post.writerName }}</p>
-              <p class="post-date">{{ formatDate(post.updateAt) }}</p>
-            </div>
-          </div>
+  <div style="width: 100%; height: 100%">
+    <div style="height: 100%; color: white; display: flex; flex-direction: column">
+      <div style="width: 100%;">
+        <div
+          v-for="post in boards"
+          :key="post.id"
+          class="post-container"
+          @click="goBoardDetail(clubId, post.id)"
+          style="width: 100%; display: flex; flex-direction: row; cursor: pointer;"
+        >
+          <!-- 게시물 내용을 표시하는 부분 -->
+          <div style="width: 80%; height: 100%; display: flex; align-items: center; padding-left: 2%"><p
+            class="post-title">{{ post.title }}</p></div>
+          <div style="width: 10%; height: 100%; display: flex; align-items: center"><p class="post-writer">
+            {{ post.writerName }}</p></div>
+          <div style="width: 10%; height: 100%; display: flex; align-items: center"><p class="post-date">
+            {{ formatDate(post.updateAt) }}</p></div>
         </div>
-        <v-pagination
-          v-model="pageNumber"
-          :length="totalPages"
-          :total-visible="10"
-          @input="handlePageChange"
-        ></v-pagination>
+      </div>
+      <div style="display: flex; margin-top: auto; align-items: flex-end; flex-direction: row">
+        <div style="width: 70%; margin-left: 15%;">
+          <v-pagination
+            style="width: auto"
+            v-model="pageNumber"
+            :length="totalPages"
+            :total-visible="10"
+            @input="handlePageChange"
+          ></v-pagination>
+        </div>
+        <div>
+          <v-btn :to="`/clubs/${clubId}/board-create`">게시글 작성</v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -35,14 +39,13 @@
 <script>
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       boards: [], // API에서 받아온 데이터를 저장할 배열
       clubId: null,
-      pageNumber:1,
-      totalPages:null,
+      pageNumber: 1,
+      totalPages: null,
     };
   },
   methods: {
@@ -57,6 +60,7 @@ export default {
           params: {
             page: this.pageNumber - 1,
             size: 10,
+            sort: "id,desc"
           },
         };
         await this.$axios
@@ -105,11 +109,7 @@ export default {
 
 <style scoped>
 /* CSS for styling 게시글 (post) section */
-.post-columns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Adjust as needed */
-}
+
 .post-container {
   width: calc(50% - 10px);
   background-color: #272727;
@@ -120,13 +120,9 @@ export default {
   flex-direction: column;
 }
 
-.post-content {
-  flex: 1;
-}
-
-.post-content h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+.post-title {
+  font-size: 14px;
+  margin: 0;
 }
 
 .post-writer {

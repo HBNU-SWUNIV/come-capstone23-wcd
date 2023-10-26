@@ -1,8 +1,8 @@
 <template>
-  <div style="width: 100%">
-    <div style="color: white; display: flex; flex-direction: row">
+  <div style="width: 100%; height: 100%">
+    <div style="color: white; height: 100%; display: flex; flex-direction: row">
       <LeftClubNav/>
-      <div style="width: 100%; padding:10px; padding-top: 40px; padding-left: 0; padding-right: 30px;">
+      <div style="width: 100%; height: 100%;">
         <div class="d-flex">
           <NoticeCard />
           <ScheduleCard />
