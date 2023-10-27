@@ -44,6 +44,8 @@
     "workbox-sw": "^7.0.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.12.3"
+    "@nuxtjs/vuetify": "^1.12.3",
+    "@types/sockjs-client": "^1.5.3",
+    "@types/stompjs": "^2.3.7"
   }
 }

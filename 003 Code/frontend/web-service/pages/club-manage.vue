@@ -1,3 +1,7 @@
 <template>
-    <div>club manager</div>
+  <div>club manager</div>
 </template>
+
+<script>
+
+</script>

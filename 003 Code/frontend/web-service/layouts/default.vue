@@ -109,7 +109,7 @@
         </v-btn>
         <ChatModal v-if="isModalVisible" @close-modal="closeModal" />
         <v-btn icon>
-          <v-icon>mdi-account-circle</v-icon>
+          <v-icon @click="goMyInfoPage">mdi-account-circle</v-icon>
         </v-btn>
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
           <v-icon>mdi-bell</v-icon>
@@ -119,7 +119,7 @@
         <v-container
           style="
             max-width: 100%;
-            height:100%;
+            height: 100%;
             padding: 0;
             display: flex;
             justify-content: center;
@@ -141,7 +141,7 @@
           </v-list-item>
         </v-list>
         <v-list style="padding: 0">
-          <v-list-item
+          <!-- <v-list-item
             v-for="(notification, i) in notifications"
             :key="i"
             :to="notification.to"
@@ -159,6 +159,11 @@
               <v-list-item-subtitle>{{
                 notification.time
               }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item> -->
+          <v-list-item v-for="(notification, i) in noti" :key="i">
+            <v-list-item-content>
+              <v-list-item-title>{{ notification }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -242,9 +247,13 @@ export default {
         },
       ],
       isModalVisible: false,
+      noti: [],
     };
   },
   methods: {
+    goMyInfoPage() {
+      this.$router.push("/myprofile");
+    },
     async Logout() {
       const confirmed = window.confirm("로그아웃하시겠습니까?");
 
@@ -305,20 +314,24 @@ export default {
     },
 
     async getSSE() {
-      const userId = sessionStorage.getItem("user_id")
-      const sse = new EventSource(`https://wcd.kro.kr/api/alarm-service/connect/${userId}`
+      const userId = sessionStorage.getItem("user_id");
+      const sse = new EventSource(
+        `https://wcd.kro.kr/api/alarm-service/connect/${userId}`
       );
       sse.addEventListener("connect", (e) => {
         const { data: receivedConnectData } = e;
         console.log("connect event data: ", receivedConnectData); // "connected!"
+        this.noti.push(receivedConnectData);
       });
       sse.addEventListener("notifyJoinClubMember", (e) => {
         const { data: receivedConnectData } = e;
         console.log("join event data: ", receivedConnectData); // "connected!"
+        this.noti.push(receivedConnectData);
       });
       sse.addEventListener("notifyCreateSchedule", (e) => {
         const { data: receivedConnectData } = e;
         console.log("schedule event data: ", receivedConnectData); // "connected!"
+        this.noti.push(receivedConnectData);
       });
     },
     getImageDataUri(imageData) {
@@ -380,7 +393,7 @@ export default {
         topicList: topicList, // 구독하려는 주제 리스트
       };
 
-      fetch("https://211.115.222.246:5007/alarm-service/subscribe", {
+      fetch("https://wcd.kro.kr/api/fcm-service/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

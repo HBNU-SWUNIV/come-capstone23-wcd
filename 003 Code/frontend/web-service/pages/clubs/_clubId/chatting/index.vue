@@ -86,7 +86,7 @@ export default {
       if (this.stompClient) {
         this.stompClient.send("/app/chat/send", {}, JSON.stringify(chat));
 
-        this.sendAlarm();
+        // this.sendAlarm();
 
         this.message = "";
       } else {
@@ -101,7 +101,7 @@ export default {
         chatMessage: this.message,
         topic: this.clubId,
       };
-      fetch("https://211.115.222.246:5007/sendChatMessage", {
+      fetch("https://wcd.kro.kr/api/fcm-service", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
