@@ -23,7 +23,8 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: '*'
+            allowedOrigins: 
+              - '*'
               # - 'http://localhost:3000'
               # - 'https://localhost:3000'
               # - 'ws://localhost:3000'
@@ -33,7 +34,7 @@ spring:
               # - 'https://wcd.kro.kr'
               # - 'ws://wcd.kro.kr'
               # - 'wss://wcd.kro.kr'
-            allow-credentials: false
+            allow-credentials: true
             allowedHeaders: '*'
             exposedHeaders: '*'
             allowedMethods:
