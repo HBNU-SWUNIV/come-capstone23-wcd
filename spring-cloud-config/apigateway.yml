@@ -66,6 +66,10 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/fcm-service/(?<segment>.*), /$\{segment}
+        - id: websocket-sockjs-route
+          uri: lb://CHATTING-SERVICE
+          predicate:
+            - Path=/api/chatting-service/info/**
         - id: chatting-service
           uri: lb://CHATTING-SERVICE
           predicates:
