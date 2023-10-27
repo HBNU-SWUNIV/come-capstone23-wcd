@@ -14,8 +14,6 @@ spring:
       import:
         - classpath:/bootstrap.yml
     gateway:
-      httpclient:
-        websockets: true
       default-filters:
         - name: GlobalFilter
           args:
