@@ -34,7 +34,7 @@ spring:
               # - 'https://wcd.kro.kr'
               # - 'ws://wcd.kro.kr'
               # - 'wss://wcd.kro.kr'
-            allow-credentials: true
+            allow-credentials: false
             allowedHeaders: '*'
             exposedHeaders: '*'
             allowedMethods:
