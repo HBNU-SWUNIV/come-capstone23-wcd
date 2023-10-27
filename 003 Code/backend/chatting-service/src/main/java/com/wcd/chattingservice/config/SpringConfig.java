@@ -24,7 +24,7 @@ public class SpringConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // stomp 접속 주소 url => /ws
         registry.addEndpoint("/ws") // 연결될 엔드포인트
-                .setAllowedOrigins("https://wcd.kro.kr", "http://wcd.kro.kr", "http://localhost:3000", "https://localhost:3000", "http://localhost:8080", "10.1.1.66")
+                .setAllowedOrigins("*")
                 .withSockJS(); // SocketJS 를 연결한다는 설정
     }
 
