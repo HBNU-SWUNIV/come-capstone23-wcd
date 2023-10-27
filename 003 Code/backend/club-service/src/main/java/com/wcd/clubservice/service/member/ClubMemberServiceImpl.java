@@ -61,13 +61,15 @@ public class ClubMemberServiceImpl implements ClubMemberService {
             .isApproval(isApproval)
             .build();
 
+        Long id = clubMemberRepository.saveAndFlush(clubMember).getId();
+
         log.info("alarmService 시작");
         alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
                 .clubId(clubId)
                 .userId(userId)
                 .build());
 
-        return clubMemberRepository.save(clubMember).getId();
+        return id;
     }
 
     @Override
