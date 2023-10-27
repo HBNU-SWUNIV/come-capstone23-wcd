@@ -63,7 +63,7 @@ public class ClubServiceImpl implements ClubService {
             e.printStackTrace();
         }
 
-        Long savedClubId = clubRepository.save(requestClub.toEntity(hostId, mainImageUrl)).getId();
+        Long savedClubId = clubRepository.saveAndFlush(requestClub.toEntity(hostId, mainImageUrl)).getId();
 
         // *** 모임 생성 시 모임원에 host 추가할 필요 있음 ***
         clubMemberService.createClubMember(savedClubId, hostId);
