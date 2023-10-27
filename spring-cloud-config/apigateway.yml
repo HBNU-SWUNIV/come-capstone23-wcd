@@ -74,22 +74,22 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
             - CorsRemoveFilter
-        - id: chatting-wss
-          uri: lb:wss://CHATTING-SERVICE
-          predicates:
-            - Path=/api/chatting-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
-            - CorsRemoveFilter
-        - id: chatting-ws
-          uri: lb:ws://CHATTING-SERVICE
-          predicates:
-            - Path=/api/chatting-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
-            - CorsRemoveFilter
+        # - id: chatting-wss
+        #   uri: lb:wss://CHATTING-SERVICE
+        #   predicates:
+        #     - Path=/api/chatting-service/**
+        #   filters:
+        #     - RemoveRequestHeader=Cookie
+        #     - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+        #     - CorsRemoveFilter
+        # - id: chatting-ws
+        #   uri: lb:ws://CHATTING-SERVICE
+        #   predicates:
+        #     - Path=/api/chatting-service/**
+        #   filters:
+        #     - RemoveRequestHeader=Cookie
+        #     - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+        #     - CorsRemoveFilter
         - id: alarm-service
           uri: lb://ALARM-SERVICE
           predicates:
