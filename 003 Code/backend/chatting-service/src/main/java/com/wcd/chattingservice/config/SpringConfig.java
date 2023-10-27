@@ -23,8 +23,9 @@ public class SpringConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // stomp 접속 주소 url => /ws
-        registry.addEndpoint("/ws"); // 연결될 엔드포인트
-//                .withSockJS(); // SocketJS 를 연결한다는 설정
+        registry.addEndpoint("/ws") // 연결될 엔드포인트
+                .setAllowedOrigins("*")
+                .withSockJS(); // SocketJS 를 연결한다는 설정
     }
 
     // STOMP에서 사용하는 메시지 브로커 설정
