@@ -71,21 +71,21 @@ spring:
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, HOST
+            - RemoveRequestHeader=Cookie, Host
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-wss
           uri: lb:wss://CHATTING-SERVICE
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, HOST
+            - RemoveRequestHeader=Cookie, Host
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-ws
           uri: lb:ws://CHATTING-SERVICE
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, HOST
+            - RemoveRequestHeader=Cookie, Host
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: alarm-service
           uri: lb://ALARM-SERVICE
