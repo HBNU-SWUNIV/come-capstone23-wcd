@@ -2,10 +2,7 @@
   <div
     style="
       height: 100%;
-      /*padding: 20px;*/
-      /*padding-right: 30px;*/
-      /*padding-left: 50px;*/
-      /*padding-top: 50px;*/
+      padding: 40px;
     "
   >
     <img

@@ -305,7 +305,8 @@ export default {
     },
 
     async getSSE() {
-      const sse = new EventSource(`https://211.115.222.246:5008/connect/${sessionStorage.getItem("user_id")}`
+      const userId = sessionStorage.getItem("user_id")
+      const sse = new EventSource(`https://wcd.kro.kr/api/alarm-service/connect/${userId}`
       );
       sse.addEventListener("connect", (e) => {
         const { data: receivedConnectData } = e;
