@@ -14,8 +14,6 @@ spring:
       import:
         - classpath:/bootstrap.yml
     gateway:
-      httpclient:
-        websockets: true
       default-filters:
         - name: GlobalFilter
           args:
@@ -25,17 +23,17 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins:
+            allowedOrigins: '*'
               # - 'http://localhost:3000'
-              - 'https://localhost:3000'
-              - 'ws://localhost:3000'
-              - 'wss://localhost:3000'
-              - 'http://localhost:8080'
-              - 'http://wcd.kro.kr'
-              - 'https://wcd.kro.kr'
-              - 'ws://wcd.kro.kr'
-              - 'wss://wcd.kro.kr'
-            allow-credentials: true
+              # - 'https://localhost:3000'
+              # - 'ws://localhost:3000'
+              # - 'wss://localhost:3000'
+              # - 'http://localhost:8080'
+              # - 'http://wcd.kro.kr'
+              # - 'https://wcd.kro.kr'
+              # - 'ws://wcd.kro.kr'
+              # - 'wss://wcd.kro.kr'
+            # allow-credentials: true
             allowedHeaders: '*'
             exposedHeaders: '*'
             allowedMethods:
