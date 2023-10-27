@@ -71,21 +71,24 @@ spring:
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, Host
+            - RemoveRequestHeader=Cookie
+            - RemoveResponseHeader=Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-wss
           uri: lb:wss://CHATTING-SERVICE
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, Host
+            - RemoveRequestHeader=Cookie
+            - RemoveResponseHeader=Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-ws
           uri: lb:ws://CHATTING-SERVICE
           predicates:
             - Path=/api/chatting-service/**
           filters:
-            - RemoveRequestHeader=Cookie, Host
+            - RemoveRequestHeader=Cookie
+            - RemoveResponseHeader=Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: alarm-service
           uri: lb://ALARM-SERVICE
