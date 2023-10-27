@@ -34,9 +34,6 @@ public class CorsRemoveFilter extends AbstractGatewayFilterFactory<CorsRemoveFil
             headers.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
             headers.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS);
 
-            // 새로운 값으로 ACCESS_CONTROL_ALLOW_CREDENTIALS 설정
-            headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "false");
-
             log.info("CorsRemoveFilter => Headers after removal: {}", headers);
 
             // 수정된 헤더로 응답 보내기
