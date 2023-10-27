@@ -64,10 +64,13 @@ public class ClubMemberServiceImpl implements ClubMemberService {
         Long id = clubMemberRepository.saveAndFlush(clubMember).getId();
 
         log.info("alarmService 시작");
-        alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
-                .clubId(clubId)
-                .userId(userId)
-                .build());
+
+        if(clubMemberRepository.countByClubId(clubId) > 1) {
+            alarmServiceClient.notifyJoinClub(RequestJoinClub.builder()
+                    .clubId(clubId)
+                    .userId(userId)
+                    .build());
+        }
 
         return id;
     }
