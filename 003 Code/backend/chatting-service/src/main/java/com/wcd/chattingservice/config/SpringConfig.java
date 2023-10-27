@@ -2,15 +2,23 @@ package com.wcd.chattingservice.config;
 
 import com.wcd.chattingservice.handler.StompHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+
+import java.security.Principal;
+import java.util.Map;
 
 @Configuration
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor
+@Slf4j
 public class SpringConfig implements WebSocketMessageBrokerConfigurer {
     private final StompHandler stompHandler; // jwt 인증
 
@@ -24,7 +32,8 @@ public class SpringConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // stomp 접속 주소 url => /ws
         registry.addEndpoint("/ws") // 연결될 엔드포인트
-                .setAllowedOrigins("https://wcd.kro.kr", "http://wcd.kro.kr", "http://localhost:3000", "https://localhost:3000", "http://localhost:8080", "10.1.1.66")
+                .setAllowedOrigins("https://wcd.kro.kr", "http://wcd.kro.kr", "http://localhost:3000", "https://localhost:3000", "http://localhost:8080", "ws://localhost:3000", "wss://localhost:3000", "ws://wcd.kro.kr", "wss://wcd.kro.kr", "10.1.1.66")
+                .setHandshakeHandler(new MyHandshakeHandler())
                 .withSockJS(); // SocketJS 를 연결한다는 설정
     }
 
@@ -40,6 +49,20 @@ public class SpringConfig implements WebSocketMessageBrokerConfigurer {
         // 메시지 가공 처리가 필요한 경우, 가공 핸들러로 메시지를 라우팅 되도록하는 설정
         // 메시지를 발행하는 요청 url => 즉 메시지 보낼 때
         registry.setApplicationDestinationPrefixes("/app");
+    }
+
+    // URL을 로깅하기 위한 커스텀 핸드셰이크 핸들러
+    private static class MyHandshakeHandler extends DefaultHandshakeHandler {
+        @Override
+        protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+            Principal principal = super.determineUser(request, wsHandler, attributes);
+
+            // 연결된 URL을 로그로 출력
+            String connectionUrl = request.getURI().toString();
+            log.info("WebSocket 연결 URL: {}", connectionUrl);
+
+            return principal;
+        }
     }
 
 //    @Override
