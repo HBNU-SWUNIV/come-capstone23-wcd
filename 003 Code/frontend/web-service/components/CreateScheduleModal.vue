@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <h1>일정</h1>
+      <h1>{{ modalData }} 일정</h1>
       <v-form @submit.prevent="addEvent">
         <div style="margin-top: 30px">
           <v-text-field
@@ -116,11 +116,14 @@
   
 <script>
 export default {
+  props: {
+    modalData: String, // modalData prop을 정의
+  },
   data() {
     return {
       title: "",
       content: "",
-      start: "",
+      start: this.modalData,
       startHour: "00",
       startMinute: "00",
       end: "",

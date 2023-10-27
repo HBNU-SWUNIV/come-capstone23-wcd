@@ -32,6 +32,11 @@
         @click="joinClub"
         >모임 가입</v-btn
       >
+      <v-btn
+        v-if="clubmembers.map((item) => item.userId).includes(parseInt(user_id)) && !(this.user_id == clubInfo.hostId)"
+        @click="outClub"
+        >모임 탈퇴</v-btn
+      >
     </div>
   </div>
 </template>
@@ -114,6 +119,40 @@ export default {
             .then(async(res) => {
               console.log(res);
               alert("가입되었습니다.");
+              await this.getMemberInfo(this.$route);
+            });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+    async outClub() {
+      let outData = {
+        userId: this.user_id,
+        clubId: this.$route.params.clubId,
+      };
+
+      const confirmOut = window.confirm("모임에서 탈퇴하시겠습니까?");
+
+      if (confirmOut) {
+        try {
+          const access_token = this.$store.state.access_token;
+          const config = {
+            headers: {
+              "Content-Type": "application/json", // JSON 형식으로 변경
+              Authorization: `Bearer ${access_token}`,
+            },
+          };
+
+          await this.$axios
+            .delete(
+              `/club-service/clubs/${this.$route.params.clubId}/members/${this.user_id}`,
+              JSON.stringify(outData),
+              config
+            )
+            .then(async(res) => {
+              console.log(res);
+              alert("탈퇴되었습니다.");
               await this.getMemberInfo(this.$route);
             });
         } catch (err) {

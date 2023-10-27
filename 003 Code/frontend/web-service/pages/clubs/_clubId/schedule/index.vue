@@ -10,9 +10,41 @@
     >
       <div style="width: 900px; padding: 20px; padding-right: 20px">
         <FullCalendar :options="calendarOptions" @dateClick="openModal" />
+        <v-dialog
+          v-model="eventDialog"
+          max-width="500"
+          persistent
+          @click:outside="eventDialog = false"
+        >
+          <v-card>
+            <!-- 제목부분 스타일 조정 -->
+            <v-card-title>
+              {{ eventTitle }}
+            </v-card-title>
+            <v-divider></v-divider>
+
+            <!-- 시간표시부분 스타일 조정 -->
+            <v-card-text>
+              <span class="font-weight-medium">{{ eventTimeRange }}</span>
+            </v-card-text>
+
+            <v-card-title>
+              {{ eventDescription }}
+            </v-card-title>
+
+            <!-- 액션버튼 스타일 조정 -->
+            <v-card-actions class="justify-end mt-5">
+              <v-btn style="color:rgb(125, 125, 255)">수정</v-btn>
+              <v-btn style="color:rgb(255, 125, 125)" @click="deleteEvent">삭제</v-btn>
+              <v-btn @click="eventDialog = false"
+                >닫기</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
       <!-- <v-btn @click="openModal">일정추가</v-btn> -->
-      <CreateScheduleModal v-if="isModalVisible" @close-modal="closeModal" />
+      <CreateScheduleModal v-if="isModalVisible" @close-modal="closeModal" :modalData="dataForModal"/>
     </div>
   </div>
 </template>
@@ -44,26 +76,42 @@ export default {
             dayMaxEventRows: 1, // adjust to 6 only for timeGridWeek/timeGridDay
           },
         },
-        eventClick: function (info) {
-          const confirmation = confirm("삭제하시겠습니까?");
-          console.log(info.event)
-          if (confirmation) {
-            this.deleteEvent(info.event.id);
-          }
-        },
+        eventClick: this.eventClick,
         eventTextColor: "white",
         dateClick: this.openModal,
         datesSet: this.handleDateChange,
       },
+      dataForModal: "",
       isModalVisible: false,
       // schedules: [],
       yymm: this.formatDate(new Date()),
+      eventDialog: false,
+      eventTitle: "",
+      eventDescription:"",
+      scheduleId: null,
     };
   },
   methods: {
-    openModal() {
+    eventClick(info) {
+      this.scheduleId = info.event.id
+      console.log(this.scheduleId)
+      this.eventDialog = true;
+      this.eventTitle = info.event.title;
+      this.eventDescription = info.event.extendedProps.description;
+
+      const startTime = info.event.start.toLocaleString();
+      if (info.event.end) {
+        const endTime = new Date(info.event.end.getTime() - 1).toLocaleString();
+        this.eventTimeRange = `${startTime} - ${endTime}`;
+      } else {
+        eventTimeRange.value = startTime;
+      }
+    },
+    openModal(arg) {
       // 날짜를 클릭할 때 모달을 표시
       this.isModalVisible = true;
+      this.dataForModal = arg.dateStr;
+      console.log(this.dataForModal)
     },
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
@@ -96,25 +144,30 @@ export default {
         console.log(err);
       }
     },
-    async deleteEvent(scheduleId){
-      try {
-        const access_token = this.$store.state.access_token;
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        };
-        await this.$axios
-          .delete(
-            `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${scheduleId}`,
-            config
-          )
-          .then((res) => {
-            console.log(res);
-          });
-      } catch (err) {
-        console.log(err);
+    async deleteEvent() {
+      const confirmation = confirm("삭제하시겠습니까?");
+
+      if (confirmation) {
+        try {
+          const access_token = this.$store.state.access_token;
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+          };
+          await this.$axios
+            .delete(
+              `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${this.scheduleId}`,
+              config
+            )
+            .then((res) => {
+              console.log(res);
+              this.eventDialog = false;
+            });
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     formatDate(date) {

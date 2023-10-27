@@ -5,9 +5,9 @@
         채팅방
       </h2>
 
-      <v-list style="background-color: white; padding: 0">
+      <v-list class="drawer-content" style="height:400px; background-color: white; padding: 0">
         <v-list-item
-          v-for="(myclub, i) in displayedClubs"
+          v-for="(myclub, i) in myclubs"
           :key="i"
           @click="openChattingRoom(myclub.id)"
           style="color: black"
@@ -68,12 +68,6 @@ export default {
     openChattingRoom(clubId) {
       this.$emit("close-modal");
       this.$router.push(`/clubs/${clubId}/chatting`);
-    },
-  },
-  computed: {
-    displayedClubs() {
-      // 최대 5개 클럽만 표시
-      return this.myclubs.slice(0, 5);
     },
   },
   created() {
