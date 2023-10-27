@@ -80,6 +80,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+            - WebSocket=ws # Enable WebSocket support
         - id: chatting-ws
           uri: lb:ws://CHATTING-SERVICE
           predicates:
@@ -87,6 +88,9 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
+            - SetPath=/ws/**
+            - Hystrix=chatting-ws-hystrix # Optional: Add Hystrix circuit breaker for resilience
+            - WebSocket=ws # Enable WebSocket support
         - id: alarm-service
           uri: lb://ALARM-SERVICE
           predicates:
