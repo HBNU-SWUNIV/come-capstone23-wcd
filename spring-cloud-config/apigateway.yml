@@ -72,6 +72,7 @@ spring:
             - Path=/api/chatting-service/**
           filters:
             - RemoveRequestHeader=Cookie, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
+            - AddResponseHeader=Access-Control-Allow-Credentials, false
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-wss
           uri: lb:wss://CHATTING-SERVICE
@@ -79,6 +80,7 @@ spring:
             - Path=/api/chatting-service/**
           filters:
             - RemoveRequestHeader=Cookie, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
+            - AddResponseHeader=Access-Control-Allow-Credentials, false
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: chatting-ws
           uri: lb:ws://CHATTING-SERVICE
@@ -86,6 +88,7 @@ spring:
             - Path=/api/chatting-service/**
           filters:
             - RemoveRequestHeader=Cookie, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials
+            - AddResponseHeader=Access-Control-Allow-Credentials, false
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
         - id: alarm-service
           uri: lb://ALARM-SERVICE
