@@ -99,9 +99,9 @@
                 @click="editComment(reply.id)"
                 >수정</span
               >
-              <span class="action-text" @click="replyComment(reply.id)"
+              <!-- <span class="action-text" @click="replyComment(reply.id)"
                 >답글</span
-              >
+              > -->
               <span
                 v-if="reply.writerId == user_id"
                 class="action-text"
