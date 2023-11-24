@@ -99,9 +99,9 @@
                 @click="editComment(reply.id)"
                 >수정</span
               >
-              <span class="action-text" @click="replyComment(reply.id)"
+              <!-- <span class="action-text" @click="replyComment(reply.id)"
                 >답글</span
-              >
+              > -->
               <span
                 v-if="reply.writerId == user_id"
                 class="action-text"
@@ -216,7 +216,7 @@ export default {
           };
           await this.$axios
             .delete(
-              `/club-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
+              `/board-service/boards/${this.$route.params.boardId}/posts/${this.$route.params.boardId}`,
               config
             )
             .then((res) => {
