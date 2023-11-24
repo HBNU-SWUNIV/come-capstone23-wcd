@@ -25,10 +25,10 @@ public class Schedule extends BaseEntity {
 
     private String description;
 
-    @Column(name = "start")
+    @Column(name = "start_time")
     private LocalDateTime start;
 
-    @Column(name = "end")
+    @Column(name = "end_time")
     private LocalDateTime end;
 
     @Column(name = "all_day")
