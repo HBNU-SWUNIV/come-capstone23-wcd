@@ -216,7 +216,7 @@ export default {
           };
           await this.$axios
             .delete(
-              `/club-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
+              `/board-service/boards/${this.$route.params.boardId}/posts/${this.$route.params.boardId}`,
               config
             )
             .then((res) => {
