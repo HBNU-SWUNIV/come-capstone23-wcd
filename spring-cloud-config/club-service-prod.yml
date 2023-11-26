@@ -13,7 +13,7 @@ spring:
         dialect: "{cipher}AQA9G+89tJBSbPFlGciphEBcNa5MpD66RAxy7lIBtEWDoSqIOY1IdXy8N+WTEcVItgg4Xk3UT5qRVnXngwn1e2BuezX4r3XXdVpZbz4TM77gwZ5cYPSTxqNImp18IhLUtko9WUexs0Nobcqu2ImYl8vW1OCLcblGSlaY8CSc/Z8C2OGQMhBFlV2vcX/45yZwWKRNyrN2GQyp+34X2S+cFgBxaZAqFpZYPaSCTpkfACyClgj7kXPHnDVwgl5ObBSYwYtaTDbsVbPq/xscjxwO7SauFllayzTQyVKuzby+Jmave7/srSblCcofB/K7MhnXqACdatzjkB6fK/ugKT+OQEJH7ejIsnfnZTMaktK9HdVP0GdqEcPaIbzO0cBO5mGz/rbRZikkBQdYwxh4ZUl+B/cMjXedSUEg5rAAkh8dKvgPvg=="
 
 file:
-  dir: /root/image/
+  dir: /root/images/
   url: "{cipher}AQAPrvQacIk1dSxbDUfMRHiYXwRtbG1l3mGcpj+pCZEpOf8UNBL1yR7RoiTX2CW9qy9pspTSPtwTo9bJzTiQ4ahoNovJnn4RPdaFOE7j5hD5bM58J++nxQIiyQyuaUw+78u/ewsaomGMZr3ljtl20iO15PjWj4QkaDq8e1tDVbLZ8I6CgDKTFE+eYi7gNgSEYGAodrnIdLMetW/xAa04+XM7wGmY3yVhJIc4N7MLlejgLDMG6sMqWF2ZV/9YegTA339EQ8srMK51hHdySDJTAQavdaYdMMvXZlWU0Y5j9oDrUW8z/xvwHBvs1WJz/BeCkF4sw81bJ/5yIiQ2SqPEdVjbdNfiX+qAT5iXNGcQCAPpTkXKd/eVldQCEBerrWJBD23VbdFAiQIZbxqL1XcEdw3G"
 
 logging:
