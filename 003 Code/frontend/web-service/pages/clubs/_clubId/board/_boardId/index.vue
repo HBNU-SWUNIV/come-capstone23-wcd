@@ -216,13 +216,13 @@ export default {
           };
           await this.$axios
             .delete(
-              `/board-service/boards/${this.$route.params.boardId}/posts/${this.$route.params.boardId}`,
+              `/board-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.boardId}`,
               config
             )
             .then((res) => {
               console.log(res);
               alert("게시글이 삭제되었습니다.");
-              this.$router.push(`/`);
+              this.$router.push(`/clubs/${this.$route.params.clubId}/board`);
             });
         } catch (err) {
           console.log(err);

@@ -34,7 +34,7 @@
 
             <!-- 액션버튼 스타일 조정 -->
             <v-card-actions class="justify-end mt-5">
-              <v-btn style="color:rgb(125, 125, 255)">수정</v-btn>
+              <v-btn style="color:rgb(125, 125, 255)" @click="editEvent">수정</v-btn>
               <v-btn style="color:rgb(255, 125, 125)" @click="deleteEvent">삭제</v-btn>
               <v-btn @click="eventDialog = false"
                 >닫기</v-btn
@@ -169,6 +169,9 @@ export default {
           console.log(err);
         }
       }
+    },
+    async editEvent() {
+      console.log("일정 수정 기능구현")
     },
     formatDate(date) {
       const year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
