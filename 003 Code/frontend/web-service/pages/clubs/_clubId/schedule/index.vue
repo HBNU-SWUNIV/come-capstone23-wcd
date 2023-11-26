@@ -34,17 +34,23 @@
 
             <!-- 액션버튼 스타일 조정 -->
             <v-card-actions class="justify-end mt-5">
-              <v-btn style="color:rgb(125, 125, 255)">수정</v-btn>
-              <v-btn style="color:rgb(255, 125, 125)" @click="deleteEvent">삭제</v-btn>
-              <v-btn @click="eventDialog = false"
-                >닫기</v-btn
+              <v-btn style="color: rgb(125, 125, 255)" @click="editEvent"
+                >수정</v-btn
               >
+              <v-btn style="color: rgb(255, 125, 125)" @click="deleteEvent"
+                >삭제</v-btn
+              >
+              <v-btn @click="eventDialog = false">닫기</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </div>
       <!-- <v-btn @click="openModal">일정추가</v-btn> -->
-      <CreateScheduleModal v-if="isModalVisible" @close-modal="closeModal" :modalData="dataForModal"/>
+      <CreateScheduleModal
+        v-if="isModalVisible"
+        @close-modal="closeModal"
+        :modalData="dataForModal"
+      />
     </div>
   </div>
 </template>
@@ -87,14 +93,14 @@ export default {
       yymm: this.formatDate(new Date()),
       eventDialog: false,
       eventTitle: "",
-      eventDescription:"",
+      eventDescription: "",
       scheduleId: null,
     };
   },
   methods: {
     eventClick(info) {
-      this.scheduleId = info.event.id
-      console.log(this.scheduleId)
+      this.scheduleId = info.event.id;
+      console.log(this.scheduleId);
       this.eventDialog = true;
       this.eventTitle = info.event.title;
       this.eventDescription = info.event.extendedProps.description;
@@ -111,7 +117,7 @@ export default {
       // 날짜를 클릭할 때 모달을 표시
       this.isModalVisible = true;
       this.dataForModal = arg.dateStr;
-      console.log(this.dataForModal)
+      console.log(this.dataForModal);
     },
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
@@ -156,19 +162,22 @@ export default {
               Authorization: `Bearer ${access_token}`,
             },
           };
-          await this.$axios
-            .delete(
-              `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${this.scheduleId}`,
-              config
-            )
-            .then((res) => {
-              console.log(res);
-              this.eventDialog = false;
-            });
+
+          const response = await this.$axios.delete(
+            `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${this.scheduleId}`,
+            config
+          );
+
+          console.log(response);
+          this.eventDialog = false;
         } catch (err) {
-          console.log(err);
+          console.error(err);
+          // 더 많은 오류 처리 로직 추가 가능
         }
       }
+    },
+    async editEvent() {
+      console.log("일정 수정 기능구현");
     },
     formatDate(date) {
       const year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year

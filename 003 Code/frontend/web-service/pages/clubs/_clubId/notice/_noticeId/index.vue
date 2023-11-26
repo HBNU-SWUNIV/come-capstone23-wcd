@@ -216,13 +216,13 @@
             };
             await this.$axios
               .delete(
-                `/club-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.noticeId}`,
+                `/notice-service/clubs/${this.$route.params.clubId}/posts/${this.$route.params.noticeId}`,
                 config
               )
               .then((res) => {
                 console.log(res);
                 alert("공지사항이 삭제되었습니다.");
-                this.$router.push(`/`);
+                this.$router.push(`/clubs/${this.$route.params.clubId}/notice`);
               });
           } catch (err) {
             console.log(err);

@@ -20,11 +20,11 @@
 
     <hr />
     <div class="d-flex flex-column" style="margin-top: 10px">
-      <v-btn
+      <!-- <v-btn
         v-if="this.user_id == clubInfo.hostId"
         :to="`/clubs/${clubInfo.id}/settings`"
         >모임 관리</v-btn
-      >
+      > -->
       <v-btn
         v-if="
           !clubmembers.map((item) => item.userId).includes(parseInt(user_id))

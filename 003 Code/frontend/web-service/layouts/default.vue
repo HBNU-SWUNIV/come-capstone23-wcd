@@ -108,9 +108,9 @@
           <v-icon @click="openModal">mdi-chat</v-icon>
         </v-btn>
         <ChatModal v-if="isModalVisible" @close-modal="closeModal" />
-        <v-btn icon>
+        <!-- <v-btn icon>
           <v-icon @click="goMyInfoPage">mdi-account-circle</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
