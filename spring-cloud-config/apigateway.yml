@@ -82,8 +82,6 @@ spring:
             - RemoveRequestHeader=Cookie, Host
             - RewritePath=/api/chatting-service/(?<segment>.*), /$\{segment}
             - CorsRemoveFilter
-            - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
         - id: chatting-wss
           uri: lb:wss://CHATTING-SERVICE
           predicates:
@@ -114,8 +112,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/openvidu/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
         - id: openvidu-wss
           uri: lb:ws://OPENVIDU
           predicates:
