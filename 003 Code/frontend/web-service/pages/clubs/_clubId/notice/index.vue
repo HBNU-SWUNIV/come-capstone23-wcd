@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; height: 100%; padding: 40px;">
     <div style="height: 100%; color: white; display: flex; flex-direction: column">
-      <div style="width: 100%;">
+      <div style="width: 100%; flex-grow: 1">
         <div
           v-for="post in notices"
           :key="post.id"
@@ -110,12 +110,13 @@ export default {
 
 .post-container {
   width: calc(50% - 10px);
-  background-color: #272727;
   border-radius: 5px;
   margin-bottom: 10px;
   padding: 15px;
   display: flex;
   flex-direction: column;
+  color: black;
+  border: #e0e0e0 solid 1px;
 }
 
 .post-title {
@@ -124,13 +125,11 @@ export default {
 }
 
 .post-writer {
-  color: #b4b4b4;
   font-size: 14px;
   margin: 0;
 }
 
 .post-date {
-  color: #b4b4b4;
   font-size: 14px;
   margin: 0;
 }

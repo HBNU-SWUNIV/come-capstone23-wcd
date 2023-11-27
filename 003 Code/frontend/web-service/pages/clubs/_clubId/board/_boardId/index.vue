@@ -1,13 +1,13 @@
 <template>
   <div class="d-flex" style="width: 100%;">
-    <div style="width: 100%; padding: 80px; padding-bottom: 0;">
-      <h1 style="margin-bottom: 20px">{{ post.title }}</h1>
+    <div style="display: flex; flex-direction: column; width: 100%; padding: 30px;">
+      <h1 style="margin-bottom: 10px; font-size: 20px">{{ post.title }}</h1>
       <p
         style="
           margin: 0;
           margin-bottom: 5px;
           font-size: 15px;
-          color: rgb(181, 255, 181);
+          color: rgb(52, 173, 52);
         "
       >
         작성자: {{ post.writerName }}
@@ -15,74 +15,48 @@
       <p style="margin: 0; font-size: 13px; color: gray">
         작성일: {{ formatDate(post.createdAt) }}
       </p>
-      <p style="margin: 0; font-size: 13px; color: gray">
-        수정일: {{ formatDate(post.updateAt) }}
-      </p>
-      <hr style="margin-top: 20px" />
+      <hr style="margin-top: 10px; border: 0.3px solid #e0e0e0" />
       <!-- <p style="height:350px; margin-top: 20px; font-size: 20px;">{{ post.content }}</p> -->
       <div
         class="drawer-content"
-        style="height: 350px; margin-top: 20px"
+        style="height: 350px; margin-top: 20px; flex-grow: 1"
         v-html="formattedContent"
       ></div>
-      <div style="margin-top: 20px">
-        <v-btn @click="goBoardList">목록</v-btn>
+      <div style="display: flex; justify-content: end; margin-top: 20px; gap: 10px">
         <v-btn
           v-if="post.writerId == user_id"
-          style="color: rgb(125, 255, 125)"
           :to="`/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}/edit`"
           >수정</v-btn
         >
         <v-btn
           v-if="post.writerId == user_id"
-          style="color: rgb(255, 125, 125)"
           @click="deleteBoard"
-          >삭제</v-btn
-        >
+          >삭제</v-btn>
+        <v-btn @click="goBoardList">목록</v-btn>
       </div>
     </div>
-    <div style="width: 30%; padding: 20px; background-color: rgb(39, 39, 39)">
-      <div class="d-flex">
+    <div style="display: flex; gap: 10px; flex-direction: column;width: 30%; padding: 20px; border-left: 0.3px solid #e0e0e0">
+      <div style="display: flex">
         <h2>댓글</h2>
         <h2 style="margin-left: 10px; color: rgb(161, 161, 161)">
           {{ commentsElement }}개
         </h2>
       </div>
-      <v-form
-        class="d-flex"
-        style="margin-top: 20px; margin-bottom: 10px"
-        @submit.prevent="CommentSubmit"
-      >
-        <input
-          class="comment-input"
-          placeholder="댓글을 입력하세요..."
-          v-model="comment"
-        />
-        <button type="submit" class="comment-submit-btn" :disabled="!comment">
-          댓글
-        </button>
-      </v-form>
-      <div class="drawer-content" style="height: 700px">
+      <div class="drawer-content" style="flex-grow: 1">
         <div
           class="d-flex"
           v-for="(reply, i) in comments"
           :key="i"
           style="margin-top: 10px"
         >
-          <v-avatar size="42">
-            <img
-              src="https://blog.kakaocdn.net/dn/0mySg/btqCUccOGVk/nQ68nZiNKoIEGNJkooELF1/img.jpg"
-              alt="원 모양 이미지"
-            />
-          </v-avatar>
           <div style="padding-left: 10px; width: 100%">
             <div class="d-flex">
-              <p style="font-size: 15px; margin: 0">{{ reply.writerName }}</p>
+              <p style="font-size: 14px; margin: 0">{{ reply.writerName }}</p>
               <p
                 style="
                   padding-left: 5px;
                   margin: 0;
-                  font-size: 15px;
+                  font-size: 14px;
                   color: gray;
                 "
               >
@@ -129,6 +103,20 @@
           </div>
         </div>
       </div>
+      <v-form
+        class="d-flex"
+        style="margin-top: 20px; margin-bottom: 10px"
+        @submit.prevent="CommentSubmit"
+      >
+        <input
+          class="comment-input"
+          placeholder="댓글을 입력하세요..."
+          v-model="comment"
+        />
+        <button type="submit" class="comment-submit-btn" :disabled="!comment">
+          댓글
+        </button>
+      </v-form>
     </div>
   </div>
 </template>
@@ -293,7 +281,7 @@ export default {
       const paragraphs = doc.getElementsByTagName("p");
       for (let i = 0; i < paragraphs.length; i++) {
         paragraphs[i].style.fontSize = "16px";
-        paragraphs[i].style.color = "white";
+        paragraphs[i].style.color = "black";
       }
 
       // HTML로 변환
@@ -402,10 +390,8 @@ export default {
   height: 30px;
   padding: 10px;
   border: 1px solid #ccc;
-  color: white;
   border-radius: 4px;
   font-size: 14px;
-  margin-bottom: 10px;
   transition: border-color 0.2s ease-in-out;
 }
 
