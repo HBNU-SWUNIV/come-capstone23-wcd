@@ -43,7 +43,7 @@
       >
         <span style="font-weight: bold">{{ message.sender }}:</span>
         {{ message.message }}
-        <span style="color: #777">[{{ formatDate(message.sendTime) }}]</span>
+        <span style="color: #777; font-size: 11px;">{{ formatDate(message.sendTime) }}</span>
       </p>
     </div>
     <div
