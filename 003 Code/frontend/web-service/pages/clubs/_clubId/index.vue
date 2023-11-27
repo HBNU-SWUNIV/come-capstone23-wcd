@@ -3,11 +3,11 @@
     <div style="color: white; height: 100%; display: flex; flex-direction: row;">
       <LeftClubNav/>
       <div style="width: 100%; height: 100%; padding: 30px 40px 30px 0; display: flex; flex-direction: column; gap: 20px">
-        <div style="display: flex; flex-grow: 1; gap: 20px">
+        <div style="display: flex;  height: 50%; gap: 20px">
           <NoticeCard style="height: 100%; width: 50%"/>
           <ScheduleCard style="height: 100%; width: 50%"/>
         </div>
-        <div style="display: flex; flex-grow: 1; gap: 20px">
+        <div style="display: flex; height: 50%; gap: 20px">
           <BoardCard style="height: 100%; width: 50%"/>
           <CommunicationCard style="height: 100%; width: 50%"/>
         </div>
