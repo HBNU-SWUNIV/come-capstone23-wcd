@@ -307,7 +307,6 @@ export default {
           .then((res) => {
             console.log(res);
             this.myclubs = res.data;
-            // this.subscribeToPushNotifications();
           });
       } catch (err) {
         console.log(err);

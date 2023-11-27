@@ -184,9 +184,7 @@ export default {
 
           await this.$axios
             .delete(
-              `/club-service/clubs/${this.$route.params.clubId}/members/${this.user_id}`,
-              JSON.stringify(outData),
-              config
+              `/club-service/clubs/${this.$route.params.clubId}/members/${this.user_id}`,config,JSON.stringify(outData),
             )
             .then(async (res) => {
               console.log(res);
