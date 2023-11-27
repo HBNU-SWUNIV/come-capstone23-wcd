@@ -34,6 +34,7 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-logging'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config:4.0.2'
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'

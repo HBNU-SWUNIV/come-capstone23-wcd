@@ -5,6 +5,10 @@ spring:
   application:
     name: board-service
 
+  config:
+    import:
+      - classpath:/bootstrap.yml
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
