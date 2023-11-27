@@ -162,7 +162,7 @@ export default {
             `/schedule-service/clubs/${this.$route.params.clubId}/calendars/${this.scheduleId}`,
             config
           );
-
+          this.getSchedules()
           this.eventDialog = false;
         } catch (err) {
           // 더 많은 오류 처리 로직 추가 가능
