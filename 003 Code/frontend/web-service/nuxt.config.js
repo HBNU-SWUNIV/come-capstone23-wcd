@@ -42,7 +42,7 @@ export default {
   plugins: [
     { src: "~/plugins/axios.js", mode: "client" },
     { src: "~/plugins/ckeditor.js", mode: "client" },
-    { src: "~/plugins/firebase.js", mode: "client" },
+    // { src: "~/plugins/firebase.js", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,16 +63,16 @@ export default {
     "@nuxtjs/pwa",
   ],
 
-  pwa: {
-    workbox: {
-      importScripts: ["/firebase-messaging-sw.js"], // Firebase Cloud Messaging Service Worker를 import합니다.
-    },
-    manifest: {
-      name: "Your App Name",
-      short_name: "App",
-      lang: "en",
-    },
-  },
+  // pwa: {
+  //   workbox: {
+  //     importScripts: ["/firebase-messaging-sw.js"],
+  //   },
+  //   manifest: {
+  //     name: "Your App Name",
+  //     short_name: "App",
+  //     lang: "en",
+  //   },
+  // },
 
   axios: {
     baseURL: process.env.API_BASE_URL,

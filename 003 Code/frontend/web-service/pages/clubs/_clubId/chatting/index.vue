@@ -86,34 +86,10 @@ export default {
       if (this.stompClient) {
         this.stompClient.send("/app/chat/send", {}, JSON.stringify(chat));
 
-        // this.sendAlarm();
-
         this.message = "";
       } else {
         console.error("WebSocket connection is not established.");
       }
-    },
-
-    sendAlarm() {
-      const messageData = {
-        clubName: this.clubName,
-        userName: "유저이름",
-        chatMessage: this.message,
-        topic: this.clubId,
-      };
-      fetch(`${process.env.API_BASE_URL}/fcm-service`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageData),
-      })
-        .then((response) => {
-          console.log("데이터 전송 성공:", response);
-        })
-        .catch((error) => {
-          console.error("데이터 전송 중 오류:", error);
-        });
     },
 
     async getMessage() {

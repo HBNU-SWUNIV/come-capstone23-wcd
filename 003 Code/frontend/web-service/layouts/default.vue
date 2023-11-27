@@ -360,75 +360,6 @@ export default {
       // 모달을 닫을 때 호출되는 메서드
       this.isModalVisible = false;
     },
-
-    // unSubscribe() {
-    //   const push_token = localStorage.getItem("push_token");
-    //   const topicList = this.myclubs.map((myclub) => myclub.id);
-    //   console.log(topicList);
-    //   const data = {
-    //     token: push_token,
-    //     topicList: topicList,
-    //   };
-
-    //   fetch("http://211.115.222.246:5004/unsubscribe", {
-    //     method: "DELETE",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-    //     .then((response) => {
-    //       console.log("Push 알림 구독취소 완료");
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Push 알림 구독 실패:", error);
-    //     });
-    // },
-    subscribeToPushNotifications() {
-      const push_token = localStorage.getItem("push_token");
-      const topicList = this.myclubs.map((myclub) => myclub.id);
-      console.log(topicList);
-      const data = {
-        token: push_token,
-        topicList: topicList, // 구독하려는 주제 리스트
-      };
-
-      fetch("https://wcd.kro.kr/api/fcm-service/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          console.log("Push 알림 구독 완료");
-          console.log(response);
-
-          // const messageData = {
-          //   clubName: "클럽이름",
-          //   userName: "유저이름",
-          //   chatMessage: "메시지내용",
-          //   topic: 3,
-          // };
-          // fetch("https://211.115.222.246:5008/sendChatMessage", {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   body: JSON.stringify(messageData),
-          // })
-          //   .then((response) => {
-          //     console.log("데이터 전송 성공:", response);
-          //   })
-          //   .catch((error) => {
-          //     console.error("데이터 전송 중 오류:", error);
-          //   });
-        })
-        .catch((error) => {
-          console.error("Push 알림 구독 실패:", error);
-        });
-    },
   },
   watch: {
     // 화면 크기가 변경될 때마다 높이를 조절
@@ -445,7 +376,6 @@ export default {
   created() {
     this.getMyClubs();
     this.getSSE();
-    // this.unSubscribe();
   },
 };
 </script>
