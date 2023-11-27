@@ -113,15 +113,12 @@ export default {
       categories: [
         "음악",
         "요리",
-        "스포츠",
+        "운동",
         "영화",
-        "공예",
         "독서",
         "여행",
-        "봉사활동",
         "언어교환",
-        "예술",
-        "기타",
+        "예술"
       ],
       approvalMethods: ["FREE", "APPROVAL"],
       multipartFile: null, // 이미지 파일

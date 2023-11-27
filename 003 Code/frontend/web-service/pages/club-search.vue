@@ -8,6 +8,7 @@
         name="search"
         placeholder="검색어를 입력하세요..."
         v-model="searchKeyword"
+        style="color: black"
       />
     </div>
     <v-select
@@ -121,9 +122,23 @@ export default {
     //   // 페이지 번호가 변경될 때 호출되는 메서드
     //   this.getBoards(this.pageNumber); // 현재 페이지 번호를 인자로 전달하여 데이터를 가져옴
     // },
+    getQueryString() {
+      const urlObject = new URL(window.location.href);
+      const queryString = urlObject.searchParams;
+      console.log(queryString)
+      if (queryString.get('type') === "category") {
+        console.log("222222")
+        this.selectedFilter = "카테고리";
+        this.searchKeyword = queryString.get('title');
+        this.filteredClubs = this.clubs.filter((club) =>
+          club.category.includes(this.searchKeyword)
+        );
+      }
+    }
   },
-  created() {
-    this.getClubs();
+  async created() {
+    await this.getClubs();
+    this.getQueryString();
   },
   watch: {
     searchKeyword() {
@@ -140,14 +155,10 @@ export default {
   flex-direction: row;
   align-items: center;
   padding: 20px;
-  border: 1px solid #525252;
+  border: 0.3px solid #e0e0e0;
   border-radius: 5px;
   background-color: none;
   transition: background-color 0.3s;
-}
-
-.club-item:hover {
-  background-color: #222222;
 }
 
 /* 클럽 로고 이미지 스타일 */

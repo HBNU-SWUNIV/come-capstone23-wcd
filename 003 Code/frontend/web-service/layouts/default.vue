@@ -162,7 +162,7 @@
               }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item> -->
-          <v-list-item v-for="(notification, i) in noti" :key="i">
+          <v-list-item   v-for="(notification, i) in noti" :key="i">
             <v-list-item-content>
               <v-list-item-title>{{ notification }}</v-list-item-title>
             </v-list-item-content>

@@ -5,6 +5,7 @@
       <v-list-item
         v-for="(category, i) in categories"
         :key="i"
+        :to="`/club-search?type=category&title=${category.title}`"
         router
         exact
         style="display: flex; justify-content: center; align-items: center"
