@@ -33,7 +33,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ["@/static/custom-ckeditor-styles.css"],
+  css: [
+    "@/static/global.css",
+    "@/static/custom-ckeditor-styles.css"
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -79,8 +82,8 @@ export default {
   vuetify: {
     customVariables: ["~/assets/variables.scss"],
     theme: {
-      dark: true,
-      light: false,
+      dark: false,
+      light: true,
       themes: {
         dark: {
           primary: "#ffffff",

@@ -38,7 +38,7 @@
                   <v-list-item-subtitle class="club-description" style="margin-bottom: 0; margin-top: 10px;">
                     <v-chip style="font-size: 12px; height:25px;">{{ club.category }}</v-chip>
                   </v-list-item-subtitle>
-                  
+
                 </div>
               </div>
             </v-list-item-content>
@@ -56,7 +56,7 @@
 </template>
 
 
-    
+
   <script>
 export default {
   data() {
@@ -88,11 +88,9 @@ export default {
           },
         };
         const response = await this.$axios.get(`/club-service/clubs`, config);
-        console.log(response.data.content);
         this.clubs = response.data.content;
         this.filteredClubs = response.data.content;
       } catch (err) {
-        console.error("Error while fetching clubs:", err);
         this.clubs = []; // 에러 발생 시 빈 배열로 초기화
       }
     },
@@ -134,7 +132,7 @@ export default {
   },
 };
 </script>
-  
+
 <style scoped>
 /* 클럽 아이템 스타일 */
 .club-item {

@@ -339,12 +339,10 @@ export default {
         await this.$axios
           .post("/user-service/signup", JSON.stringify(SignupData), config)
           .then((res) => {
-            console.log(res);
             alert("회원가입 되었습니다.");
             this.$router.push("/login");
           });
       } catch (err) {
-        console.log(err);
       }
     },
     validateName() {
@@ -361,7 +359,7 @@ export default {
     },
     validateEmail() {
       this.alreadyEmail = false;
-      
+
       if (this.email === "") {
         this.isEmailValid = false;
         return;
@@ -460,13 +458,11 @@ export default {
         await this.$axios
           .post("/user-service/mail/send", JSON.stringify(EmailData), config)
           .then((res) => {
-            console.log(res);
             alert("인증코드가 전송되었습니다.");
           });
       } catch (err) {
         if (err.response && err.response.status === 409) {
           // 에러 응답이 409인 경우
-          console.log("이미 가입된 이메일입니다.");
 
           // 에러 발생 시 초기화
           this.validBox = false;
@@ -479,7 +475,6 @@ export default {
           this.verificationCode = ""; // 입력한 인증 코드 초기화
           this.alreadyEmail = true;
         } else {
-          console.log(err);
         }
       }
     },
@@ -550,7 +545,6 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res.status);
             if (res.status == 200) {
               this.validBox = false;
               this.timerVisible = false;
@@ -560,7 +554,6 @@ export default {
             }
           });
       } catch (err) {
-        console.log(err);
       }
     },
     calculatePasswordStrength() {

@@ -170,12 +170,10 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res.data);
             this.post = res.data;
             this.formattedContent = this.formatContent(this.post.content); // 데이터를 받고 나서 가공
           });
       } catch (err) {
-        console.error("err", err);
       }
     },
 
@@ -194,12 +192,10 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res);
             this.commentsElement = res.data.totalElements;
             this.comments = res.data.content;
           });
       } catch (err) {
-        console.log(err);
       }
     },
 
@@ -220,12 +216,10 @@ export default {
               config
             )
             .then((res) => {
-              console.log(res);
               alert("게시글이 삭제되었습니다.");
               this.$router.push(`/clubs/${this.$route.params.clubId}/board`);
             });
         } catch (err) {
-          console.log(err);
         }
       }
     },
@@ -247,12 +241,10 @@ export default {
               config
             )
             .then(async (res) => {
-              console.log(res);
               alert("댓글이 삭제되었습니다.");
               await this.getComments();
             });
         } catch (err) {
-          console.log(err);
         }
       }
     },
@@ -281,12 +273,10 @@ export default {
             config
           )
           .then(async (res) => {
-            console.log(res);
             this.comment = "";
             await this.getComments();
           });
       } catch (err) {
-        console.log(err);
       }
     },
 
@@ -372,14 +362,12 @@ export default {
             config
           )
           .then(async (res) => {
-            console.log(res);
             alert("댓글이 수정되었습니다.");
             this.editedCommentId = null; // 수정 중인 댓글 초기화
             this.editedCommentContent = ""; // 수정 중인 댓글 내용 초기화
             await this.getComments();
           });
       } catch (err) {
-        console.log(err);
       }
     },
   },

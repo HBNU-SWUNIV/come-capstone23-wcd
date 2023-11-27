@@ -190,12 +190,10 @@ export default {
         await this.$axios
           .post("/club-service/clubs", formData, config)
           .then((res) => {
-            console.log(res);
             alert("모임이 생성되었습니다.");
             this.$router.push("/");
           });
       } catch (err) {
-        console.log(err);
       }
     },
     addTag() {

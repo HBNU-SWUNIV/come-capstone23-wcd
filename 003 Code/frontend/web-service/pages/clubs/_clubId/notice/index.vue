@@ -70,12 +70,10 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res.data);
             this.notices = res.data.content;
             this.totalPages = res.data.totalPages;
           });
       } catch (err) {
-        console.error("err", err);
         this.notices = [];
       }
     },

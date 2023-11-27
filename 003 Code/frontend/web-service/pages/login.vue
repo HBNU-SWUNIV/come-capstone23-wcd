@@ -70,7 +70,7 @@ export default {
           .post("/user-service/login", JSON.stringify(LoginData), config)
           .then((res) => {
             alert("로그인 되었습니다.");
-  
+
             // 컴포넌트 또는 액션 내에서 엑세스 토큰 저장
             this.$store.commit("setAccessToken", res.data.access_token);
 
@@ -81,12 +81,10 @@ export default {
             this.$router.push("/");
           });
       } catch (error) {
-        if (error.response && error.response.status === 401) { 
-              alert("유저 정보가 일치하지 않습니다."); 
-              console.log(error.response); 
-              return; 
-            } 
-        console.log(error);
+        if (error.response && error.response.status === 401) {
+              alert("유저 정보가 일치하지 않습니다.");
+              return;
+            }
         alert("현재 로그인이 불가능합니다.")
       }
     },

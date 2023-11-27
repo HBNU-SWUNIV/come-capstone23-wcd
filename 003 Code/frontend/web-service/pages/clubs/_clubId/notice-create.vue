@@ -16,7 +16,7 @@
             v-model="editorData"
             :config="editorConfig"
           ></ckeditor>
-  
+
           <div style="margin-top: auto; display: flex; flex-direction: row-reverse; align-items: flex-end; width: 100%; height: 10%">
             <div>
               <v-btn
@@ -36,11 +36,11 @@
       </v-form>
     </div>
   </template>
-  
+
   <script>
   import CKEditor from "@ckeditor/ckeditor5-vue2";
   import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-  
+
   export default {
     components: {
       ckeditor: CKEditor.component,
@@ -60,7 +60,7 @@
           title: this.title,
           content: this.editorData,
         };
-  
+
         try {
           if (this.title === "") {
             alert("제목을 입력하세요.");
@@ -73,7 +73,7 @@
               Authorization: `Bearer ${access_token}`,
             },
           };
-  
+
           await this.$axios
             .post(
               `/notice-service/clubs/${this.$route.params.clubId}/posts`,
@@ -81,19 +81,17 @@
               config
             )
             .then((res) => {
-              console.log(res);
               alert("공지사항이 작성되었습니다.");
               this.$router.push(`/clubs/${this.$route.params.clubId}/notice`);
             });
         } catch (err) {
-          console.log(err);
         }
       },
       async cancel() {
         const confirmCancel = confirm(
           "작성한 내용이 모두 사라집니다. 게시글 작성을 취소하시겠습니까?"
         );
-  
+
         if (confirmCancel) {
           // 사용자가 확인을 눌렀을 때
           this.$router.push(`/clubs/${this.$route.params.clubId}/notice`); // 홈 페이지로 이동 또는 원하는 경로로 이동
@@ -102,14 +100,13 @@
     },
   };
   </script>
-  
+
   <style>
   .ck-editor__editable {
     height: 550px;
   }
-  
+
   .ck-content {
     font-size: 15px;
   }
   </style>
-  

@@ -54,7 +54,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import FullCalendar from "@fullcalendar/vue";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -100,7 +100,6 @@ export default {
   methods: {
     eventClick(info) {
       this.scheduleId = info.event.id;
-      console.log(this.scheduleId);
       this.eventDialog = true;
       this.eventTitle = info.event.title;
       this.eventDescription = info.event.extendedProps.description;
@@ -117,7 +116,6 @@ export default {
       // 날짜를 클릭할 때 모달을 표시
       this.isModalVisible = true;
       this.dataForModal = arg.dateStr;
-      console.log(this.dataForModal);
     },
     closeModal() {
       // 모달을 닫을 때 호출되는 메서드
@@ -142,12 +140,9 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res.data);
             this.calendarOptions.events = res.data;
-            console.log(this.calendarOptions.initialEvents);
           });
       } catch (err) {
-        console.log(err);
       }
     },
     async deleteEvent() {
@@ -168,10 +163,8 @@ export default {
             config
           );
 
-          console.log(response);
           this.eventDialog = false;
         } catch (err) {
-          console.error(err);
           // 더 많은 오류 처리 로직 추가 가능
         }
       }

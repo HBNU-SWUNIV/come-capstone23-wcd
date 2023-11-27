@@ -81,12 +81,10 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res);
             alert("게시글이 작성되었습니다.");
             this.$router.push(`/clubs/${this.$route.params.clubId}/board`);
           });
       } catch (err) {
-        console.log(err);
       }
     },
     async cancel() {

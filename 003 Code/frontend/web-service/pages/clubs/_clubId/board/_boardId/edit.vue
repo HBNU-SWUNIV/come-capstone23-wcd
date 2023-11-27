@@ -27,7 +27,7 @@
     </v-form>
   </div>
 </template>
-  
+
   <script>
 import CKEditor from "@ckeditor/ckeditor5-vue2";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -72,14 +72,11 @@ export default {
           JSON.stringify(BoardData),
           config
         );
-
-        console.log(response);
         alert("게시글이 수정되었습니다.");
         this.$router.push(
           `/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}`
         );
       } catch (err) {
-        console.error(err);
       }
     },
     async getBoardDetail() {
@@ -97,7 +94,6 @@ export default {
             config
           )
           .then((res) => {
-            console.log(res.data);
             this.post = res.data;
             this.formattedContent = this.formatContent(this.post.content); // 데이터를 받고 나서 가공
 
@@ -105,7 +101,6 @@ export default {
             this.editorData = this.post.content;
           });
       } catch (err) {
-        console.error("err", err);
       }
     },
     async cancel() {
@@ -144,7 +139,7 @@ export default {
   },
 };
 </script>
-  
+
   <style>
 .ck-editor__editable {
   height: 400px;
