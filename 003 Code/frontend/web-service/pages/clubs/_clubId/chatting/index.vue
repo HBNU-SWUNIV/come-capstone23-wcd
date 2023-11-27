@@ -7,7 +7,7 @@
           testmessage.sendTime
         }}]
       </p>
-      <p v-for="message in messages" :key="message.id" style="color: white">
+      <p v-for="message in messages" :key="message.id" style="color: black">
         {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
       </p>
     </div>
@@ -27,7 +27,7 @@
           height: 100%;
           width: 100%;
           resize: none;
-          color:white;
+          color:black;
         "
       ></textarea>
     </div>
