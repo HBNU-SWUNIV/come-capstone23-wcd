@@ -103,7 +103,7 @@
         <v-btn
           type="submit"
           :disabled="isAddEventButtonDisabled"
-          style="color: rgb(125, 255, 125)"
+          style="color: black"
           >일정 추가</v-btn
         >
       </v-form>
@@ -113,7 +113,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
@@ -236,13 +236,13 @@ export default {
 
 .modal {
   text-align: center;
-  background-color: rgb(0, 0, 0);
   height: 550px;
   width: 500px;
   margin-top: 10%;
   padding: 40px;
   border-radius: 20px;
-  color: rgb(255, 255, 255);
+  color: black;
+  background-color: white;
   border: 1px solid white;
 }
 .close {

@@ -291,7 +291,7 @@
         const paragraphs = doc.getElementsByTagName("p");
         for (let i = 0; i < paragraphs.length; i++) {
           paragraphs[i].style.fontSize = "16px";
-          paragraphs[i].style.color = "white";
+          paragraphs[i].style.color = "black";
         }
 
         // HTML로 변환

@@ -1,32 +1,31 @@
 <template>
-    <div style="width: 90%; padding: 30px; margin: auto">
-      <h1 style="margin-bottom: 10px">공지사항 수정</h1>
-      <v-form @submit.prevent="EditNoticeSubmit">
-        <v-text-field
-          v-model="title"
-          label="공지사항 제목"
-          placeholder="공지사항 제목"
-          required
-          type="text"
-        ></v-text-field>
-        <ckeditor
-          :editor="editor"
-          v-model="editorData"
-          :config="editorConfig"
-        ></ckeditor>
+  <div style="width: 100%; padding: 30px;">
+    <v-form style="height: 100%" @submit.prevent="EditBoardSubmit">
+      <v-text-field
+        v-model="title"
+        label="게시글 제목"
+        placeholder="게시글 제목"
+        required
+        type="text"
+      ></v-text-field>
+      <ckeditor
+        :editor="editor"
+        v-model="editorData"
+        :config="editorConfig"
+      ></ckeditor>
 
-        <v-btn style="margin-top: 20px; color: rgb(255, 125, 125)" @click="cancel"
-          >취소</v-btn
+      <div style="margin-top: auto; display: flex; flex-direction: row-reverse; align-items: flex-end; width: 100%; height: 10%">
+        <v-btn  style="margin-left: 10px;" @click="cancel"
+        >취소</v-btn
         >
         <v-btn
           type="submit"
           :disabled="!editorData"
-          style="margin-top: 20px; color: rgb(125, 255, 125)"
-          >수정</v-btn
-        >
-      </v-form>
-    </div>
-  </template>
+        >수정</v-btn>
+      </div>
+    </v-form>
+  </div>
+</template>
 
     <script>
   import CKEditor from "@ckeditor/ckeditor5-vue2";
@@ -125,7 +124,7 @@
         const paragraphs = doc.getElementsByTagName("p");
         for (let i = 0; i < paragraphs.length; i++) {
           paragraphs[i].style.fontSize = "16px";
-          paragraphs[i].style.color = "white";
+          paragraphs[i].style.color = "black";
         }
 
         // HTML로 변환
@@ -141,11 +140,12 @@
   };
   </script>
 
-    <style>
-  .ck-editor__editable {
-    height: 400px;
-  }
-  .ck-content {
-    font-size: 15px;
-  }
-  </style>
+<style>
+.ck-editor__editable {
+  height: 550px;
+}
+
+.ck-content {
+  font-size: 15px;
+}
+</style>

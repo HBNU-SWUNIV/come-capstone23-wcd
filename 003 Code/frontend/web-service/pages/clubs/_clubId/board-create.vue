@@ -22,12 +22,12 @@
             <v-btn
               type="submit"
               :disabled="!editorData"
-              style="color: rgb(125, 255, 125); margin-left: 10px;"
+              style="margin-left: 10px;"
             >게시
             </v-btn>
           </div>
           <div >
-            <v-btn style="color: rgb(255, 125, 125)" @click="cancel"
+            <v-btn @click="cancel"
             >취소
             </v-btn>
           </div>

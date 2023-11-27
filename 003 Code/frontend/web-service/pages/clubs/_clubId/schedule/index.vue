@@ -18,26 +18,25 @@
         >
           <v-card>
             <!-- 제목부분 스타일 조정 -->
-            <v-card-title>
+            <v-card-title style="padding-bottom: 0; margin-bottom: 10px">
               {{ eventTitle }}
             </v-card-title>
-            <v-divider></v-divider>
 
             <!-- 시간표시부분 스타일 조정 -->
-            <v-card-text>
+            <v-card-text style="margin-bottom: 10px; padding-top: 0px; padding-bottom: 0px">
               <span class="font-weight-medium">{{ eventTimeRange }}</span>
             </v-card-text>
-
-            <v-card-title>
+            <v-divider></v-divider>
+            <v-card-text style="margin-top: 10px">
               {{ eventDescription }}
-            </v-card-title>
+            </v-card-text>
 
             <!-- 액션버튼 스타일 조정 -->
             <v-card-actions class="justify-end mt-5">
               <!-- <v-btn style="color: rgb(125, 125, 255)" @click="editEvent"
                 >수정</v-btn
               > -->
-              <v-btn style="color: rgb(255, 125, 125)" @click="deleteEvent"
+              <v-btn style="" @click="deleteEvent"
                 >삭제</v-btn
               >
               <v-btn @click="eventDialog = false">닫기</v-btn>
