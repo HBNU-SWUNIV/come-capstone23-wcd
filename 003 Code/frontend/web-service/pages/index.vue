@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; padding: 30px; gap: 20px">
-    <ClubCategoryCard style="flex-grow: 1"/>
+    <ClubCategoryCard style="height: 150px"/>
     <ClubRecommendCard style="flex-grow: 2"/>
     <div style="display: flex; flex-direction: row; flex-grow: 2; gap: 20px">
       <MyClubCard />
