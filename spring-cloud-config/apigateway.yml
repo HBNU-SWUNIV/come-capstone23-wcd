@@ -54,12 +54,19 @@ spring:
         - id: schedule-service
           uri: lb://SCHEDULE-SERVICE
           predicates:
-            - Path=/api/schedule-service/**
+            - Path=/api/schedule-service/clubs/{club-id}/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
             - ClubMemberAuthorizationFilter
+        - id: schedule-service
+          uri: lb://SCHEDULE-SERVICE
+          predicates:
+            - Path=/api/schedule-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
         - id: fcm-service
           uri: lb://FCM-SERVICE
           predicates:
