@@ -1,6 +1,6 @@
 <template>
   <div style="width: 500px;">
-    <v-card style="background-color: rgba(0, 0, 0, 0.9);">
+    <v-card>
       <v-card-title class="d-flex justify-center">
         <h1 style="padding: 20px">LOGIN</h1>
       </v-card-title>
@@ -20,10 +20,8 @@
             required
             type="password"
           ></v-text-field>
+          <v-btn type="submit" class="contrast" style="width:100%; margin-bottom: 20px;">로그인</v-btn>
           <v-btn to="/signup" style="width:100%;">아직 회원이 아니신가요?</v-btn>
-          <!-- <v-checkbox v-model="remember" label="자동 로그인"></v-checkbox> -->
-
-          <v-btn type="submit" class="contrast" style="width:100%; margin-top: 20px;">로그인</v-btn>
         </v-form>
       </v-card-text>
     </v-card>

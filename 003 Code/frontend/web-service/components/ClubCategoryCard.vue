@@ -1,31 +1,24 @@
 <template>
-  <v-card>
+  <v-card style="display: flex; flex-direction: column">
     <v-card-title>{{ title }}</v-card-title>
-    <v-list style="display: flex; flex-direction: row">
+    <v-list style="display: flex; flex-direction: row; justify-content: space-between;">
       <v-list-item
         v-for="(category, i) in categories"
         :key="i"
         router
         exact
-        style="
-          padding: 0;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-        "
+        style="display: flex; justify-content: center; align-items: center"
       >
         <v-list-item-action
           style="
-            margin: 0;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          "
-        >
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: auto;
+        ">
           <v-icon>{{ category.icon }}</v-icon>
-          <v-list-item-title style="margin-top:5px;">{{ category.title }}</v-list-item-title>
+          <v-list-item-title>{{ category.title }}</v-list-item-title>
         </v-list-item-action>
       </v-list-item>
     </v-list>

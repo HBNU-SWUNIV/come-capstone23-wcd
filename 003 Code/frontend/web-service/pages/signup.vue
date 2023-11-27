@@ -1,7 +1,7 @@
 <template>
   <div style="width: 600px;">
     <v-container>
-      <v-card style="background-color: rgba(0, 0, 0, 0.9)">
+      <v-card>
         <v-card-title class="d-flex justify-center">
           <h1 style="padding: 20px">SIGN UP</h1>
         </v-card-title>

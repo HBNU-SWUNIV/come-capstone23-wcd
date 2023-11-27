@@ -7,11 +7,11 @@
   >
     <img
       :src="clubInfo.mainImageUrl"
-      style="width: 320px; height: 240px; border-radius: 5px;"
+      style="width: 320px; height: 240px; border-radius: 5px; border: solid 1px #e0e0e0"
     />
 
-    <h1 style="font-size: 27px; margin-bottom: 5px;">{{ clubInfo.clubName }}</h1>
-    <p style="margin-bottom: 5px; font-size: 13px; color: rgb(125, 255, 125)">
+    <h1 style="font-size: 27px; color: black; font-weight: 600; margin-bottom: 5px;">{{ clubInfo.clubName }}</h1>
+    <p style="margin-bottom: 5px; font-size: 13px; color: rgb(52,173,52)">
       멤버 수 : {{ clubmembers.length }}
     </p>
     <p style="margin-bottom: 15px; color: rgb(202, 202, 202); font-size: 13px">

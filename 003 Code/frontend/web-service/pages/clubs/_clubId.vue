@@ -1,8 +1,8 @@
 <template>
   <div style="width:100%; height:100%;">
-    <ClubNavigation />
+    <ClubNavigation style="border-bottom: solid 0.3px #e0e0e0"/>
     <div style="display: flex; flex-direction: row; height: calc(100% - 64px);">
-      <router-view />
+      <router-view/>
     </div>
   </div>
 </template>

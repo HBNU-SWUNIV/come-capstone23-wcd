@@ -1,5 +1,5 @@
 <template>
-  <v-card style="width: 50%; margin: 10px; height: fit-content;" 
+  <v-card
     ><v-card-title
       >{{ title }}<v-spacer />
       <v-btn :to="`/clubs/${clubId}/notice`">더보기</v-btn></v-card-title
@@ -14,7 +14,7 @@
       >
         <v-list-item-content style="display: flex;">
           <v-list-item-title>{{ notice.title }} </v-list-item-title>
-          <p style="margin:0; font-size: 13px; color:gray;">작성자: {{ notice.writerName }}</p>
+          <p style="margin:0; font-size: 13px; color:rgb(128,128,128);">작성자: {{ notice.writerName }}</p>
         </v-list-item-content>
       </v-list-item>
     </v-list>

@@ -1,10 +1,10 @@
 <template>
-  <div style="width: 100%; padding: 30px;">
-    <ClubRecommendCard />
-    <ClubCategoryCard />
-    <div style="display: flex;">
-      <MyClubCard style="margin-right: 15px;"/> 
-      <MyCreateClubCard style="margin-left: 15px;"/>
+  <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; padding: 30px; gap: 20px">
+    <ClubCategoryCard style="flex-grow: 1"/>
+    <ClubRecommendCard style="flex-grow: 2"/>
+    <div style="display: flex; flex-direction: row; flex-grow: 2; gap: 20px">
+      <MyClubCard />
+      <MyCreateClubCard />
     </div>
   </div>
 </template>
@@ -27,7 +27,5 @@ export default {
 </script>
 
 <style>
-.v-card {
-  margin-bottom: 30px;
-}
-</style> 
+
+</style>

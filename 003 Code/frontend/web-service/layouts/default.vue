@@ -10,10 +10,10 @@
         fixed
         app
       >
-        <v-list style="height: 100%">
+        <v-list style="height: 100%; padding: 0">
           <div
             ref="homeHeight"
-            style="margin-bottom: 10px; height: fit-content"
+            style="height: fit-content"
           >
             <v-list-item
               v-for="(home, i) in homes"
@@ -21,7 +21,6 @@
               :to="home.to"
               router
               exact
-              style="margin-bottom: 10px"
               @click="getMyClubsAgain"
             >
               <v-list-item-action class="d-block mx-auto">
@@ -33,7 +32,7 @@
               </v-list-item-action>
             </v-list-item>
           </div>
-
+          <v-divider style="margin: 0 8px"></v-divider>
           <div class="drawer-content" ref="clubHeight">
             <v-list-item
               v-for="(myclub, i) in myclubs"
@@ -41,15 +40,19 @@
               :to="`/clubs/${myclub.id}`"
               router
               exact
+              style="padding: 4px 16px"
             >
               <v-tooltip right>
                 <template v-slot:activator="{ on }">
                   <v-list-item-action
                     v-on="on"
-                    class="d-block mx-auto"
-                    style="height: 45px"
+                    style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-items: center; margin: 0; gap: 4px"
                   >
                     <img class="image" :src="myclub.mainImageUrl" />
+                    <v-list-item-title
+                      style="font-size: 12px; text-align: center"
+                    >{{ myclub.clubName }}</v-list-item-title
+                    >
                   </v-list-item-action>
                 </template>
                 <span>{{ myclub.clubName }}</span>
@@ -64,8 +67,6 @@
               bottom: 0;
               width: 100%;
               text-align: center;
-              margin-bottom: 20px;
-              margin margin-top: 10px;
             "
           >
             <v-list-item
@@ -89,7 +90,7 @@
           </div>
         </v-list>
       </v-navigation-drawer>
-      <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar :clipped-left="clipped" fixed app style="background-color: #ffffff; box-shadow: none; border-bottom: solid 1px #e0e0e0">
         <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
         <div class="input-container">
           <v-icon class="icon">mdi-magnify</v-icon>
@@ -101,9 +102,6 @@
           />
         </div>
         <v-spacer />
-        <v-btn style="color: rgb(255, 125, 125)" @click="Logout"
-          >로그아웃</v-btn
-        >
         <v-btn icon>
           <v-icon @click="openModal">mdi-chat</v-icon>
         </v-btn>
@@ -114,6 +112,9 @@
         <v-btn icon @click.stop="rightDrawer = !rightDrawer">
           <v-icon>mdi-bell</v-icon>
         </v-btn>
+        <v-btn style="color: #757575" @click="Logout"
+        >로그아웃</v-btn
+        >
       </v-app-bar>
       <v-main>
         <v-container
@@ -454,7 +455,7 @@ export default {
 .input-container {
   display: flex;
   align-items: center;
-  background-color: #333; /* 배경색 설정 */
+  background-color: #efefef;
   height: 40px;
   width: 400px;
   border-radius: 5px;
@@ -474,7 +475,7 @@ export default {
 }
 
 #search::placeholder {
-  color: #d4d4d4; /* 입력창의 플레이스홀더(검색어를 입력하세요) 색상 설정 */
+  color: #8e8e8e; /* 입력창의 플레이스홀더(검색어를 입력하세요) 색상 설정 */
 }
 
 #search:focus {
@@ -489,6 +490,7 @@ export default {
   width: 45px;
   height: 45px;
   border-radius: 5px;
+  object-fit: cover;
 }
 .drawer-content {
   height: calc(100vh - 56px); /* 56px는 앱 바 높이 */
