@@ -321,7 +321,6 @@ export default {
       sse.addEventListener("connect", (e) => {
         const { data: receivedConnectData } = e;
         console.log("connect event data: ", receivedConnectData); // "connected!"
-        this.noti.push(receivedConnectData);
       });
       sse.addEventListener("notifyJoinClubMember", (e) => {
         const { data: receivedConnectData } = e;
