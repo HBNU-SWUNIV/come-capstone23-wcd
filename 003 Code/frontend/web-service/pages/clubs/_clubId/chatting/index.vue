@@ -139,7 +139,9 @@ export default {
     },
     scrollToBottom() {
       const chatContainer = this.$refs.chatContainer;
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+      if (chatContainer) {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
     },
     sendMessage() {
       if (!this.message.trim()) {
