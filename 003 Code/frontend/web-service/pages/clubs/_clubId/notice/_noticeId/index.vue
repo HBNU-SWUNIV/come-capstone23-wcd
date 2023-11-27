@@ -19,7 +19,7 @@
       <!-- <p style="height:350px; margin-top: 20px; font-size: 20px;">{{ post.content }}</p> -->
       <div
         class="drawer-content"
-        style="height: 350px; margin-top: 20px; flex-grow: 1"
+        style="height: 350px; width: 100%; margin-top: 20px; flex-grow: 1; word-break: break-all; overflow: auto"
         v-html="formattedContent"
       ></div>
       <div style="display: flex; justify-content: end; margin-top: 20px; gap: 10px">
