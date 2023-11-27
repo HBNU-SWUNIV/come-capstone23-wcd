@@ -89,7 +89,7 @@ export default {
       },
       dataForModal: "",
       isModalVisible: false,
-      // schedules: [],
+      schedules: [],
       yymm: this.formatDate(new Date()),
       eventDialog: false,
       eventTitle: "",

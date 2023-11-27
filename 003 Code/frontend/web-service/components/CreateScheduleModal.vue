@@ -178,7 +178,6 @@ export default {
           .then((res) => {
             console.log(res);
             alert("일정이 생성되었습니다.");
-            // 모달을 닫는 이벤트를 발생시킵니다.
             this.$emit("close-modal");
           });
       } catch (err) {
