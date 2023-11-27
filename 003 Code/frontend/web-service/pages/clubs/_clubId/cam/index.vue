@@ -34,7 +34,7 @@ export default {
     return {
       sessionName: this.$route.params.clubId,
       participantName: sessionStorage.getItem('user_id'),
-      APPLICATION_SERVER_URL: 'https://wcd.kro.kr/api/openvidu/',
+      APPLICATION_SERVER_URL: `${process.env.API_BASE_URL}/openvidu/`,
       webComponent: null,
     };
   },

@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     connect() {
-      const socket = new SockJS("https://wcd.kro.kr/api/chatting-service/ws");
+      const socket = new SockJS(`${process.env.API_BASE_URL}/chatting-service/ws`);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
@@ -101,7 +101,7 @@ export default {
         chatMessage: this.message,
         topic: this.clubId,
       };
-      fetch("https://wcd.kro.kr/api/fcm-service", {
+      fetch(`${process.env.API_BASE_URL}/fcm-service`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export default {
           },
         };
         await this.$axios
-          .get(`https://wcd.kro.kr/api/chatting-service/chat`, config)
+          .get(`/chatting-service/chat`, config)
           .then((res) => {
             console.log(res);
             console.log(res.data.content);
