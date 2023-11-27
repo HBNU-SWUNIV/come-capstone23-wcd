@@ -1,7 +1,10 @@
 <template>
-  <div style="width:100%; padding:40px;">
-    <h1 style="text-align: center; margin-bottom: 20px;">채팅방</h1>
-    <div class="drawer-content" style="height:400px; margin-bottom: 15px;">
+  <div style="width: 100%; padding: 40px">
+    <h1 style="text-align: center; margin-bottom: 20px">채팅방</h1>
+    <div
+      class="drawer-content"
+      style="height: 400px; margin-bottom: 15px; border: 1px solid black"
+    >
       <p v-for="testmessage in testMessages" :key="testmessage.id">
         {{ testmessage.sender }}: {{ testmessage.message }} [{{
           testmessage.sendTime
@@ -11,10 +14,7 @@
         {{ message.sender }}: {{ message.message }} [{{ message.sendTime }}]
       </p>
     </div>
-    <div style="height: 50px; background-color: rgb(255, 255, 255)">
-      <v-btn>알림 활성화</v-btn>
-    </div>
-    <div style="height: 100px; padding: 5px">
+    <div style="height: 100px; padding: 5px; border: 1px solid black">
       <textarea
         v-model="message"
         placeholder="메시지를 입력하세요"
@@ -27,7 +27,7 @@
           height: 100%;
           width: 100%;
           resize: none;
-          color:black;
+          color: black;
         "
       ></textarea>
     </div>
@@ -46,7 +46,6 @@ export default {
       messages: [],
       stompClient: null,
       testMessages: [],
-      clubName: null,
       userName: null,
     };
   },
@@ -55,7 +54,9 @@ export default {
   },
   methods: {
     connect() {
-      const socket = new SockJS(`${process.env.API_BASE_URL}/chatting-service/ws`);
+      const socket = new SockJS(
+        `${process.env.API_BASE_URL}/chatting-service/ws`
+      );
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, this.onConnected, this.onError);
     },
@@ -102,45 +103,22 @@ export default {
           },
           params: {
             clubId: this.clubId,
-            page: 0,
+            page: 1,
             size: 10,
           },
         };
-        await this.$axios
-          .get(`/chatting-service/chat`, config)
-          .then((res) => {
-            console.log(res);
-            console.log(res.data.content);
-            this.testMessages = res.data.content.reverse();
-            console.log(this.testMessages);
-          });
+        await this.$axios.get(`${process.env.API_BASE_URL}/chatting-service/chat`, config).then((res) => {
+          console.log(res.data.content);
+          this.testMessages = res.data.content.reverse();
+          console.log(this.testMessages);
+        });
       } catch (err) {
         console.error("err", err);
-      }
-    },
-    async getClubInfo() {
-      try {
-        const access_token = this.$store.state.access_token;
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        };
-        await this.$axios
-          .get(`/club-service/clubs/${this.$route.params.clubId}`, config)
-          .then((res) => {
-            console.log(res);
-            this.clubName = res.data.clubName;
-          });
-      } catch (err) {
-        console.log(err);
       }
     },
   },
   async created() {
     this.clubId = this.$route.params.clubId;
-    this.getClubInfo();
     this.connect();
     this.getMessage();
   },
