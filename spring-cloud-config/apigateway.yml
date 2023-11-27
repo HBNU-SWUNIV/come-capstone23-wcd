@@ -59,7 +59,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/schedule-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
         - id: fcm-service
           uri: lb://FCM-SERVICE
           predicates:
@@ -105,8 +104,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/openvidu/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
         - id: openvidu-wss
           uri: lb:ws://OPENVIDU
           predicates:
@@ -114,5 +111,3 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/api/openvidu/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
-            - ClubMemberAuthorizationFilter
