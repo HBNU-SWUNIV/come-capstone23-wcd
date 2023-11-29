@@ -178,7 +178,7 @@ export default {
           params: {
             clubId: this.clubId,
             page: 0,
-            size: 10,
+            size: 1000,
           },
         };
         await this.$axios
