@@ -2,7 +2,8 @@
   <v-card style="width: 50%">
     <v-card-title
       >{{ title }}<v-spacer />
-      <v-btn to="/club-manage">더보기</v-btn></v-card-title
+      <!-- <v-btn to="/club-manage">더보기</v-btn> -->
+      </v-card-title
     >
     <v-list>
       <v-list-item

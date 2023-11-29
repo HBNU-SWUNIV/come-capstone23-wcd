@@ -1,6 +1,8 @@
 <template>
   <v-card style="width:50%">
-    <v-card-title>{{ title }}<v-spacer/> <v-btn to="/myclub">더보기</v-btn></v-card-title>
+    <v-card-title>{{ title }}<v-spacer/> 
+      <!-- <v-btn to="/myclub">더보기</v-btn> -->
+    </v-card-title>
     <v-list>
       <v-list-item
         v-for="(myclub, i) in displayedClubs"
