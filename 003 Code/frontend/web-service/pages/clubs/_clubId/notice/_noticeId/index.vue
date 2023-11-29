@@ -25,14 +25,14 @@
       <div style="display: flex; justify-content: end; margin-top: 20px; gap: 10px">
         <v-btn
           v-if="post.writerId == user_id"
-          :to="`/clubs/${this.$route.params.clubId}/board/${this.$route.params.boardId}/edit`"
+          :to="`/clubs/${this.$route.params.clubId}/notice/${this.$route.params.noticeId}/edit`"
         >수정</v-btn
         >
         <v-btn
           v-if="post.writerId == user_id"
-          @click="deleteBoard"
+          @click="deleteNotice"
         >삭제</v-btn>
-        <v-btn @click="goBoardList">목록</v-btn>
+        <v-btn @click="goNoticeList">목록</v-btn>
       </div>
     </div>
     <div style="display: flex; gap: 10px; flex-direction: column;width: 30%; padding: 20px; border-left: 0.3px solid #e0e0e0">

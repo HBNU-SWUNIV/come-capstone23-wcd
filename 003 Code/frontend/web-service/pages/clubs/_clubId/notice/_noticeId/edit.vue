@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%; padding: 30px;">
-    <v-form style="height: 100%" @submit.prevent="EditBoardSubmit">
+    <v-form style="height: 100%" @submit.prevent="EditNoticeSubmit">
       <v-text-field
         v-model="title"
         label="게시글 제목"
